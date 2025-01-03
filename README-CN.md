@@ -2,40 +2,40 @@
 
 [![GitHub version](https://badge.fury.io/gh/aliyun%2Falibabacloud-oss-php-sdk-v2.svg)](https://badge.fury.io/gh/aliyun%2Falibabacloud-oss-php-sdk-v2)
 
-alibabacloud-oss-php-sdk-v2 is the Developer Preview for the v2 of the OSS SDK for the PHP programming language
+alibabacloud-oss-php-sdk-v2 是OSS在PHP编译语言下的第二版SDK
 
-## [README in Chinese](README-CN.md)
+## [README in English](README.md)
 
-## About
-> - This PHP SDK is based on the official APIs of [Alibaba Cloud OSS](http://www.aliyun.com/product/oss/).
-> - Alibaba Cloud Object Storage Service (OSS) is a cloud storage service provided by Alibaba Cloud, featuring massive capacity, security, a low cost, and high reliability. 
-> - The OSS can store any type of files and therefore applies to various websites, development enterprises and developers.
-> - With this SDK, you can upload, download and manage data on any app anytime and anywhere conveniently. 
+## 关于
+> - 此PHP SDK基于[阿里云对象存储服务](http://www.aliyun.com/product/oss/)官方API构建。
+> - 阿里云对象存储（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。
+> - OSS适合存放任意文件类型，适合各种网站、开发企业及开发者使用。
+> - 使用此SDK，用户可以方便地在任何应用、任何时间、任何地点上传，下载和管理数据。
 
-## Running Environment
-> - PHP 7.4 or above. 
+## 运行环境
+> - PHP 7.4及以上。
 
-## Installing
-### Install the sdk through composer
-If you use the composer to manage project dependencies, run the following command in your project's root directory:
+## 安装方法
+### 通过 composer 安装
+如果您通过composer管理您的项目依赖，可以在你的项目根目录运行：
 ```bash
 $ composer require alibabacloud/oss-v2
 ```
-You can also declare the dependency on Alibaba Cloud OSS SDK for PHP v2 in the composer.json file.
-```json
+或者在你的`composer.json`中声明对Alibaba Cloud OSS SDK for PHP v2的依赖：
+```php
 "require": {
     "alibabacloud/oss-v2": "*"
 }
 ```
+然后通过`composer install`安装依赖
 
-### Install from the Phar file directly
+### 通过Phar打包文件安装
 ```bash
-$ require_once '/path/to/alibabacloud-oss-php-sdk-v2-{version}.phar'
+require_once '/path/to/alibabacloud-oss-php-sdk-v2-{version}.phar'
 ```
 
-
-## Getting Started
-#### List Bucket
+## 快速使用
+#### 获取存储空间列表（List Bucket）
 ```php
 <?php
 
@@ -65,7 +65,7 @@ foreach ($iter as $page) {
 }
 ```
 
-#### List Objects
+#### 获取文件列表（List Objects）
 ```php
 <?php
 
@@ -96,7 +96,7 @@ foreach ($iter as $page) {
 }
 ```
 
-#### Put Object
+#### 上传文件（Put Object）
 ```php
 <?php
 
@@ -130,14 +130,14 @@ printf(
 );
 ```
 
-##  Complete Example
-More example projects can be found in the `sample` folder 
+## 更多示例
+请参看`sample`目录
 
-### Running Example
-> - Run `composer install` to download the dependent libraries.
-> - Go to the sample code folder `sample`。
-> - Configure credentials values from the environment variables, like `export OSS_ACCESS_KEY_ID="your access key id"`, `export OSS_ACCESS_KEY_SECRET="your access key secrect"`
-> - Take ListBuckets.php as an example，run `php ListBuckets.php --region cn-hangzhou` command。
+### 运行示例
+> - 执行`composer install`下载依赖的库
+> - 进入示例程序目录 `sample`。
+> - 通过环境变量，配置访问凭证, `export OSS_ACCESS_KEY_ID="your access key id"`, `export OSS_ACCESS_KEY_SECRET="your access key secrect"`
+> - 以 ListBuckets.php 为例，执行 `php ListBuckets.php --region cn-hangzhou`。
 
-## License
-> - Apache-2.0, see [license file](LICENSE)
+## 许可协议
+> - Apache-2.0, 请参阅 [许可文件](LICENSE)
