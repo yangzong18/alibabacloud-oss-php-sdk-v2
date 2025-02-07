@@ -110,6 +110,12 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise listBucketsAsync(Models\ListBucketsRequest $request, array $args = []) Queries all buckets that are owned by a requester.
  * @method Models\DescribeRegionsResult describeRegions(Models\DescribeRegionsRequest $request, array $args = []) Queries the endpoints of all supported regions or the endpoints of a specific region.
  * @method \GuzzleHttp\Promise\Promise describeRegionsAsync(Models\DescribeRegionsRequest $request, array $args = []) Queries the endpoints of all supported regions or the endpoints of a specific region.
+ * @method Models\PutBucketLifecycleResult putBucketLifecycle(Models\PutBucketLifecycleRequest $request, array $args = []) Configures a lifecycle rule for a bucket. After you configure a lifecycle rule for a bucket, Object Storage Service (OSS) automatically deletes the objects that matching the rule or converts the storage type of the objects based on the point in time that is specified in the lifecycle rule.
+ * @method \GuzzleHttp\Promise\Promise putBucketLifecycleAsync(Models\PutBucketLifecycleRequest $request, array $args = []) Configures a lifecycle rule for a bucket. After you configure a lifecycle rule for a bucket, Object Storage Service (OSS) automatically deletes the objects that matching the rule or converts the storage type of the objects based on the point in time that is specified in the lifecycle rule.
+ * @method Models\GetBucketLifecycleResult getBucketLifecycle(Models\GetBucketLifecycleRequest $request, array $args = []) Queries the lifecycle rules configured for a bucket. Only the owner of a bucket has the permissions to query the lifecycle rules configured for the bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketLifecycleAsync(Models\GetBucketLifecycleRequest $request, array $args = []) Queries the lifecycle rules configured for a bucket. Only the owner of a bucket has the permissions to query the lifecycle rules configured for the bucket.
+ * @method Models\DeleteBucketLifecycleResult deleteBucketLifecycle(Models\DeleteBucketLifecycleRequest $request, array $args = []) Deletes the lifecycle rules of a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketLifecycleAsync(Models\DeleteBucketLifecycleRequest $request, array $args = []) Deletes the lifecycle rules of a bucket.
  */
 final class Client
 {

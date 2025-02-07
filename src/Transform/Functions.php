@@ -70,6 +70,10 @@ final class Functions
         'CompleteBucketWorm' => 'BucketWorm',
         'ExtendBucketWorm' => 'BucketWorm',
         'GetBucketWorm' => 'BucketWorm',
+        // bucket lifecycle
+        'PutBucketLifecycle' => 'BucketLifecycle',
+        'GetBucketLifecycle' => 'BucketLifecycle',
+        'DeleteBucketLifecycle' => 'BucketLifecycle',
     ];
 
     public static function getTransformClass(string $apiName)
