@@ -120,6 +120,14 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise putBucketTransferAccelerationAsync(Models\PutBucketTransferAccelerationRequest $request, array $args = []) Configures transfer acceleration for a bucket. After you enable transfer acceleration for a bucket, the object access speed is accelerated for users worldwide. The transfer acceleration feature is applicable to scenarios where data needs to be transferred over long geographical distances. This feature can also be used to download or upload objects that are gigabytes or terabytes in size.
  * @method Models\GetBucketTransferAccelerationResult getBucketTransferAcceleration(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
  * @method \GuzzleHttp\Promise\Promise getBucketTransferAccelerationAsync(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
+ * @method Models\PutBucketPolicyResult putBucketPolicy(Models\PutBucketPolicyRequest $request, array $args = []) Configures a policy for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketPolicyAsync(Models\PutBucketPolicyRequest $request, array $args = []) Configures a policy for a bucket.
+ * @method Models\GetBucketPolicyResult getBucketPolicy(Models\GetBucketPolicyRequest $request, array $args = []) Queries the policies configured for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketPolicyAsync(Models\GetBucketPolicyRequest $request, array $args = []) Queries the policies configured for a bucket.
+ * @method Models\DeleteBucketPolicyResult deleteBucketPolicy(Models\DeleteBucketPolicyRequest $request, array $args = []) Deletes a policy for a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketPolicyAsync(Models\DeleteBucketPolicyRequest $request, array $args = []) Deletes a policy for a bucket.
+ * @method Models\GetBucketPolicyStatusResult getBucketPolicyStatus(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
+ * @method \GuzzleHttp\Promise\Promise getBucketPolicyStatusAsync(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
  */
 final class Client
 {
