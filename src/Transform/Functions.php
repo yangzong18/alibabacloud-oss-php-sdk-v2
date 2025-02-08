@@ -74,6 +74,9 @@ final class Functions
         'PutBucketLifecycle' => 'BucketLifecycle',
         'GetBucketLifecycle' => 'BucketLifecycle',
         'DeleteBucketLifecycle' => 'BucketLifecycle',
+        // bucket transfer acceleration
+        'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
     ];
 
     public static function getTransformClass(string $apiName)
