@@ -77,6 +77,13 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket transfer acceleration
+        'PutBucketLogging' => 'BucketLogging',
+        'GetBucketLogging' => 'BucketLogging',
+        'DeleteBucketLogging' => 'BucketLogging',
+        'PutUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'GetUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'DeleteUserDefinedLogFieldsConfig' => 'BucketLogging',
     ];
 
     public static function getTransformClass(string $apiName)
