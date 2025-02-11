@@ -120,6 +120,10 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise putBucketTransferAccelerationAsync(Models\PutBucketTransferAccelerationRequest $request, array $args = []) Configures transfer acceleration for a bucket. After you enable transfer acceleration for a bucket, the object access speed is accelerated for users worldwide. The transfer acceleration feature is applicable to scenarios where data needs to be transferred over long geographical distances. This feature can also be used to download or upload objects that are gigabytes or terabytes in size.
  * @method Models\GetBucketTransferAccelerationResult getBucketTransferAcceleration(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
  * @method \GuzzleHttp\Promise\Promise getBucketTransferAccelerationAsync(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
+ * @method Models\PutBucketRefererResult putBucketReferer(Models\PutBucketRefererRequest $request, array $args = []) Configures a Referer whitelist for an Object Storage Service (OSS) bucket. You can specify whether to allow the requests whose Referer field is empty or whose query strings are truncated.
+ * @method \GuzzleHttp\Promise\Promise putBucketRefererAsync(Models\PutBucketRefererRequest $request, array $args = []) Configures a Referer whitelist for an Object Storage Service (OSS) bucket. You can specify whether to allow the requests whose Referer field is empty or whose query strings are truncated.
+ * @method Models\GetBucketRefererResult getBucketReferer(Models\GetBucketRefererRequest $request, array $args = []) Queries the hotlink protection configurations for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketRefererAsync(Models\GetBucketRefererRequest $request, array $args = []) Queries the hotlink protection configurations for a bucket.
  */
 final class Client
 {
