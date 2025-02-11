@@ -120,6 +120,12 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise putBucketTransferAccelerationAsync(Models\PutBucketTransferAccelerationRequest $request, array $args = []) Configures transfer acceleration for a bucket. After you enable transfer acceleration for a bucket, the object access speed is accelerated for users worldwide. The transfer acceleration feature is applicable to scenarios where data needs to be transferred over long geographical distances. This feature can also be used to download or upload objects that are gigabytes or terabytes in size.
  * @method Models\GetBucketTransferAccelerationResult getBucketTransferAcceleration(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
  * @method \GuzzleHttp\Promise\Promise getBucketTransferAccelerationAsync(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
+ * @method Models\GetBucketWebsiteResult getBucketWebsite(Models\GetBucketWebsiteRequest $request, array $args = []) Queries the static website hosting status and redirection rules configured for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketWebsiteAsync(Models\GetBucketWebsiteRequest $request, array $args = []) Queries the static website hosting status and redirection rules configured for a bucket.
+ * @method Models\PutBucketWebsiteResult putBucketWebsite(Models\PutBucketWebsiteRequest $request, array $args = []) Enables the static website hosting mode for a bucket and configures redirection rules for the bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketWebsiteAsync(Models\PutBucketWebsiteRequest $request, array $args = []) Enables the static website hosting mode for a bucket and configures redirection rules for the bucket.
+ * @method Models\DeleteBucketWebsiteResult deleteBucketWebsite(Models\DeleteBucketWebsiteRequest $request, array $args = []) Disables the static website hosting mode and deletes the redirection rules for a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketWebsiteAsync(Models\DeleteBucketWebsiteRequest $request, array $args = []) Disables the static website hosting mode and deletes the redirection rules for a bucket.
  */
 final class Client
 {
