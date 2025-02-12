@@ -77,6 +77,9 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket request payment
+        'PutBucketRequestPayment' => 'BucketRequestPayment',
+        'GetBucketRequestPayment' => 'BucketRequestPayment',
     ];
 
     public static function getTransformClass(string $apiName)
