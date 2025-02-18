@@ -77,6 +77,13 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket replication
+        'PutBucketRtc' => 'BucketReplication',
+        'PutBucketReplication' => 'BucketReplication',
+        'GetBucketReplication' => 'BucketReplication',
+        'GetBucketReplicationLocation' => 'BucketReplication',
+        'GetBucketReplicationProgress' => 'BucketReplication',
+        'DeleteBucketReplication' => 'BucketReplication',
     ];
 
     public static function getTransformClass(string $apiName)
