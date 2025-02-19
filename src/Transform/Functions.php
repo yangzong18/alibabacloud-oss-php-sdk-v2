@@ -77,6 +77,12 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket cname
+        'PutCname' => 'BucketCname',
+        'ListCname' => 'BucketCname',
+        'DeleteCname' => 'BucketCname',
+        'GetCnameToken' => 'BucketCname',
+        'CreateCnameToken' => 'BucketCname',
     ];
 
     public static function getTransformClass(string $apiName)
