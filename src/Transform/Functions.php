@@ -77,6 +77,11 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket meta query
+        'GetMetaQueryStatus' => 'BucketMetaQuery',
+        'CloseMetaQuery' => 'BucketMetaQuery',
+        'DoMetaQuery' => 'BucketMetaQuery',
+        'OpenMetaQuery' => 'BucketMetaQuery',
     ];
 
     public static function getTransformClass(string $apiName)
