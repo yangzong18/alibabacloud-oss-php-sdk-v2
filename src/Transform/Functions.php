@@ -81,6 +81,18 @@ final class Functions
         'PutBucketWebsite' => 'BucketWebsite',
         'GetBucketWebsite' => 'BucketWebsite',
         'DeleteBucketWebsite' => 'BucketWebsite',
+        // bucket transfer acceleration
+        'PutBucketLogging' => 'BucketLogging',
+        'GetBucketLogging' => 'BucketLogging',
+        'DeleteBucketLogging' => 'BucketLogging',
+        'PutUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'GetUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'DeleteUserDefinedLogFieldsConfig' => 'BucketLogging',
+        // bucket policy
+        'PutBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicyStatus' => 'BucketPolicy',
+        'DeleteBucketPolicy' => 'BucketPolicy',
     ];
 
     public static function getTransformClass(string $apiName)
