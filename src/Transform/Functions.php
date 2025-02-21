@@ -77,6 +77,11 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket cors
+        'PutBucketCors' => 'BucketCors',
+        'GetBucketCors' => 'BucketCors',
+        'DeleteBucketCors' => 'BucketCors',
+        'OptionObject' => 'BucketCors',
         // bucket request payment
         'PutBucketRequestPayment' => 'BucketRequestPayment',
         'GetBucketRequestPayment' => 'BucketRequestPayment',
