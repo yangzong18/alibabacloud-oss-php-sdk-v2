@@ -84,6 +84,11 @@ final class Functions
         'PutUserDefinedLogFieldsConfig' => 'BucketLogging',
         'GetUserDefinedLogFieldsConfig' => 'BucketLogging',
         'DeleteUserDefinedLogFieldsConfig' => 'BucketLogging',
+        // bucket policy
+        'PutBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicyStatus' => 'BucketPolicy',
+        'DeleteBucketPolicy' => 'BucketPolicy',
     ];
 
     public static function getTransformClass(string $apiName)
