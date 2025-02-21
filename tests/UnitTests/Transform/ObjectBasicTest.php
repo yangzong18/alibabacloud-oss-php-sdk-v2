@@ -1494,12 +1494,10 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             $this->assertStringContainsString("missing required field, key", (string)$e);
         }
 
-        try {
-            $request = new Models\RestoreObjectRequest('bucket-123', 'key-123');
-            $input = ObjectBasic::fromRestoreObject($request);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertStringContainsString("missing required field, restoreRequest", (string)$e);
-        }
+        $request = new Models\RestoreObjectRequest('bucket-123', 'key-123');
+        $input = ObjectBasic::fromRestoreObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
 
         $request = new Models\RestoreObjectRequest('bucket-123', 'key-123');
         $request->restoreRequest = new RestoreRequest(3);

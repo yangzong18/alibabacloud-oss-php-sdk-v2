@@ -955,7 +955,6 @@ final class ObjectBasic
     {
         Functions::assertFieldRequired('bucket', $request->bucket);
         Functions::assertFieldRequired('key', $request->key);
-        Functions::assertFieldRequired('restoreRequest', $request->restoreRequest);
         $input = new OperationInput(
             'RestoreObject',
             'POST',
