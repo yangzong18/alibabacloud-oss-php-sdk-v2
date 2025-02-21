@@ -77,6 +77,9 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket access monitor
+        'PutBucketAccessMonitor' => 'BucketAccessMonitor',
+        'GetBucketAccessMonitor' => 'BucketAccessMonitor',
         // bucket cname
         'PutCname' => 'BucketCname',
         'ListCname' => 'BucketCname',
