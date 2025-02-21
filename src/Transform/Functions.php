@@ -77,6 +77,9 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket referer
+        'PutBucketReferer' => 'BucketReferer',
+        'GetBucketReferer' => 'BucketReferer',
         // bucket website
         'PutBucketWebsite' => 'BucketWebsite',
         'GetBucketWebsite' => 'BucketWebsite',
