@@ -80,6 +80,43 @@ final class Functions
         // bucket access monitor
         'PutBucketAccessMonitor' => 'BucketAccessMonitor',
         'GetBucketAccessMonitor' => 'BucketAccessMonitor',
+        // bucket cname
+        'PutCname' => 'BucketCname',
+        'ListCname' => 'BucketCname',
+        'DeleteCname' => 'BucketCname',
+        'GetCnameToken' => 'BucketCname',
+        'CreateCnameToken' => 'BucketCname',
+        // bucket cors
+        'PutBucketCors' => 'BucketCors',
+        'GetBucketCors' => 'BucketCors',
+        'DeleteBucketCors' => 'BucketCors',
+        'OptionObject' => 'BucketCors',
+        // bucket request payment
+        'PutBucketRequestPayment' => 'BucketRequestPayment',
+        'GetBucketRequestPayment' => 'BucketRequestPayment',
+        // bucket tags
+        'PutBucketTags' => 'BucketTags',
+        'GetBucketTags' => 'BucketTags',
+        'DeleteBucketTags' => 'BucketTags',
+        // bucket referer
+        'PutBucketReferer' => 'BucketReferer',
+        'GetBucketReferer' => 'BucketReferer',
+        // bucket website
+        'PutBucketWebsite' => 'BucketWebsite',
+        'GetBucketWebsite' => 'BucketWebsite',
+        'DeleteBucketWebsite' => 'BucketWebsite',
+        // bucket transfer acceleration
+        'PutBucketLogging' => 'BucketLogging',
+        'GetBucketLogging' => 'BucketLogging',
+        'DeleteBucketLogging' => 'BucketLogging',
+        'PutUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'GetUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'DeleteUserDefinedLogFieldsConfig' => 'BucketLogging',
+        // bucket policy
+        'PutBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicyStatus' => 'BucketPolicy',
+        'DeleteBucketPolicy' => 'BucketPolicy',
     ];
 
     public static function getTransformClass(string $apiName)

@@ -19,7 +19,7 @@ final class ListObjectVersionsPaginator extends Paginator
      * @param array $args accepts the following:
      * - limit int: The maximum number of items in the response.
      *   For example, ['limit' => 10]
-     * @return \Generator<Models\ListObjectsResult>
+     * @return \Generator<Models\ListObjectVersionsResult>
      */
     public function iterPage(Models\ListObjectVersionsRequest $request, array $args = []): \Generator
     {
