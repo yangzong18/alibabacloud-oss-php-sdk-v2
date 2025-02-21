@@ -77,6 +77,10 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket website
+        'PutBucketWebsite' => 'BucketWebsite',
+        'GetBucketWebsite' => 'BucketWebsite',
+        'DeleteBucketWebsite' => 'BucketWebsite',
         // bucket transfer acceleration
         'PutBucketLogging' => 'BucketLogging',
         'GetBucketLogging' => 'BucketLogging',
