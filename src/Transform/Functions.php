@@ -80,6 +80,29 @@ final class Functions
         // bucket request payment
         'PutBucketRequestPayment' => 'BucketRequestPayment',
         'GetBucketRequestPayment' => 'BucketRequestPayment',
+        // bucket tags
+        'PutBucketTags' => 'BucketTags',
+        'GetBucketTags' => 'BucketTags',
+        'DeleteBucketTags' => 'BucketTags',
+        // bucket referer
+        'PutBucketReferer' => 'BucketReferer',
+        'GetBucketReferer' => 'BucketReferer',
+        // bucket website
+        'PutBucketWebsite' => 'BucketWebsite',
+        'GetBucketWebsite' => 'BucketWebsite',
+        'DeleteBucketWebsite' => 'BucketWebsite',
+        // bucket transfer acceleration
+        'PutBucketLogging' => 'BucketLogging',
+        'GetBucketLogging' => 'BucketLogging',
+        'DeleteBucketLogging' => 'BucketLogging',
+        'PutUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'GetUserDefinedLogFieldsConfig' => 'BucketLogging',
+        'DeleteUserDefinedLogFieldsConfig' => 'BucketLogging',
+        // bucket policy
+        'PutBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicy' => 'BucketPolicy',
+        'GetBucketPolicyStatus' => 'BucketPolicy',
+        'DeleteBucketPolicy' => 'BucketPolicy',
     ];
 
     public static function getTransformClass(string $apiName)
