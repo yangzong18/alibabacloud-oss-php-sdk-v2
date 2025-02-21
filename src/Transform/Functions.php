@@ -77,6 +77,9 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket request payment
+        'PutBucketRequestPayment' => 'BucketRequestPayment',
+        'GetBucketRequestPayment' => 'BucketRequestPayment',
         // bucket tags
         'PutBucketTags' => 'BucketTags',
         'GetBucketTags' => 'BucketTags',
