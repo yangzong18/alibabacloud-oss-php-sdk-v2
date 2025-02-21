@@ -120,6 +120,16 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise putBucketTransferAccelerationAsync(Models\PutBucketTransferAccelerationRequest $request, array $args = []) Configures transfer acceleration for a bucket. After you enable transfer acceleration for a bucket, the object access speed is accelerated for users worldwide. The transfer acceleration feature is applicable to scenarios where data needs to be transferred over long geographical distances. This feature can also be used to download or upload objects that are gigabytes or terabytes in size.
  * @method Models\GetBucketTransferAccelerationResult getBucketTransferAcceleration(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
  * @method \GuzzleHttp\Promise\Promise getBucketTransferAccelerationAsync(Models\GetBucketTransferAccelerationRequest $request, array $args = []) Queries the transfer acceleration configurations of a bucket.
+ * @method Models\PutCnameResult putCname(Models\PutCnameRequest $request, array $args = []) Maps a CNAME record to a bucket.
+ * @method \GuzzleHttp\Promise\Promise putCnameAsync(Models\PutCnameRequest $request, array $args = []) Maps a CNAME record to a bucket.
+ * @method Models\ListCnameResult listCname(Models\ListCnameRequest $request, array $args = []) Queries all CNAME records that are mapped to a bucket.
+ * @method \GuzzleHttp\Promise\Promise listCnameAsync(Models\ListCnameRequest $request, array $args = []) Queries all CNAME records that are mapped to a bucket.
+ * @method Models\DeleteCnameResult deleteCname(Models\DeleteCnameRequest $request, array $args = []) Deletes a CNAME record that is mapped to a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteCnameAsync(Models\DeleteCnameRequest $request, array $args = []) Deletes a CNAME record that is mapped to a bucket.
+ * @method Models\GetCnameTokenResult getCnameToken(Models\GetCnameTokenRequest $request, array $args = []) Queries the created CNAME tokens.
+ * @method \GuzzleHttp\Promise\Promise getCnameTokenAsync(Models\GetCnameTokenRequest $request, array $args = []) Queries the created CNAME tokens.
+ * @method Models\CreateCnameTokenResult createCnameToken(Models\CreateCnameTokenRequest $request, array $args = []) Creates a CNAME token to verify the ownership of a domain name.
+ * @method \GuzzleHttp\Promise\Promise createCnameTokenAsync(Models\CreateCnameTokenRequest $request, array $args = []) Creates a CNAME token to verify the ownership of a domain name.
  * @method Models\PutBucketCorsResult putBucketCors(Models\PutBucketCorsRequest $request, array $args = []) Configures cross-origin resource sharing (CORS) rules for a bucket.
  * @method \GuzzleHttp\Promise\Promise putBucketCorsAsync(Models\PutBucketCorsRequest $request, array $args = []) Configures cross-origin resource sharing (CORS) rules for a bucket.
  * @method Models\GetBucketCorsResult getBucketCors(Models\GetBucketCorsRequest $request, array $args = []) Queries the cross-origin resource sharing (CORS) rules that are configured for a bucket.
