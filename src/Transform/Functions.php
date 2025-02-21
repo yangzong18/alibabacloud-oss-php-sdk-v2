@@ -77,6 +77,10 @@ final class Functions
         // bucket transfer acceleration
         'PutBucketTransferAcceleration' => 'BucketTransferAcceleration',
         'GetBucketTransferAcceleration' => 'BucketTransferAcceleration',
+        // bucket tags
+        'PutBucketTags' => 'BucketTags',
+        'GetBucketTags' => 'BucketTags',
+        'DeleteBucketTags' => 'BucketTags',
         // bucket referer
         'PutBucketReferer' => 'BucketReferer',
         'GetBucketReferer' => 'BucketReferer',
