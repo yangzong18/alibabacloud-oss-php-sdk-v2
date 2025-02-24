@@ -14,42 +14,23 @@ use AlibabaCloud\Oss\V2\Annotation\XmlRoot;
  */
 #[XmlRoot(name: 'ServerSideEncryptionRule')]
 final class ServerSideEncryptionRule extends Model
-{
+{   
     /**
-     * The key that is managed by Key Management Service (KMS).
-     * @var string|null
+     * The container that stores the default server-side encryption method.
+     * @var ApplyServerSideEncryptionByDefault|null
      */
-    #[XmlElement(rename: 'KMSMasterKeyID', type: 'string')]
-    public ?string $kmsMasterKeyId;
-
-    /**
-     * The default server-side encryption method.Valid values: KMS, AES-256, and SM4.
-     * @var string|null
-     */
-    #[XmlElement(rename: 'SSEAlgorithm', type: 'string')]
-    public ?string $sseAlgorithm;
-
-    /**
-     * The algorithm that is used to encrypt objects. If you do not configure this parameter, objects are encrypted by using AES-256. This parameter is valid only when SSEAlgorithm is set to KMS.Valid value: SM4.
-     * @var string|null
-     */
-    #[XmlElement(rename: 'KMSDataEncryption', type: 'string')]
-    public ?string $kmsDataEncryption;
+    #[XmlElement(rename: 'ApplyServerSideEncryptionByDefault', type: ApplyServerSideEncryptionByDefault::class)]
+    public ?ApplyServerSideEncryptionByDefault $applyServerSideEncryptionByDefault;
+    
 
     /**
      * ServerSideEncryptionRule constructor.
-     * @param string|null $kmsMasterKeyId The key that is managed by Key Management Service (KMS).
-     * @param string|null $sseAlgorithm The default server-side encryption method.
-     * @param string|null $kmsDataEncryption The algorithm that is used to encrypt objects.
+     * @param ApplyServerSideEncryptionByDefault|null $applyServerSideEncryptionByDefault The container that stores the default server-side encryption method.
      */
     public function __construct(
-        ?string $kmsMasterKeyId = null,
-        ?string $sseAlgorithm = null,
-        ?string $kmsDataEncryption = null
+        ?ApplyServerSideEncryptionByDefault $applyServerSideEncryptionByDefault = null
     )
-    {
-        $this->kmsMasterKeyId = $kmsMasterKeyId;
-        $this->sseAlgorithm = $sseAlgorithm;
-        $this->kmsDataEncryption = $kmsDataEncryption;
+    {   
+        $this->applyServerSideEncryptionByDefault = $applyServerSideEncryptionByDefault;
     }
 }
