@@ -126,6 +126,9 @@ final class Functions
         'PutBucketEncryption' => 'BucketEncryption',
         'GetBucketEncryption' => 'BucketEncryption',
         'DeleteBucketEncryption' => 'BucketEncryption',
+        // bucket archive direct read
+        'GetBucketArchiveDirectRead' => 'BucketArchiveDirectRead',
+        'PutBucketArchiveDirectRead' => 'BucketArchiveDirectRead',
     ];
 
     public static function getTransformClass(string $apiName)
