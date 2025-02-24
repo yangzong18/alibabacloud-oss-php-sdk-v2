@@ -196,6 +196,10 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise getBucketEncryptionAsync(Models\GetBucketEncryptionRequest $request, array $args = []) Queries the encryption rules configured for a bucket.
  * @method Models\DeleteBucketEncryptionResult deleteBucketEncryption(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
  * @method \GuzzleHttp\Promise\Promise deleteBucketEncryptionAsync(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
+ * @method Models\GetBucketArchiveDirectReadResult getBucketArchiveDirectRead(Models\GetBucketArchiveDirectReadRequest $request, array $args = []) Queries whether real-time access of Archive objects is enabled for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketArchiveDirectReadAsync(Models\GetBucketArchiveDirectReadRequest $request, array $args = []) Queries whether real-time access of Archive objects is enabled for a bucket.
+ * @method Models\PutBucketArchiveDirectReadResult putBucketArchiveDirectRead(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketArchiveDirectReadAsync(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
  */
 final class Client
 {
