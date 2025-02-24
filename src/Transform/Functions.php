@@ -122,6 +122,11 @@ final class Functions
         'GetBucketPolicy' => 'BucketPolicy',
         'GetBucketPolicyStatus' => 'BucketPolicy',
         'DeleteBucketPolicy' => 'BucketPolicy',
+        // bucket inventory
+        'PutBucketInventory' => 'BucketInventory',
+        'GetBucketInventory' => 'BucketInventory',
+        'ListBucketInventory' => 'BucketInventory',
+        'DeleteBucketInventory' => 'BucketInventory',
     ];
 
     public static function getTransformClass(string $apiName)
