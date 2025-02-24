@@ -369,7 +369,7 @@ final class BucketBasic
                 ) : null;
                 $info->storageClass = Functions::tryToString($xml->StorageClass);
                 $info->resourceGroupId = Functions::tryToString($xml->ResourceGroupId);
-                $info->sseRule = isset($xml->ServerSideEncryptionRule) ? new Models\ServerSideEncryptionRule(
+                $info->sseRule = isset($xml->ServerSideEncryptionRule) ? new Models\ServerSideEncryptionRuleInfo(
                     Functions::tryToString($xml->ServerSideEncryptionRule->KMSMasterKeyID),
                     Functions::tryToString($xml->ServerSideEncryptionRule->SSEAlgorithm),
                     Functions::tryToString($xml->ServerSideEncryptionRule->KMSDataEncryption),

@@ -82,9 +82,9 @@ final class BucketInfo extends Model
 
     /**
      * The server-side encryption configurations of the bucket.
-     * @var ServerSideEncryptionRule|null
+     * @var ServerSideEncryptionRuleInfo |null
      */
-    public ?ServerSideEncryptionRule $sseRule;
+    public ?ServerSideEncryptionRuleInfo $sseRule;
 
     /**
      * The versioning status of the bucket.
@@ -138,7 +138,7 @@ final class BucketInfo extends Model
      * @param Owner|null $owner The owner of the bucket.
      * @param string|null $storageClass The storage class of the bucket.
      * @param string|null $resourceGroupId The ID of the resource group to which the bucket belongs.
-     * @param ServerSideEncryptionRule|null $sseRule The server-side encryption configurations of the bucket.
+     * @param ServerSideEncryptionRuleInfo |null $sseRule The server-side encryption configurations of the bucket.
      * @param string|null $versioning The versioning status of the bucket.
      * @param string|null $transferAcceleration Indicates whether transfer acceleration is enabled for the bucket.
      * @param string|null $crossRegionReplication Indicates whether cross-region replication (CRR) is enabled for the bucket.
@@ -158,7 +158,7 @@ final class BucketInfo extends Model
         ?Owner $owner = null,
         ?string $storageClass = null,
         ?string $resourceGroupId = null,
-        ?ServerSideEncryptionRule $sseRule = null,
+        ?ServerSideEncryptionRuleInfo $sseRule = null,
         ?string $versioning = null,
         ?string $transferAcceleration = null,
         ?string $crossRegionReplication = null,

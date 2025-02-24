@@ -190,6 +190,12 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise deleteBucketPolicyAsync(Models\DeleteBucketPolicyRequest $request, array $args = []) Deletes a policy for a bucket.
  * @method Models\GetBucketPolicyStatusResult getBucketPolicyStatus(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
  * @method \GuzzleHttp\Promise\Promise getBucketPolicyStatusAsync(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
+ * @method Models\PutBucketEncryptionResult putBucketEncryption(Models\PutBucketEncryptionRequest $request, array $args = []) Configures encryption rules for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketEncryptionAsync(Models\PutBucketEncryptionRequest $request, array $args = []) Configures encryption rules for a bucket.
+ * @method Models\GetBucketEncryptionResult getBucketEncryption(Models\GetBucketEncryptionRequest $request, array $args = []) Queries the encryption rules configured for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketEncryptionAsync(Models\GetBucketEncryptionRequest $request, array $args = []) Queries the encryption rules configured for a bucket.
+ * @method Models\DeleteBucketEncryptionResult deleteBucketEncryption(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketEncryptionAsync(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
  */
 final class Client
 {
