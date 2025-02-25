@@ -190,28 +190,10 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise deleteBucketPolicyAsync(Models\DeleteBucketPolicyRequest $request, array $args = []) Deletes a policy for a bucket.
  * @method Models\GetBucketPolicyStatusResult getBucketPolicyStatus(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
  * @method \GuzzleHttp\Promise\Promise getBucketPolicyStatusAsync(Models\GetBucketPolicyStatusRequest $request, array $args = []) Checks whether the current bucket policy allows public access.
- * @method Models\PutBucketEncryptionResult putBucketEncryption(Models\PutBucketEncryptionRequest $request, array $args = []) Configures encryption rules for a bucket.
- * @method \GuzzleHttp\Promise\Promise putBucketEncryptionAsync(Models\PutBucketEncryptionRequest $request, array $args = []) Configures encryption rules for a bucket.
- * @method Models\GetBucketEncryptionResult getBucketEncryption(Models\GetBucketEncryptionRequest $request, array $args = []) Queries the encryption rules configured for a bucket.
- * @method \GuzzleHttp\Promise\Promise getBucketEncryptionAsync(Models\GetBucketEncryptionRequest $request, array $args = []) Queries the encryption rules configured for a bucket.
- * @method Models\DeleteBucketEncryptionResult deleteBucketEncryption(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
- * @method \GuzzleHttp\Promise\Promise deleteBucketEncryptionAsync(Models\DeleteBucketEncryptionRequest $request, array $args = []) Deletes encryption rules for a bucket.
- * @method Models\GetBucketArchiveDirectReadResult getBucketArchiveDirectRead(Models\GetBucketArchiveDirectReadRequest $request, array $args = []) Queries whether real-time access of Archive objects is enabled for a bucket.
- * @method \GuzzleHttp\Promise\Promise getBucketArchiveDirectReadAsync(Models\GetBucketArchiveDirectReadRequest $request, array $args = []) Queries whether real-time access of Archive objects is enabled for a bucket.
- * @method Models\PutBucketArchiveDirectReadResult putBucketArchiveDirectRead(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
- * @method \GuzzleHttp\Promise\Promise putBucketArchiveDirectReadAsync(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
- * @method Models\GetPublicAccessBlockResult getPublicAccessBlock(Models\GetPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of OSS resources.
- * @method \GuzzleHttp\Promise\Promise getPublicAccessBlockAsync(Models\GetPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of OSS resources.
- * @method Models\PutPublicAccessBlockResult putPublicAccessBlock(Models\PutPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for Object Storage Service (OSS) resources.
- * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(Models\PutPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for Object Storage Service (OSS) resources.
- * @method Models\DeletePublicAccessBlockResult deletePublicAccessBlock(Models\DeletePublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of OSS resources.
- * @method \GuzzleHttp\Promise\Promise deletePublicAccessBlockAsync(Models\DeletePublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of OSS resources.
- * @method Models\GetBucketPublicAccessBlockResult getBucketPublicAccessBlock(Models\GetBucketPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of a bucket.
- * @method \GuzzleHttp\Promise\Promise getBucketPublicAccessBlockAsync(Models\GetBucketPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of a bucket.
- * @method Models\PutBucketPublicAccessBlockResult putBucketPublicAccessBlock(Models\PutBucketPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for a bucket.
- * @method \GuzzleHttp\Promise\Promise putBucketPublicAccessBlockAsync(Models\PutBucketPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for a bucket.
- * @method Models\DeleteBucketPublicAccessBlockResult deleteBucketPublicAccessBlock(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
- * @method \GuzzleHttp\Promise\Promise deleteBucketPublicAccessBlockAsync(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
+ * @method Models\GetBucketResourceGroupResult getBucketResourceGroup(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise getBucketResourceGroupAsync(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method Models\PutBucketResourceGroupResult putBucketResourceGroup(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise putBucketResourceGroupAsync(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
  */
 final class Client
 {
