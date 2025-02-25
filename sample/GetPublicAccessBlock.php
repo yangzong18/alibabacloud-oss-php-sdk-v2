@@ -8,7 +8,6 @@ use AlibabaCloud\Oss\V2 as Oss;
 $optsdesc = [
     "region" => ['help' => 'The region in which the bucket is located.', 'required' => True],
     "endpoint" => ['help' => 'The domain names that other services can use to access OSS.', 'required' => False],
-    "bucket" => ['help' => 'The name of the bucket', 'required' => True],
 ];
 $longopts = \array_map(function ($key) {
     return "$key:";
@@ -23,7 +22,6 @@ foreach ($optsdesc as $key => $value) {
 }
 
 $region = $options["region"];
-$bucket = $options["bucket"];
 
 // Loading credentials values from the environment variables
 $credentialsProvider = new Oss\Credentials\EnvironmentVariableCredentialsProvider();
@@ -37,11 +35,11 @@ if (isset($options["endpoint"])) {
 }
 
 $client = new Oss\Client($cfg);
-$request = new Oss\Models\GetBucketArchiveDirectReadRequest($bucket);
-$result = $client->getBucketArchiveDirectRead($request);
+$request = new Oss\Models\GetPublicAccessBlockRequest();
+$result = $client->getPublicAccessBlock($request);
 
 printf(
     'status code:' . $result->statusCode . PHP_EOL .
     'request id:' . $result->requestId . PHP_EOL .
-    'archive direct read config:' . var_export($result->archiveDirectReadConfiguration->enabled, true)
+    'public access block config:' . var_export($result->publicAccessBlockConfiguration, true)
 );

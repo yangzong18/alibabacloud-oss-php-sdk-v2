@@ -200,6 +200,18 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise getBucketArchiveDirectReadAsync(Models\GetBucketArchiveDirectReadRequest $request, array $args = []) Queries whether real-time access of Archive objects is enabled for a bucket.
  * @method Models\PutBucketArchiveDirectReadResult putBucketArchiveDirectRead(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
  * @method \GuzzleHttp\Promise\Promise putBucketArchiveDirectReadAsync(Models\PutBucketArchiveDirectReadRequest $request, array $args = []) Enables or disables real-time access of Archive objects for a bucket.
+ * @method Models\GetPublicAccessBlockResult getPublicAccessBlock(Models\GetPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of OSS resources.
+ * @method \GuzzleHttp\Promise\Promise getPublicAccessBlockAsync(Models\GetPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of OSS resources.
+ * @method Models\PutPublicAccessBlockResult putPublicAccessBlock(Models\PutPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for Object Storage Service (OSS) resources.
+ * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(Models\PutPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for Object Storage Service (OSS) resources.
+ * @method Models\DeletePublicAccessBlockResult deletePublicAccessBlock(Models\DeletePublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of OSS resources.
+ * @method \GuzzleHttp\Promise\Promise deletePublicAccessBlockAsync(Models\DeletePublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of OSS resources.
+ * @method Models\GetBucketPublicAccessBlockResult getBucketPublicAccessBlock(Models\GetBucketPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketPublicAccessBlockAsync(Models\GetBucketPublicAccessBlockRequest $request, array $args = []) Queries the Block Public Access configurations of a bucket.
+ * @method Models\PutBucketPublicAccessBlockResult putBucketPublicAccessBlock(Models\PutBucketPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketPublicAccessBlockAsync(Models\PutBucketPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for a bucket.
+ * @method Models\DeleteBucketPublicAccessBlockResult deleteBucketPublicAccessBlock(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketPublicAccessBlockAsync(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
  */
 final class Client
 {
