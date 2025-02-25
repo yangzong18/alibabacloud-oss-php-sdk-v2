@@ -40,7 +40,7 @@ $client = new Oss\Client($cfg);
 $request = new Oss\Models\PutBucketArchiveDirectReadRequest($bucket, new Oss\Models\ArchiveDirectReadConfiguration(
     true
 ));
-$result = $client->PutBucketArchiveDirectRead($request);
+$result = $client->putBucketArchiveDirectRead($request);
 
 printf(
     'status code:' . $result->statusCode . PHP_EOL .

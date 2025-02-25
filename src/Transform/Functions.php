@@ -129,6 +129,14 @@ final class Functions
         // bucket archive direct read
         'GetBucketArchiveDirectRead' => 'BucketArchiveDirectRead',
         'PutBucketArchiveDirectRead' => 'BucketArchiveDirectRead',
+        // public access block
+        'GetPublicAccessBlock' => 'PublicAccessBlock',
+        'PutPublicAccessBlock' => 'PublicAccessBlock',
+        'DeletePublicAccessBlock' => 'PublicAccessBlock',
+        // bucket public access block
+        'GetBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
+        'PutBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
+        'DeleteBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
     ];
 
     public static function getTransformClass(string $apiName)
