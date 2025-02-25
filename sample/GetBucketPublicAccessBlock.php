@@ -37,11 +37,11 @@ if (isset($options["endpoint"])) {
 }
 
 $client = new Oss\Client($cfg);
-$request = new Oss\Models\GetBucketArchiveDirectReadRequest($bucket);
-$result = $client->getBucketArchiveDirectRead($request);
+$request = new Oss\Models\GetBucketPublicAccessBlockRequest($bucket);
+$result = $client->getBucketPublicAccessBlock($request);
 
 printf(
     'status code:' . $result->statusCode . PHP_EOL .
     'request id:' . $result->requestId . PHP_EOL .
-    'archive direct read config:' . var_export($result->archiveDirectReadConfiguration->enabled, true)
+    'bucket public access block config:' . var_export($result->publicAccessBlockConfiguration, true)
 );
