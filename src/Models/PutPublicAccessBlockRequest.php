@@ -13,26 +13,26 @@ use AlibabaCloud\Oss\V2\Annotation\RequiredProperty;
  * @package AlibabaCloud\Oss\V2\Models
  */
 final class PutPublicAccessBlockRequest extends RequestModel
-{   
+{
 
-    /** 
+    /**
      * Request body.
      * @var PublicAccessBlockConfiguration|null
      */
+    #[RequiredProperty()]
     #[TagProperty(tag: '', position: 'body', rename: 'PublicAccessBlockConfiguration', type: 'xml')]
     public ?PublicAccessBlockConfiguration $publicAccessBlockConfiguration;
 
     /**
      * PutPublicAccessBlockRequest constructor.
-     * 
      * @param PublicAccessBlockConfiguration|null $publicAccessBlockConfiguration Request body.
      * @param array|null $options
      */
-    public function __construct( 
+    public function __construct(
         ?PublicAccessBlockConfiguration $publicAccessBlockConfiguration = null,
         ?array $options = null
     )
-    {   
+    {
         $this->publicAccessBlockConfiguration = $publicAccessBlockConfiguration;
         parent::__construct($options);
     }
