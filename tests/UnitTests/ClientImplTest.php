@@ -70,7 +70,7 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         #$this->assertEquals('oss', $sdkOptions['response_stream']);
 
         $this->assertEquals(null, $innerOptions['handler']);
-        $this->assertStringContainsString('alibabacloud-php-sdk-v2/1.', $innerOptions['user_agent']);
+        $this->assertStringContainsString('alibabacloud-php-sdk-v2/0.', $innerOptions['user_agent']);
 
         $this->assertEquals(False, $requestOptions['allow_redirects']);
         $this->assertEquals(10.0, $requestOptions['connect_timeout']);
