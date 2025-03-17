@@ -61,7 +61,8 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals('TagA=B&TagC=D', $input->getHeaders()['x-oss-tagging']);
             $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
             $this->assertEmpty($input->getParameters()['uploads']);
-            $this->assertEmpty($input->getOpMetadata());
+            $this->assertNotEmpty($input->getOpMetadata());
+            $this->assertEquals(true,$input->getOpMetadata()['detect_content_type']);
         } catch (\InvalidArgumentException $e) {
             $this->assertTrue(false, "should not here");
         }

@@ -583,7 +583,26 @@ final class ClientImpl
             $input->getBody(),
         );
 
+        // user agent
         $request = $request->withAddedHeader('User-Agent', $this->innerOptions['user_agent']);
+
+        // Add a default content-type if possible.
+        if ($input->hasOpMetadata('detect_content_type') &&
+            !isset($options['sdk_presign']) &&
+            !$request->hasHeader('Content-Type')) {
+            $value = Utils::guessContentType($input->getKey());
+            // compatibility with PrepareBodyMiddleware
+            if ($value == null && $request->getBody() != null) {
+                if ($uri = $request->getBody()->getMetadata('uri')) {
+                    if (is_string($uri) && $type = Utils::guessContentType($uri)) {
+                        $value = $type;
+                    }
+                }
+            }
+            if ($value != null) {
+                $request = $request->withAddedHeader('Content-Type', $value);
+            }
+        }
 
         // signing context
         $signingContext = new Signer\SigningContext(
