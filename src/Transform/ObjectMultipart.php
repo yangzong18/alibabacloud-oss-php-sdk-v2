@@ -191,7 +191,8 @@ final class ObjectMultipart
                 if (isset($request->clientSideEncryptionPartSize)) {
                     $input->setHeader("x-oss-meta-client-side-encryption-part-size", (string)$request->clientSideEncryptionPartSize);
                 }
-            }
+            },
+            [Functions::class, 'addContentType']
         ];
         Functions::serializeInputLite($request, $input, $customSerializer);
         return $input;

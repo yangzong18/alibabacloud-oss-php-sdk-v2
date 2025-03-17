@@ -343,6 +343,7 @@ final class Client
         $input = call_user_func([$class, $fromFunc], $request);
 
         $options = $args;
+        $options['sdk_presign'] = true;
         $options['auth_method'] = 'query';
         if (isset($args['expiration']) && ($args['expiration'] instanceof \DateTime)) {
             $input->setOpMetadata('expiration_time', $args['expiration']);

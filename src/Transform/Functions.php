@@ -293,10 +293,13 @@ final class Functions
         if ($input->hasHeader('Content-Type')) {
             return;
         }
+        /*
         $value = Utils::guessContentType($input->getKey());
         if ($value != null) {
             $input->setHeader('Content-Type', $value);
         }
+        */
+        $input->setOpMetadata('detect_content_type', true);
     }
 
     public static function addContentMd5(RequestModel $request, OperationInput $input)
