@@ -91,7 +91,6 @@ print_r(Oss\Version::VERSION);
 * [访问域名](#访问域名)
 * [HTTP客户端](#http客户端)
 * [重试](#重试)
-* [日志](#日志)
 * [配置参数汇总](#配置参数汇总)
 
 ## 加载配置
@@ -518,8 +517,8 @@ co(function () use ($client, $bucket) {
 |参数名称 | 说明 | 默认值
 |:-------|:-------|:-------
 |maxAttempts|最大尝试次数| 3
-|maxBackoff|最大退避时间| 20秒, 20 * time.Second
-|baseDelay|基础延迟| 200毫秒, 200 * time.Millisecond
+|maxBackoff|最大退避时间| 20秒, 20
+|baseDelay|基础延迟| 200毫秒, 0.2
 |backoff|退避算法| FullJitter 退避,  [0.0, 1.0) * min(2 ^ attempts * baseDealy, maxBackoff)
 |errorRetryables|可重试的错误| 具体的错误信息，请参见[重试错误](src/Retry)
 
