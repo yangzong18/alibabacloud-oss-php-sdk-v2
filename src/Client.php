@@ -214,6 +214,40 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise deleteBucketPublicAccessBlockAsync(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
  * @method Models\ListCloudBoxesResult listCloudBoxes(Models\ListCloudBoxesRequest $request, array $args = []) Lists cloud box buckets that belong to the current account.
  * @method \GuzzleHttp\Promise\Promise listCloudBoxesAsync(Models\ListCloudBoxesRequest $request, array $args = []) Lists cloud box buckets that belong to the current account.
+ * @method Models\ListBucketDataRedundancyTransitionResult listBucketDataRedundancyTransition(Models\ListBucketDataRedundancyTransitionRequest $request, array $args = []) Lists all redundancy type conversion tasks of a bucket.
+ * @method \GuzzleHttp\Promise\Promise listBucketDataRedundancyTransitionAsync(Models\ListBucketDataRedundancyTransitionRequest $request, array $args = []) Lists all redundancy type conversion tasks of a bucket.
+ * @method Models\ListUserDataRedundancyTransitionResult listUserDataRedundancyTransition(Models\ListUserDataRedundancyTransitionRequest $request, array $args = []) Lists all redundancy type conversion tasks.
+ * @method \GuzzleHttp\Promise\Promise listUserDataRedundancyTransitionAsync(Models\ListUserDataRedundancyTransitionRequest $request, array $args = []) Lists all redundancy type conversion tasks.
+ * @method Models\GetBucketDataRedundancyTransitionResult getBucketDataRedundancyTransition(Models\GetBucketDataRedundancyTransitionRequest $request, array $args = []) Queries the redundancy type conversion tasks of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketDataRedundancyTransitionAsync(Models\GetBucketDataRedundancyTransitionRequest $request, array $args = []) Queries the redundancy type conversion tasks of a bucket.
+ * @method Models\CreateBucketDataRedundancyTransitionResult createBucketDataRedundancyTransition(Models\CreateBucketDataRedundancyTransitionRequest $request, array $args = []) Creates a redundancy type conversion task for a bucket.
+ * @method \GuzzleHttp\Promise\Promise createBucketDataRedundancyTransitionAsync(Models\CreateBucketDataRedundancyTransitionRequest $request, array $args = []) Creates a redundancy type conversion task for a bucket.
+ * @method Models\DeleteBucketDataRedundancyTransitionResult deleteBucketDataRedundancyTransition(Models\DeleteBucketDataRedundancyTransitionRequest $request, array $args = []) Deletes a redundancy type conversion task of a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketDataRedundancyTransitionAsync(Models\DeleteBucketDataRedundancyTransitionRequest $request, array $args = []) Deletes a redundancy type conversion task of a bucket.
+ * @method Models\GetBucketHttpsConfigResult getBucketHttpsConfig(Models\GetBucketHttpsConfigRequest $request, array $args = []) Queries the Transport Layer Security (TLS) version configurations of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketHttpsConfigAsync(Models\GetBucketHttpsConfigRequest $request, array $args = []) Queries the Transport Layer Security (TLS) version configurations of a bucket.
+ * @method Models\PutBucketHttpsConfigResult putBucketHttpsConfig(Models\PutBucketHttpsConfigRequest $request, array $args = []) Enables or disables Transport Layer Security (TLS) version management for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketHttpsConfigAsync(Models\PutBucketHttpsConfigRequest $request, array $args = []) Enables or disables Transport Layer Security (TLS) version management for a bucket.
+ * @method Models\GetBucketResourceGroupResult getBucketResourceGroup(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise getBucketResourceGroupAsync(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method Models\PutBucketResourceGroupResult putBucketResourceGroup(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise putBucketResourceGroupAsync(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method Models\PutStyleResult putStyle(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
+ * @method \GuzzleHttp\Promise\Promise putStyleAsync(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
+ * @method Models\ListStyleResult listStyle(Models\ListStyleRequest $request, array $args = []) Queries all image styles that are created for a bucket.
+ * @method \GuzzleHttp\Promise\Promise listStyleAsync(Models\ListStyleRequest $request, array $args = []) Queries all image styles that are created for a bucket.
+ * @method Models\GetStyleResult getStyle(Models\GetStyleRequest $request, array $args = []) Queries the information about an image style of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getStyleAsync(Models\GetStyleRequest $request, array $args = []) Queries the information about an image style of a bucket.
+ * @method Models\DeleteStyleResult deleteStyle(Models\DeleteStyleRequest $request, array $args = []) Deletes an image style from a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteStyleAsync(Models\DeleteStyleRequest $request, array $args = []) Deletes an image style from a bucket.
+ * @method Models\PutBucketInventoryResult putBucketInventory(Models\PutBucketInventoryRequest $request, array $args = []) Configures an inventory for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketInventoryAsync(Models\PutBucketInventoryRequest $request, array $args = []) Configures an inventory for a bucket.
+ * @method Models\GetBucketInventoryResult getBucketInventory(Models\GetBucketInventoryRequest $request, array $args = []) Queries the inventories that are configured for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketInventoryAsync(Models\GetBucketInventoryRequest $request, array $args = []) Queries the inventories that are configured for a bucket.
+ * @method Models\ListBucketInventoryResult listBucketInventory(Models\ListBucketInventoryRequest $request, array $args = []) Queries all inventories in a bucket at a time.
+ * @method \GuzzleHttp\Promise\Promise listBucketInventoryAsync(Models\ListBucketInventoryRequest $request, array $args = []) Queries all inventories in a bucket at a time.
+ * @method Models\DeleteBucketInventoryResult deleteBucketInventory(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryAsync(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
  */
 final class Client
 {

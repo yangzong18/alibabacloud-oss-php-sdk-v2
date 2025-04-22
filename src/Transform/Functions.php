@@ -139,6 +139,28 @@ final class Functions
         'DeleteBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
         // list cloud boxes
         'ListCloudBoxes' => 'CloudBoxes',
+        // bucket redundancy transition
+        'ListBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'ListUserDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'GetBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'CreateBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'DeleteBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        // bucket https config
+        'GetBucketHttpsConfig' => 'BucketHttpsConfig',
+        'PutBucketHttpsConfig' => 'BucketHttpsConfig',
+        // bucket resource group
+        'GetBucketResourceGroup' => 'BucketResourceGroup',
+        'PutBucketResourceGroup' => 'BucketResourceGroup',
+        // bucket style
+        'PutStyle' => 'BucketStyle',
+        'ListStyle' => 'BucketStyle',
+        'GetStyle' => 'BucketStyle',
+        'DeleteStyle' => 'BucketStyle',
+        // bucket inventory
+        'PutBucketInventory' => 'BucketInventory',
+        'GetBucketInventory' => 'BucketInventory',
+        'ListBucketInventory' => 'BucketInventory',
+        'DeleteBucketInventory' => 'BucketInventory',
     ];
 
     public static function getTransformClass(string $apiName)
