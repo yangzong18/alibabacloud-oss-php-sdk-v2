@@ -140,6 +140,16 @@ final class Functions
         // bucket resource group
         'GetBucketResourceGroup' => 'BucketResourceGroup',
         'PutBucketResourceGroup' => 'BucketResourceGroup',
+        // bucket style
+        'PutStyle' => 'BucketStyle',
+        'ListStyle' => 'BucketStyle',
+        'GetStyle' => 'BucketStyle',
+        'DeleteStyle' => 'BucketStyle',
+        // bucket inventory
+        'PutBucketInventory' => 'BucketInventory',
+        'GetBucketInventory' => 'BucketInventory',
+        'ListBucketInventory' => 'BucketInventory',
+        'DeleteBucketInventory' => 'BucketInventory',
     ];
 
     public static function getTransformClass(string $apiName)
@@ -296,10 +306,13 @@ final class Functions
         if ($input->hasHeader('Content-Type')) {
             return;
         }
+        /*
         $value = Utils::guessContentType($input->getKey());
         if ($value != null) {
             $input->setHeader('Content-Type', $value);
         }
+        */
+        $input->setOpMetadata('detect_content_type', true);
     }
 
     public static function addContentMd5(RequestModel $request, OperationInput $input)

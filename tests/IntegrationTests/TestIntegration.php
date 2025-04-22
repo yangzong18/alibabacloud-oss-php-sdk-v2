@@ -321,4 +321,15 @@ class TestIntegration extends \PHPUnit\Framework\TestCase
         $this->assertEquals('OK', $result->status);
         return $result->body->getContents();
     }
+
+    public function object_get_content_type($client, $bucket, $key): string
+    {
+        $result = $client->headObject(new Oss\Models\HeadObjectRequest(
+            self::$bucketName,
+            $key,
+        ));
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        return $result->contentType;
+    }
 }

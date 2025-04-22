@@ -362,7 +362,7 @@ final class Uploader
                     $request->uploadId = $context['upload_id'];
                     yield $this->client->abortMultipartUploadAsync($request);
                 }
-                throw $context['errors'][-1];
+                throw end($context['errors']);
             }
         })->then(
             function ($result) use (&$context) {

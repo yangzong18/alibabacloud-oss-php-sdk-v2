@@ -308,7 +308,7 @@ final class Downloader
             self::drainPart($context);
 
             if (!empty($context['errors'])) {
-                throw $context['errors'][-1];
+                throw end($context['errors']);
             }
 
             if (!empty($context['parts'])) {
@@ -396,7 +396,7 @@ final class Downloader
             yield $each->promise();
 
             if (!empty($context['errors'])) {
-                throw $context['errors'][-1];
+                throw end($context['errors']);
             }
         })->then(
             function ($result) use (&$context) {
