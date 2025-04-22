@@ -137,6 +137,12 @@ final class Functions
         'GetBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
         'PutBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
         'DeleteBucketPublicAccessBlock' => 'BucketPublicAccessBlock',
+        // bucket redundancy transition
+        'ListBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'ListUserDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'GetBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'CreateBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
+        'DeleteBucketDataRedundancyTransition' => 'BucketRedundancyTransition',
         // bucket https config
         'GetBucketHttpsConfig' => 'BucketHttpsConfig',
         'PutBucketHttpsConfig' => 'BucketHttpsConfig',
