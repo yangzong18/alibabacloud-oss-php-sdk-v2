@@ -212,6 +212,10 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise putBucketPublicAccessBlockAsync(Models\PutBucketPublicAccessBlockRequest $request, array $args = []) Enables or disables Block Public Access for a bucket.
  * @method Models\DeleteBucketPublicAccessBlockResult deleteBucketPublicAccessBlock(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
  * @method \GuzzleHttp\Promise\Promise deleteBucketPublicAccessBlockAsync(Models\DeleteBucketPublicAccessBlockRequest $request, array $args = []) Deletes the Block Public Access configurations of a bucket.
+ * @method Models\GetBucketResourceGroupResult getBucketResourceGroup(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise getBucketResourceGroupAsync(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method Models\PutBucketResourceGroupResult putBucketResourceGroup(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise putBucketResourceGroupAsync(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
  * @method Models\PutStyleResult putStyle(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
  * @method \GuzzleHttp\Promise\Promise putStyleAsync(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
  * @method Models\ListStyleResult listStyle(Models\ListStyleRequest $request, array $args = []) Queries all image styles that are created for a bucket.
