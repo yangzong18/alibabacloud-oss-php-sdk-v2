@@ -371,4 +371,102 @@ class ClientPresignerTest extends TestIntegration
             $this->assertStringContainsString("is not subclass of RequestModel, got NULL", $e);
         }
     }
+
+    public function testPresignWithContentType()
+    {
+        $client = $this->getDefaultClient();
+        $bucketName = self::$bucketName;
+
+        $objectName = self::$OBJECTNAME_PREFIX . self::randomLowStr() . '-put-object.zip';
+        $body = 'hi oss';
+        $httpClient = new GuzzleHttp\Client();
+        // PutObjRequest
+        try {
+            $request = new Oss\Models\PutObjectRequest($bucketName, $objectName);
+            $result = $client->presign($request);
+            $response = $httpClient->request($result->method, $result->url, ['body' => $body]);
+            $this->assertCount(0, $result->signedHeaders);
+            $this->assertEquals(200, $response->getStatusCode());
+        } catch (\Throwable $e) {
+            print_r($e);
+            $this->assertTrue(false, 'should not here');
+        }
+
+        // UploadPart
+        $objectNameMultipart = self::$OBJECTNAME_PREFIX . self::randomLowStr() . '-multi-part.zip';
+        try {
+            $request = new Oss\Models\InitiateMultipartUploadRequest($bucketName, $objectNameMultipart);
+            $result = $client->presign($request);
+            $this->assertCount(1, $result->signedHeaders);
+            $this->assertArrayHasKey('content-md5',$result->signedHeaders);
+            $response = $httpClient->request($result->method, $result->url, ['headers' => $result->signedHeaders]);
+            $this->assertEquals(200, $response->getStatusCode());
+        } catch (\Throwable $e) {
+            $this->assertTrue(false, 'should not here');
+        }
+
+        $body = $response->getBody()->getContents();
+        $xml = Utils::parseXml($body);
+        $uploadId = Functions::tryToString($xml->UploadId);
+        try {
+            $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart,);
+            $partRequest->partNumber = 1;
+            $partRequest->uploadId = $uploadId;
+            $result = $client->presign($partRequest);
+            $this->assertCount(0, $result->signedHeaders);
+            $response = $httpClient->request($result->method, $result->url, ['body' => $body, ['headers' => $result->signedHeaders]]);
+            $this->assertEquals(200, $response->getStatusCode());
+        } catch (\Throwable $e) {
+            $this->assertTrue(false, 'should not here');
+        }
+
+        try {
+            $request = new Oss\Models\CompleteMultipartUploadRequest($bucketName, $objectNameMultipart);
+            $request->completeMultipartUpload = new CompleteMultipartUpload(
+                [new Oss\Models\UploadPart(
+                    $partRequest->partNumber, $response->getHeaderLine('ETag')
+                )]
+            );
+            $request->uploadId = $uploadId;
+            $result = $client->presign($request);
+            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><CompleteMultipartUpload></CompleteMultipartUpload>');
+            if (isset($request->completeMultipartUpload->parts)) {
+                foreach ($request->completeMultipartUpload->parts as $part) {
+                    $xmlPart = $xml->addChild('Part');
+                    $xmlPart->addChild('PartNumber', strval($part->partNumber));
+                    $xmlPart->addChild('ETag', $part->etag);
+                }
+            }
+            $response = $httpClient->request($result->method, $result->url, ['body' => $xml->asXML(), 'headers' => $result->signedHeaders]);
+            $this->assertEquals(200, $response->getStatusCode());
+            $headRequest = new Oss\Models\HeadObjectRequest($bucketName, $objectNameMultipart);
+            $headResult = $client->headObject($headRequest);
+            $this->assertEquals(200, $headResult->statusCode);
+            $this->assertEquals(strlen($body), $headResult->contentLength);
+            $this->assertEquals('Multipart', $headResult->objectType);
+        } catch (\Throwable $e) {
+            print_r($e->getMessage());
+            $this->assertTrue(false, 'should not here');
+        }
+
+        $objectNameMultipartCopy = self::$OBJECTNAME_PREFIX . self::randomLowStr() . '-multi-part-copy';
+
+        try {
+            $initRequest = new Oss\Models\InitiateMultipartUploadRequest($bucketName, $objectNameMultipartCopy);
+            $initResult = $client->presign($initRequest);
+            $response = $httpClient->request($initResult->method, $initResult->url, ['headers' => $initResult->signedHeaders]);
+            $this->assertEquals(200, $response->getStatusCode());
+            $body = $response->getBody()->getContents();
+            $xml = Utils::parseXml($body);
+            $uploadId = Functions::tryToString($xml->UploadId);
+
+            $abortRequest = new Oss\Models\AbortMultipartUploadRequest($bucketName, $objectNameMultipartCopy, $uploadId);
+            $result = $client->presign($abortRequest);
+            $response = $httpClient->request($result->method, $result->url, ['headers' => $result->signedHeaders]);
+            $this->assertEquals(204, $response->getStatusCode());
+        } catch (\Throwable $e) {
+            $this->assertTrue(false, 'should not here');
+        }
+
+    }
 }
