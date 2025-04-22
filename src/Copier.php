@@ -191,7 +191,7 @@ final class Copier
 
                 if (!empty($ctx_errors)) {
                     //TODO yield $this->multipartCopy($context);
-                    throw $ctx_errors[-1];
+                    throw end($ctx_errors);
                 }
             } else {
                 yield $this->multipartCopy($context);
@@ -505,7 +505,7 @@ final class Copier
                     $request->uploadId = $context['upload_id'];
                     yield $this->client->abortMultipartUploadAsync($request);
                 }
-                throw $context['errors'][-1];
+                throw end($context['errors']);
             }
         })->then(
             function ($result) use (&$context) {

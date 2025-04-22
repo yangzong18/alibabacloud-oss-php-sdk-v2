@@ -118,7 +118,7 @@ class ClientExtensionTest extends TestIntegration
             ]
         );
 
-        // multi-part 
+        // multi-part
         $result = $uploader->uploadFile(
             new Oss\Models\PutObjectRequest(
                 $bucketName,
@@ -137,7 +137,7 @@ class ClientExtensionTest extends TestIntegration
         $objectMd5 = md5($this->object_get_contents($client, $bucketName, $key), true);
         $this->assertEquals($fileMd5, $objectMd5);
 
-        // single-part 
+        // single-part
         $result = $uploader->uploadFile(
             new Oss\Models\PutObjectRequest(
                 $bucketName,
@@ -255,6 +255,119 @@ class ClientExtensionTest extends TestIntegration
         $this->assertEquals($partFileMd5, $objectMd5);
     }
 
+    public function testUploaderDetectContentType(): void
+    {
+        $client = self::getDefaultClient();
+        $bucketName = self::$bucketName;
+        $key = self::randomObjectName();
+        $totalSize = 250 * 1024 + 123;
+        $partSize = 100 * 1024;
+        $filename = self::getTempFileName() . '.zip';
+        $this->generateFile($filename, $totalSize);
+        $fileMd5 = md5(file_get_contents($filename), true);
+        $uploader = $client->newUploader(
+            [
+                'part_size' => $partSize,
+                'parallel_num' => 1,
+            ]
+        );
+
+        // multi-part
+        $result = $uploader->uploadFile(
+            new Oss\Models\PutObjectRequest(
+                $bucketName,
+                $key
+            ),
+            $filename,
+        );
+
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertEquals(32, strlen($result->uploadId));
+        $this->assertStringEndsWith('-3"', $result->etag);
+        $this->assertNotNull($result->hashCrc64);
+        $objectMd5 = md5($this->object_get_contents($client, $bucketName, $key), true);
+        $this->assertEquals($fileMd5, $objectMd5);
+        $contentType = $this->object_get_content_type($client, $bucketName, $key);
+        $this->assertEquals("application/zip", $contentType);
+        
+        // single-part
+        $result = $uploader->uploadFile(
+            new Oss\Models\PutObjectRequest(
+                $bucketName,
+                "single-part-$key"
+            ),
+            $filename,
+            [
+                'part_size' => $totalSize * 2,
+            ]
+        );
+
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertNull($result->uploadId);
+        $this->assertStringNotContainsString('-', $result->etag);
+        $this->assertNotNull($result->hashCrc64);
+        $objectMd5 = md5($this->object_get_contents($client, $bucketName, "single-part-$key"), true);
+        $this->assertEquals($fileMd5, $objectMd5);
+        $contentType = $this->object_get_content_type($client, $bucketName, "single-part-$key");
+        $this->assertEquals("application/zip", $contentType);
+
+        // upload from multi-part
+        $result = $uploader->uploadFrom(
+            new Oss\Models\PutObjectRequest(
+                $bucketName,
+                "multi-part-from-$key"
+
+            ),
+            new LazyOpenStream($filename, 'rb'),
+            [
+                'part_size' => 200 * 1024,
+            ]
+        );
+
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertEquals(32, strlen($result->uploadId));
+        $this->assertStringEndsWith('-2"', $result->etag);
+        $this->assertNotNull($result->hashCrc64);
+        $objectMd5 = md5($this->object_get_contents($client, $bucketName, "multi-part-from-$key"), true);
+        $this->assertEquals($fileMd5, $objectMd5);
+        $contentType = $this->object_get_content_type($client, $bucketName, "multi-part-from-$key");
+        $this->assertEquals("application/octet-stream", $contentType);
+
+        // upload from single-part
+        $result = $uploader->uploadFrom(
+            new Oss\Models\PutObjectRequest(
+                $bucketName,
+                "single-part-from-$key"
+
+            ),
+            new LazyOpenStream($filename, 'rb'),
+            [
+                'part_size' => $totalSize * 2,
+            ]
+        );
+
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertNull($result->uploadId);
+        $this->assertStringNotContainsString('-', $result->etag);
+        $this->assertNotNull($result->hashCrc64);
+        $objectMd5 = md5($this->object_get_contents($client, $bucketName, "single-part-from-$key"), true);
+        $this->assertEquals($fileMd5, $objectMd5);
+        $contentType = $this->object_get_content_type($client, $bucketName, "single-part-from-$key");
+        $this->assertEquals("application/zip", $contentType);
+    }
+
     public function testUploaderFail(): void
     {
         $noPermClient = self::getInvalidAkClient();
@@ -273,7 +386,7 @@ class ClientExtensionTest extends TestIntegration
             ]
         );
 
-        // multi-part 
+        // multi-part
         try {
             $result = $uploader->uploadFile(
                 new Oss\Models\PutObjectRequest(

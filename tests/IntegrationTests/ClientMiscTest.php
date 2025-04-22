@@ -236,7 +236,7 @@ class ClientMiscTest extends TestIntegration
             yield $each->promise();
 
             if (!empty($context['errors'])) {
-                throw $context['errors'][-1];
+                throw end($context['errors']);
             }
 
             $parts = $context['parts'];

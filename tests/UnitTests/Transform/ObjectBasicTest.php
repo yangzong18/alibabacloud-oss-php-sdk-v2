@@ -317,7 +317,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('2022-10-12T00:00:00.000Z', $input->getHeaders()['expires']);
         $this->assertEquals('TagA=A&TagB=B', $input->getHeaders()['x-oss-tagging']);
         $this->assertEquals([], $input->getParameters());
-        $this->assertEquals([], $input->getOpMetadata());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
 
         $request = new Models\PutObjectRequest('bucket-123', 'key-123');
         $input = ObjectBasic::fromPutObject($request);
@@ -365,7 +365,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('2022-10-12T00:00:00.000Z', $input->getHeaders()['expires']);
         $this->assertEquals('TagA=B&TagC=D', $input->getHeaders()['x-oss-tagging']);
         $this->assertEquals([], $input->getParameters());
-        $this->assertEquals([], $input->getOpMetadata());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
 
         $request = new Models\PutObjectRequest('bucket-123', 'key-123');
         $callback = base64_encode('{
@@ -384,7 +384,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($callback, $input->getHeaders()['x-oss-callback']);
         $this->assertEquals($callbackVar, $input->getHeaders()['x-oss-callback-var']);
         $this->assertEquals([], $input->getParameters());
-        $this->assertEquals([], $input->getOpMetadata());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
 
         $request = new Models\PutObjectRequest('bucket-123', 'key-123');
         $request->body = Utils::streamFor($body);
@@ -397,7 +397,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('102400', $input->getHeaders()['x-oss-traffic-limit']);
         $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
         $this->assertEquals([], $input->getParameters());
-        $this->assertEquals([], $input->getOpMetadata());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
     }
 
     public function testToPutObject()

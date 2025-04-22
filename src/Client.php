@@ -216,6 +216,26 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise getBucketHttpsConfigAsync(Models\GetBucketHttpsConfigRequest $request, array $args = []) Queries the Transport Layer Security (TLS) version configurations of a bucket.
  * @method Models\PutBucketHttpsConfigResult putBucketHttpsConfig(Models\PutBucketHttpsConfigRequest $request, array $args = []) Enables or disables Transport Layer Security (TLS) version management for a bucket.
  * @method \GuzzleHttp\Promise\Promise putBucketHttpsConfigAsync(Models\PutBucketHttpsConfigRequest $request, array $args = []) Enables or disables Transport Layer Security (TLS) version management for a bucket.
+ * @method Models\GetBucketResourceGroupResult getBucketResourceGroup(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise getBucketResourceGroupAsync(Models\GetBucketResourceGroupRequest $request, array $args = []) Queries the ID of the resource group to which a bucket belongs.
+ * @method Models\PutBucketResourceGroupResult putBucketResourceGroup(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method \GuzzleHttp\Promise\Promise putBucketResourceGroupAsync(Models\PutBucketResourceGroupRequest $request, array $args = []) Modifies the ID of the resource group to which a bucket belongs.
+ * @method Models\PutStyleResult putStyle(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
+ * @method \GuzzleHttp\Promise\Promise putStyleAsync(Models\PutStyleRequest $request, array $args = []) Adds an image style to a bucket. An image style contains one or more image processing parameters.
+ * @method Models\ListStyleResult listStyle(Models\ListStyleRequest $request, array $args = []) Queries all image styles that are created for a bucket.
+ * @method \GuzzleHttp\Promise\Promise listStyleAsync(Models\ListStyleRequest $request, array $args = []) Queries all image styles that are created for a bucket.
+ * @method Models\GetStyleResult getStyle(Models\GetStyleRequest $request, array $args = []) Queries the information about an image style of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getStyleAsync(Models\GetStyleRequest $request, array $args = []) Queries the information about an image style of a bucket.
+ * @method Models\DeleteStyleResult deleteStyle(Models\DeleteStyleRequest $request, array $args = []) Deletes an image style from a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteStyleAsync(Models\DeleteStyleRequest $request, array $args = []) Deletes an image style from a bucket.
+ * @method Models\PutBucketInventoryResult putBucketInventory(Models\PutBucketInventoryRequest $request, array $args = []) Configures an inventory for a bucket.
+ * @method \GuzzleHttp\Promise\Promise putBucketInventoryAsync(Models\PutBucketInventoryRequest $request, array $args = []) Configures an inventory for a bucket.
+ * @method Models\GetBucketInventoryResult getBucketInventory(Models\GetBucketInventoryRequest $request, array $args = []) Queries the inventories that are configured for a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketInventoryAsync(Models\GetBucketInventoryRequest $request, array $args = []) Queries the inventories that are configured for a bucket.
+ * @method Models\ListBucketInventoryResult listBucketInventory(Models\ListBucketInventoryRequest $request, array $args = []) Queries all inventories in a bucket at a time.
+ * @method \GuzzleHttp\Promise\Promise listBucketInventoryAsync(Models\ListBucketInventoryRequest $request, array $args = []) Queries all inventories in a bucket at a time.
+ * @method Models\DeleteBucketInventoryResult deleteBucketInventory(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryAsync(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
  */
 final class Client
 {
@@ -347,6 +367,7 @@ final class Client
         $input = call_user_func([$class, $fromFunc], $request);
 
         $options = $args;
+        $options['sdk_presign'] = true;
         $options['auth_method'] = 'query';
         if (isset($args['expiration']) && ($args['expiration'] instanceof \DateTime)) {
             $input->setOpMetadata('expiration_time', $args['expiration']);
