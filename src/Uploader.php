@@ -254,7 +254,7 @@ final class Uploader
             $partNumber++
         ) {
             if ($seekable) {
-                $body = new GuzzleHttp\Psr7\LimitStream(
+                $body = new LimitStream(
                     new GuzzleHttp\Psr7\LazyOpenStream($source->getMetadata('uri'), 'rb'),
                     $part_size,
                     $source->tell()
@@ -263,7 +263,7 @@ final class Uploader
             } else {
                 $body = GuzzleHttp\Psr7\Utils::streamFor();
                 GuzzleHttp\Psr7\Utils::copyToStream(
-                    new GuzzleHttp\Psr7\LimitStream($source, $part_size, $source->tell()),
+                    new LimitStream($source, $part_size, $source->tell()),
                     $body
                 );
             }

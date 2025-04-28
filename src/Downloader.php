@@ -363,7 +363,7 @@ final class Downloader
                     $request->rangeBehavior = 'standard';
                     $request->progressFn = null;
                     $offset = $stream->tell() + $args[0] - $rstart;
-                    $sink = new GuzzleHttp\Psr7\LimitStream(
+                    $sink = new LimitStream(
                         new GuzzleHttp\Psr7\LazyOpenStream($stream->getMetadata('uri'), 'rb+'),
                         -1,
                         $offset

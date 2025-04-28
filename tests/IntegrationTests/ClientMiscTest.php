@@ -5,7 +5,7 @@ namespace IntegrationTests;
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'TestIntegration.php';
 
 use GuzzleHttp\Promise as P;
-use GuzzleHttp\Psr7\LimitStream;
+use LimitStream;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use AlibabaCloud\Oss\V2 as Oss;
 
@@ -101,7 +101,7 @@ class ClientMiscTest extends TestIntegration
         for ($i = 0, $partNum = 1; $i < $totalSize; $i += $partSize, $partNum++) {
             $gotSize = 0;
             $gotTotal = 0;
-            $body = new LimitStream($fileStream, $partSize, $i);
+            $body = new Oss\LimitStream($fileStream, $partSize, $i);
             $sendSize = $body->getSize();
             $partResult = $client->uploadPart(
                 new Oss\Models\UploadPartRequest(
@@ -199,7 +199,7 @@ class ClientMiscTest extends TestIntegration
                 $source->seek(0);
 
                 for ($partNumber = 1; $source->tell() < $source->getSize(); $partNumber++) {
-                    $body = new LimitStream(
+                    $body = new Oss\LimitStream(
                         new LazyOpenStream($source->getMetadata('uri'), 'rb'),
                         $part_size,
                         $source->tell()
