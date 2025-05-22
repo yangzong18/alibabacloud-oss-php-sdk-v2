@@ -585,7 +585,7 @@ final class ClientImpl
             'retry_max_attempts' => \max($retry_max_attempts, 1),
             'retryer' => $retryer,
             'signer' => $this->sdkOptions['signer'],
-            'credentials_provider' => $this->sdkOptions['credentials_provider'],
+            'credentials_provider' => $options['credentials_provider'] ?? $this->sdkOptions['credentials_provider'],
         ];
 
         $context['sdk_context'] = $sdk_context;
