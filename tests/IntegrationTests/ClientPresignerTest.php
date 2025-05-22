@@ -398,7 +398,7 @@ class ClientPresignerTest extends TestIntegration
             $request = new Oss\Models\InitiateMultipartUploadRequest($bucketName, $objectNameMultipart);
             $result = $client->presign($request);
             $this->assertCount(1, $result->signedHeaders);
-            $this->assertArrayHasKey('content-md5',$result->signedHeaders);
+            $this->assertArrayHasKey('content-md5', $result->signedHeaders);
             $response = $httpClient->request($result->method, $result->url, ['headers' => $result->signedHeaders]);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
@@ -467,6 +467,30 @@ class ClientPresignerTest extends TestIntegration
         } catch (\Throwable $e) {
             $this->assertTrue(false, 'should not here');
         }
+    }
 
+    public function testPresignWithAnonymous()
+    {
+        $client = $this->getDefaultClient();
+        $bucketName = self::$bucketName;
+        $objectName = self::$OBJECTNAME_PREFIX . self::randomLowStr() . '-put-object';
+        $content = 'hi oss';
+        $putObjectRequest = new Oss\Models\PutObjectRequest(
+            $bucketName, $objectName
+        );
+        $putObjectRequest->acl = 'public-read';
+        $putObjectRequest->body = Utils::streamFor($content);
+        $client->putObject($putObjectRequest);
+
+        $request = new Oss\Models\GetObjectRequest($bucketName, $objectName);
+        $options['credentials_provider'] = new Oss\Credentials\AnonymousCredentialsProvider();
+        $result = $client->presign($request, $options);
+        $this->assertNotEmpty($result->url);
+        $this->assertNotEmpty($result->method);
+        $this->assertStringNotContainsString('?', $result->url);
+        $httpClient = new GuzzleHttp\Client();
+        $response = $httpClient->get($result->url);
+        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertEquals($response->getBody()->getContents(), $content);
     }
 }
