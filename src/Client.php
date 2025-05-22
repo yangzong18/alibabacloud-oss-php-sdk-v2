@@ -420,8 +420,8 @@ final class Client
         return new Models\PresignResult(
             $result['method'],
             $result['url'],
-            $result['expiration'],
-            $result['signedHeaders']
+            $result['expiration'] ?? null,
+            $result['signedHeaders'] ?? null
         );
     }
 }
