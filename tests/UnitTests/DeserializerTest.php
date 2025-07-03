@@ -17,7 +17,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 
 use AlibabaCloud\Oss\V2\OperationOutput;
 use AlibabaCloud\Oss\V2\Deserializer;
 use AlibabaCloud\Oss\V2\Utils;
-use AlibabaCloud\Oss\V2\Exception\DeserializationExecption;
+use AlibabaCloud\Oss\V2\Exception\DeserializationException;
 
 use UnitTests\Fixtures\BaiscTypeXml;
 use UnitTests\Fixtures\BaiscTypeListXml;
@@ -271,7 +271,7 @@ class DeserializerTest extends \PHPUnit\Framework\TestCase
         try {
             Deserializer::deserializeXml($str, $xml, 'MixedTypeList');
             $this->assertTrue(false, "shoud not here");
-        } catch (DeserializationExecption $e) {
+        } catch (DeserializationException $e) {
             $this->assertStringContainsString("Deserialization raised an exception: Not found tag <MixedTypeList>", (string)$e);
         } catch (\Exception $e) {
             $this->assertTrue(false, "shoud not here");
@@ -287,7 +287,7 @@ class DeserializerTest extends \PHPUnit\Framework\TestCase
         try {
             Deserializer::deserializeXml($str, $xml, 'MixedTypeList');
             $this->assertTrue(false, "shoud not here");
-        } catch (DeserializationExecption $e) {
+        } catch (DeserializationException $e) {
             $this->assertStringContainsString("Deserialization raised an exception: Error parsing XML: part data ", (string)$e);
         } catch (\Exception $e) {
             $this->assertTrue(false, "shoud not here");
@@ -516,7 +516,7 @@ class DeserializerTest extends \PHPUnit\Framework\TestCase
         try {
             Deserializer::deserializeOutput($result, $output, $customDeserializer);
             $this->assertTrue(false, "shoud not here");
-        } catch (DeserializationExecption $e) {
+        } catch (DeserializationException $e) {
             $this->assertStringContainsString("Deserialization raised an exception: Not found tag <Configuration>", (string)$e);
         } catch (\Exception $e) {
             $this->assertTrue(false, "shoud not here");

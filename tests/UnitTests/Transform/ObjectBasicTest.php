@@ -123,7 +123,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             $output = new OperationOutput();
             $result = ObjectBasic::toDeleteMultipleObjects($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <DeleteResult>', $e);
         }
 

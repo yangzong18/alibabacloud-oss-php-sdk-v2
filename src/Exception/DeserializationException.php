@@ -7,7 +7,7 @@ namespace AlibabaCloud\Oss\V2\Exception;
 /**
  * Represents an error is encountered during deserialization.
  */
-class DeserializationExecption extends \RuntimeException
+class DeserializationException extends \RuntimeException
 {
     public function __construct(string $messge, $previous = null)
     {

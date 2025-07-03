@@ -2,7 +2,7 @@
 
 namespace UnitTests\Transform;
 
-use AlibabaCloud\Oss\V2\Exception\DeserializationExecption;
+use AlibabaCloud\Oss\V2\Exception\DeserializationException;
 use AlibabaCloud\Oss\V2\Models;
 use AlibabaCloud\Oss\V2\Transform\BucketBasic;
 use AlibabaCloud\Oss\V2\OperationOutput;
@@ -196,7 +196,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toGetBucketInfo($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <BucketInfo>', $e);
         }
 
@@ -210,7 +210,7 @@ BBB;
             );
             $result = BucketBasic::toGetBucketInfo($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <Bucket>', $e);
         }
 
@@ -426,7 +426,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toGetBucketLocation($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <LocationConstraint>', $e);
         }
 
@@ -509,7 +509,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toGetBucketStat($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <BucketStat>', $e);
         }
 
@@ -710,7 +710,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toGetBucketVersioning($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <VersioningConfiguration>', $e);
         }
 
@@ -967,7 +967,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toGetBucketAcl($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <AccessControlPolicy>', $e);
         }
 
@@ -1115,7 +1115,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toListObjects($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <ListBucketResult>', $e);
         }
 
@@ -1434,7 +1434,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toListObjectsV2($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <ListBucketResult>', $e);
         }
 
@@ -1762,7 +1762,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toListObjectVersions($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <ListVersionsResult>', $e);
         }
 
@@ -2117,7 +2117,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toListBuckets($output);
             $this->assertTrue(false, 'should not here');
-        } catch (DeserializationExecption $e) {
+        } catch (DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <ListAllMyBucketsResult>', $e);
         }
 
@@ -2299,7 +2299,7 @@ BBB;
             $output = new OperationOutput();
             $result = BucketBasic::toDescribeRegions($output);
             $this->assertTrue(false, 'should not here');
-        } catch (DeserializationExecption $e) {
+        } catch (DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <RegionInfoList>', $e);
         }
 

@@ -22,19 +22,19 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
     {
         try {
             Functions::assertXmlRoot('', '');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag', $e);
         }
 
         try {
             Functions::assertXmlRoot('<Root></Root>', '');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag', $e);
         }
 
         try {
             Functions::assertXmlRoot('<Root></Root>', '123');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag', $e);
         }
 
@@ -54,7 +54,7 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
         try {
             Functions::assertXmlRoot($str, 'Configuration');
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag', $e);
         }
 

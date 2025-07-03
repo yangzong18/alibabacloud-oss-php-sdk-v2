@@ -75,7 +75,7 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $output = new OperationOutput();
             $result = ObjectMultipart::toInitiateMultipartUpload($output);
             $this->assertTrue(false, 'should not here');
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertStringContainsString('Not found tag <InitiateMultipartUploadResult>', $e);
         }
 
@@ -100,7 +100,7 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertNull($result->key);
             $this->assertNull($result->uploadId);
             $this->assertNull($result->encodingType);
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertTrue(false, "should not here");
         }
 
@@ -124,7 +124,7 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals('', $result->key);
             $this->assertNull($result->uploadId);
             $this->assertNull($result->encodingType);
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertTrue(false, "should not here");
         }
 
@@ -248,7 +248,7 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals('"7265F4D211B56873A381D321F586****"', $result->etag);
             $this->assertEquals('1B2M2Y8AsgTpgAmY7Ph****', $result->contentMd5);
             $this->assertEquals('316181249502703*****', $result->hashCrc64);
-        } catch (Exception\DeserializationExecption $e) {
+        } catch (Exception\DeserializationException $e) {
             $this->assertTrue(false, "should not here");
         }
     }

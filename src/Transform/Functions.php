@@ -247,14 +247,14 @@ final class Functions
     public static function assertXmlRoot(string $xml, string $expect)
     {
         if (!preg_match("/<$expect([^>]*)>/", $xml)) {
-            throw new Exception\DeserializationExecption("Not found tag <$expect>");
+            throw new Exception\DeserializationException("Not found tag <$expect>");
         }
     }
 
     public static function assertXmlNodeExist(\SimpleXMLElement $elem, $name)
     {
         if (empty($elem)) {
-            throw new Exception\DeserializationExecption("Not found tag <$name>");
+            throw new Exception\DeserializationException("Not found tag <$name>");
         }
     }
 

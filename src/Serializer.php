@@ -10,7 +10,7 @@ use AlibabaCloud\Oss\V2\OperationInput;
 use AlibabaCloud\Oss\V2\Types\Model;
 use AlibabaCloud\Oss\V2\Types\RequestModel;
 use AlibabaCloud\Oss\V2\Annotation\Functions;
-use AlibabaCloud\Oss\V2\Exception\SerializationExecption;
+use AlibabaCloud\Oss\V2\Exception\SerializationException;
 use AlibabaCloud\Oss\V2\Utils;
 
 final class Serializer
@@ -75,7 +75,7 @@ final class Serializer
         // enum, since 8.1
         // TODO
 
-        throw new SerializationExecption("Unsupport type " . \gettype($value));
+        throw new SerializationException("Unsupport type " . \gettype($value));
     }
 
     private static function serializeXmlModel(\XMLWriter $writer, string $name, Model $value): void
@@ -250,6 +250,6 @@ final class Serializer
             return (string)$value;
         }
 
-        throw new SerializationExecption("Unsupport type " . \gettype($value));
+        throw new SerializationException("Unsupport type " . \gettype($value));
     }
 }

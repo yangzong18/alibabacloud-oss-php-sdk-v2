@@ -9,7 +9,7 @@ use AlibabaCloud\Oss\V2\Types\Model;
 use AlibabaCloud\Oss\V2\Types\ResultModel;
 use AlibabaCloud\Oss\V2\Annotation\Functions;
 use AlibabaCloud\Oss\V2\Annotation\XmlElement;
-use AlibabaCloud\Oss\V2\Exception\DeserializationExecption;
+use AlibabaCloud\Oss\V2\Exception\DeserializationException;
 use AlibabaCloud\Oss\V2\Utils;
 
 final class Deserializer
@@ -19,7 +19,7 @@ final class Deserializer
         try {
             $xml = Utils::parseXml($value);
         } catch (\Exception $e) {
-            throw new DeserializationExecption(
+            throw new DeserializationException(
                 'Error parsing XML: part data ' . substr($value, 0, 256), $e);
         }
 
@@ -29,7 +29,7 @@ final class Deserializer
             !empty($expect) &&
             !preg_match("/<$expect([^>]*)>/", $value)
         ) {
-            throw new DeserializationExecption("Not found tag <$expect>");
+            throw new DeserializationException("Not found tag <$expect>");
         }
 
         return self::deserializeXmlModel($xml, $className);
@@ -71,7 +71,7 @@ final class Deserializer
     {
         if (\is_object($class)) {
             if (!($class instanceof Model)) {
-                throw new DeserializationExecption($class . " is not subclass of Model");
+                throw new DeserializationException($class . " is not subclass of Model");
             }
             $rc = new \ReflectionObject($class);
             $obj = $class;
@@ -79,7 +79,7 @@ final class Deserializer
             $rc = new \ReflectionClass($class);
             $obj = $rc->newInstance();
             if (!($obj instanceof Model)) {
-                throw new DeserializationExecption($class . " is not subclass of Model");
+                throw new DeserializationException($class . " is not subclass of Model");
             }
         }
 
@@ -112,7 +112,7 @@ final class Deserializer
         } elseif ('false' === $v || '0' === $v) {
             return false;
         } else {
-            throw new DeserializationExecption(
+            throw new DeserializationException(
                 sprintf('Could not convert data to boolean. Expected "true", "false", "1" or "0", but got %s.', $value)
             );
         }
@@ -147,7 +147,7 @@ final class Deserializer
                 $vv = self::castToDatetime($value, $format);
                 break;
             default:
-                throw new DeserializationExecption("Unsupport type:$type");
+                throw new DeserializationException("Unsupport type:$type");
         }
         return $vv;
     }
@@ -283,7 +283,7 @@ final class Deserializer
                 $property->setAccessible(true);
                 $property->setValue($result, $value);
             } else {
-                throw new DeserializationExecption("Unsupport body format:$annotation->format");
+                throw new DeserializationException("Unsupport body format:$annotation->format");
             }
 
             // only one body tag
