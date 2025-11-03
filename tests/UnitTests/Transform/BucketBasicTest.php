@@ -2108,6 +2108,23 @@ BBB;
         $this->assertEquals('', $input->getParameters()['marker']);
         $this->assertEquals('/', $input->getParameters()['prefix']);
         $this->assertEquals('10', $input->getParameters()['max-keys']);
+
+        $request = new Models\ListBucketsRequest('/', '', 10,'rg-aek27tc********','k','v');
+        $input = BucketBasic::fromListBuckets($request);
+        $this->assertEquals('rg-aek27tc********', $input->getHeaders()['x-oss-resource-group-id']);
+        $this->assertEquals('', $input->getParameters()['marker']);
+        $this->assertEquals('/', $input->getParameters()['prefix']);
+        $this->assertEquals('10', $input->getParameters()['max-keys']);
+        $this->assertEquals('k', $input->getParameters()['tag-key']);
+        $this->assertEquals('v', $input->getParameters()['tag-value']);
+
+        $request = new Models\ListBucketsRequest('/', '', 10,'rg-aek27tc********',null,null,"\"k\":\"v\"");
+        $input = BucketBasic::fromListBuckets($request);
+        $this->assertEquals('rg-aek27tc********', $input->getHeaders()['x-oss-resource-group-id']);
+        $this->assertEquals('', $input->getParameters()['marker']);
+        $this->assertEquals('/', $input->getParameters()['prefix']);
+        $this->assertEquals('10', $input->getParameters()['max-keys']);
+        $this->assertEquals("\"k\":\"v\"", $input->getParameters()['tagging']);
     }
 
     public function testToListBuckets()
