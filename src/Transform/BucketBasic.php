@@ -844,6 +844,15 @@ final class BucketBasic
                 if (isset($request->resourceGroupId)) {
                     $input->setHeader('x-oss-resource-group-id', $request->resourceGroupId);
                 }
+                if (isset($request->tagKey)) {
+                    $input->setParameter('tag-key', $request->tagKey);
+                }
+                if (isset($request->tagValue)) {
+                    $input->setParameter('tag-value', $request->tagValue);
+                }
+                if (isset($request->tagging)) {
+                    $input->setParameter('tagging', $request->tagging);
+                }
             },
             [Functions::class, 'addContentMd5']
         ];
