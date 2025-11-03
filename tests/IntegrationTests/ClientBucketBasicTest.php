@@ -241,6 +241,25 @@ class ClientBucketBasicTest extends TestIntegration
         $this->assertEquals(24, strlen($result->requestId));
         $this->assertEquals(True, count($result->buckets) > 0);
 
+        $request = new Oss\Models\ListBucketsRequest(self::$BUCKETNAME_PREFIX);
+        $request->tagging = 'k:v';
+        $result = $client->listBuckets($request);
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertNull($result->buckets);
+
+        $request = new Oss\Models\ListBucketsRequest(self::$BUCKETNAME_PREFIX);
+        $request->tagKey = 'k';
+        $request->tagValue = 'v';
+        $result = $client->listBuckets($request);
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+        $this->assertNull($result->buckets);
+
         $this->waitFor(3);
         $client->deleteBucket(new Oss\Models\DeleteBucketRequest(
             $bucketName
