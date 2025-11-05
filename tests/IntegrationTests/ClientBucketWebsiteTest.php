@@ -47,6 +47,132 @@ class ClientBucketWebsiteTest extends TestIntegration
         $this->assertEquals('No Content', $delResult->status);
         $this->assertEquals(True, count($delResult->headers) > 0);
         $this->assertEquals(24, strlen($delResult->requestId));
+
+        // PutBucketWebsite
+        $putResult = $client->putBucketWebsite(new Oss\Models\PutBucketWebsiteRequest(
+            $bucketName,
+            websiteConfiguration: new Oss\Models\WebsiteConfiguration(
+                indexDocument: new Oss\Models\IndexDocument(
+                suffix: 'index.html', supportSubDir: true, type: 0
+            ),
+                errorDocument: new Oss\Models\ErrorDocument(
+                key: 'error.html', httpStatus: 404
+            ),
+                routingRules: new Oss\Models\RoutingRules([
+                new  Oss\Models\RoutingRule(
+                    redirect: new  Oss\Models\RoutingRuleRedirect(
+                    mirrorPassOriginalSlashes: false,
+                    redirectType: 'Mirror',
+                    mirrorURL: 'http://example.com/',
+                    mirrorPassQueryString: true,
+                    mirrorCheckMd5: true,
+                    mirrorSNI: true,
+                    replaceKeyPrefixWith: "def/",
+                    mirrorFollowRedirect: true,
+                    hostName: "example.com",
+                    mirrorHeaders: new Oss\Models\MirrorHeaders(
+                    passs: ["myheader-key1", "myheader-key2"],
+                    sets: array(
+                    new Oss\Models\MirrorHeaderSet(key: 'myheader-key5', value: 'myheader-value5'),
+                ),
+                    passAll: true,
+                ),
+                    passQueryString: true,
+                    enableReplacePrefix: true,
+                    httpRedirectCode: 301,
+                    mirrorURLSlave: 'http://example.com/',
+                    mirrorSaveOssMeta: true,
+                    mirrorProxyPass: false,
+                    mirrorAllowGetImageInfo: true,
+                    mirrorAllowVideoSnapshot: false,
+                    mirrorIsExpressTunnel: true,
+                    mirrorDstRegion: 'cn-hangzhou',
+                    mirrorUserLastModified: false,
+                    mirrorSwitchAllErrors: true,
+                    mirrorUsingRole: true,
+                    mirrorRole: 'aliyun-test-role',
+                    mirrorAllowHeadObject: true,
+                    transparentMirrorResponseCodes: '400',
+                    mirrorTaggings: new Oss\Models\MirrorTaggings(
+                    taggings: [new Oss\Models\MirrorTagging(
+                        value: 'v',
+                        key: 'k'
+                    )]
+                ),
+                    mirrorReturnHeaders: new Oss\Models\MirrorReturnHeaders(
+                    returnHeaders: [
+                        new Oss\Models\ReturnHeader(
+                            key: 'k',
+                            value: 'v'
+                        )
+                    ]
+                ),
+                    mirrorAuth: new Oss\Models\MirrorAuth(
+                    'S3V4', 'ap-southeast-1', 'TESTAK', 'TESTSK'
+                ),
+                    mirrorMultiAlternates: new Oss\Models\MirrorMultiAlternates(
+                        [
+                            new Oss\Models\MirrorMultiAlternate(
+                                mirrorMultiAlternateNumber: 32, mirrorMultiAlternateURL: 'https://test-multi-alter.example.com', mirrorMultiAlternateVpcId: 'vpc-test-id', mirrorMultiAlternateDstRegion: 'ap-southeast-1'
+                            )
+                        ]
+                    )
+                ),
+                    ruleNumber: 1,
+                    condition: new Oss\Models\RoutingRuleCondition(
+                    keyPrefixEquals: 'abc/',
+                    keySuffixEquals: ".txt",
+                    httpErrorCodeReturnedEquals: 404,
+                ),
+                    luaConfig: new Oss\Models\RoutingRuleLuaConfig(
+                        script: "test.lua",
+                    )
+                ),
+                new Oss\Models\RoutingRule(
+                    redirect: new Oss\Models\RoutingRuleRedirect(
+                    redirectType: 'AliCDN',
+                    mirrorURL: 'http://example.com/',
+                    mirrorPassQueryString: true,
+                    mirrorCheckMd5: true,
+                    mirrorSNI: true,
+                    protocol: 'http',
+                    mirrorFollowRedirect: true,
+                    mirrorHeaders: new Oss\Models\MirrorHeaders(
+                    passs: ["myheader-key1", "myheader-key2"],
+                    sets: array(
+                    new Oss\Models\MirrorHeaderSet(key: 'myheader-key5', value: 'myheader-value5'),
+                ),
+                    passAll: true,
+                ),
+                    passQueryString: true,
+                    replaceKeyWith: "abc",
+                ),
+                    ruleNumber: 2,
+                    condition: new Oss\Models\RoutingRuleCondition(
+                    keyPrefixEquals: 'abc/',
+                    keySuffixEquals: ".txt",
+                    httpErrorCodeReturnedEquals: 404,
+                ),
+                    luaConfig: new Oss\Models\RoutingRuleLuaConfig(
+                        script: "test.lua",
+                    )
+                ),
+            ]),
+            )
+        ));
+        $this->assertEquals(200, $putResult->statusCode);
+        $this->assertEquals('OK', $putResult->status);
+        $this->assertEquals(True, count($putResult->headers) > 0);
+        $this->assertEquals(24, strlen($putResult->requestId));
+
+        // DeleteBucketWebsite
+        $delResult = $client->deleteBucketWebsite(new Oss\Models\DeleteBucketWebsiteRequest(
+            $bucketName
+        ));
+        $this->assertEquals(204, $delResult->statusCode);
+        $this->assertEquals('No Content', $delResult->status);
+        $this->assertEquals(True, count($delResult->headers) > 0);
+        $this->assertEquals(24, strlen($delResult->requestId));
     }
 
     public function testBucketWebsiteFail()
