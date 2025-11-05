@@ -37,6 +37,13 @@ final class RoutingRule extends Model
     public ?RoutingRuleCondition $condition;
 
     /**
+     * The Lua script config of this rule.
+     * @var RoutingRuleLuaConfig|null
+     */
+    #[XmlElement(rename: 'LuaConfig', type: RoutingRuleLuaConfig::class)]
+    public ?RoutingRuleLuaConfig $luaConfig;
+
+    /**
      * RoutingRule constructor.
      * @param RoutingRuleRedirect|null $redirect The operation to perform after the rule is matched.
      * @param int|null $ruleNumber The sequence number that is used to match and run the redirection rules.
@@ -45,11 +52,13 @@ final class RoutingRule extends Model
     public function __construct(
         ?RoutingRuleRedirect $redirect = null,
         ?int $ruleNumber = null,
-        ?RoutingRuleCondition $condition = null
+        ?RoutingRuleCondition $condition = null,
+        ?RoutingRuleLuaConfig $luaConfig = null,
     )
     {
         $this->redirect = $redirect;
         $this->ruleNumber = $ruleNumber;
         $this->condition = $condition;
+        $this->luaConfig = $luaConfig;
     }
 }

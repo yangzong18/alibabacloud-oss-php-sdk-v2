@@ -121,6 +121,168 @@ final class RoutingRuleRedirect extends Model
     public ?int $httpRedirectCode;
 
     /**
+     * The slave URL for mirror-based back-to-origin.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorURLSlave', type: 'string')]
+    public ?string $mirrorURLSlave;
+
+    /**
+     * The probe URL for mirror-based back-to-origin.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorURLProbe', type: 'string')]
+    public ?string $mirrorURLProbe;
+
+    /**
+     * Whether to store the user defined metadata in mirror-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorSaveOssMeta', type: 'bool')]
+    public ?bool $mirrorSaveOssMeta;
+
+    /**
+     * Not save data in web-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorProxyPass', type: 'bool')]
+    public ?bool $mirrorProxyPass;
+
+    /**
+     * Whether to allow get image information in mirror-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorAllowGetImageInfo', type: 'bool')]
+    public ?bool $mirrorAllowGetImageInfo;
+
+    /**
+     * Whether to allow take video snapshot in mirror-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorAllowVideoSnapshot', type: 'bool')]
+    public ?bool $mirrorAllowVideoSnapshot;
+
+    /**
+     * Mirror-based back-to-origin with express tunnel.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorIsExpressTunnel', type: 'bool')]
+    public ?bool $mirrorIsExpressTunnel;
+
+    /**
+     * The VPC region for mirror-based back-to-origin express tunnel.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorDstRegion', type: 'string')]
+    public ?string $mirrorDstRegion;
+
+    /**
+     * The VPC ID for mirror-based back-to-origin express tunnel.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorDstVpcId', type: 'string')]
+    public ?string $mirrorDstVpcId;
+
+    /**
+     * The slave VPC ID for mirror-based back-to-origin express tunnel.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorDstSlaveVpcId', type: 'string')]
+    public ?string $mirrorDstSlaveVpcId;
+
+    /**
+     * Use LastModifiedTime of the file from origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorUserLastModified', type: 'bool')]
+    public ?bool $mirrorUserLastModified;
+
+    /**
+     * Used for determining the state of primary-secondary switching.
+     * The logic for primary-secondary switching is based on the error code returned by the origin server.
+     * If MirrorSwitchAllErrors is set to true, all status codes except the following are considered failures: 200, 206, 301, 302, 303, 307, 404.
+     * If it is set to false, only status codes in the 5xx range or timeouts are considered failures.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorSwitchAllErrors', type: 'bool')]
+    public ?bool $mirrorSwitchAllErrors;
+
+    /**
+     * The tunnel ID for mirror-based back-to-origin.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorTunnelId', type: 'string')]
+    public ?string $mirrorTunnelId;
+
+    /**
+     * Whether to use role for mirror-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorUsingRole', type: 'bool')]
+    public ?bool $mirrorUsingRole;
+
+    /**
+     * The role name used for mirror-based back-to-origin.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'MirrorRole', type: 'string')]
+    public ?string $mirrorRole;
+
+    /**
+     * Whether to allow take HeadObject in mirror-based back-to-origin.
+     * @var bool|null
+     */
+    #[XmlElement(rename: 'MirrorAllowHeadObject', type: 'bool')]
+    public ?bool $mirrorAllowHeadObject;
+
+    /**
+     * Specify which status codes returned by the origin server should be passed through to the client along with the body.
+     * The value should be HTTP status codes such as 4xx, 5xx, etc., separated by commas (,), for example, 400,404.
+     * This setting takes effect only when RedirectType is set to Mirror.
+     * When OSS requests content from the origin server, if the origin server returns one of the status codes specified in this parameter,
+     * OSS will pass through the status code and body returned by the origin server to the client. If the 404 status code is specified in this parameter,
+     * the configured ErrorDocument will be ineffective.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'TransparentMirrorResponseCodes', type: 'string')]
+    public ?string $transparentMirrorResponseCodes;
+
+    /**
+     * The HTTP status codes that trigger the asynchronous pull mode in mirror-based back-to-origin.
+     * @var int|null
+     */
+    #[XmlElement(rename: 'MirrorAsyncStatus', type: 'int')]
+    public ?int $mirrorAsyncStatus;
+
+    /**
+     * The rules for setting tags when saving files during mirror-based back-to-origin.
+     * @var MirrorTaggings|null
+     */
+    #[XmlElement(rename: 'MirrorTaggings', type: MirrorTaggings::class)]
+    public ?MirrorTaggings $mirrorTaggings;
+
+    /**
+     * Container to store the rules for setting response headers in mirror-based back-to-origin.
+     * @var MirrorReturnHeaders|null
+     */
+    #[XmlElement(rename: 'MirrorReturnHeaders', type: MirrorReturnHeaders::class)]
+    public ?MirrorReturnHeaders $mirrorReturnHeaders;
+
+    /**
+     * The authentication information for the origin server in mirror-based back-to-origin.
+     * @var MirrorAuth|null
+     */
+    #[XmlElement(rename: 'MirrorAuth', type: MirrorAuth::class)]
+    public ?MirrorAuth $mirrorAuth;
+
+    /**
+     * The container to store the configuration for multiple origins in mirror-based back-to-origin.
+     * @var MirrorMultiAlternates|null
+     */
+    #[XmlElement(rename: 'MirrorMultiAlternates', type: MirrorMultiAlternates::class)]
+    public ?MirrorMultiAlternates $mirrorMultiAlternates;
+
+    /**
      * RoutingRuleRedirect constructor.
      * @param bool|null $mirrorPassOriginalSlashes Is it transmitted transparently '/' to the source site.
      * @param string|null $redirectType The redirection type.
@@ -137,6 +299,28 @@ final class RoutingRuleRedirect extends Model
      * @param bool|null $enableReplacePrefix If this parameter is set to true, the prefix of the object names is replaced with the value specified by ReplaceKeyPrefixWith.
      * @param string|null $replaceKeyWith The string that is used to replace the requested object name when the request is redirected.
      * @param int|null $httpRedirectCode The HTTP redirect code in the response.
+     * @param string|null $mirrorURLSlave The slave URL for mirror-based back-to-origin.
+     * @param string|null $mirrorURLProbe The probe URL for mirror-based back-to-origin.
+     * @param bool|null $mirrorSaveOssMeta Whether to store the user defined metadata in mirror-based back-to-origin.
+     * @param bool|null $mirrorProxyPass Not save data in web-based back-to-origin.
+     * @param bool|null $mirrorAllowGetImageInfo Whether to allow get image information in mirror-based back-to-origin.
+     * @param bool|null $mirrorAllowVideoSnapshot Whether to allow take video snapshot in mirror-based back-to-origin.
+     * @param bool|null $mirrorIsExpressTunnel Mirror-based back-to-origin with express tunnel.
+     * @param string|null $mirrorDstRegion The VPC region for mirror-based back-to-origin express tunnel.
+     * @param string|null $mirrorDstVpcId The VPC ID for mirror-based back-to-origin express tunnel.
+     * @param string|null $mirrorDstSlaveVpcId The slave VPC ID for mirror-based back-to-origin express tunnel.
+     * @param bool|null $mirrorUserLastModified Use LastModifiedTime of the file from origin.
+     * @param bool|null $mirrorSwitchAllErrors Used for determining the state of primary-secondary switching.
+     * @param string|null $mirrorTunnelId The tunnel ID for mirror-based back-to-origin.
+     * @param bool|null $mirrorUsingRole Whether to use role for mirror-based back-to-origin.
+     * @param string|null $mirrorRole The role name used for mirror-based back-to-origin.
+     * @param bool|null $mirrorAllowHeadObject Whether to allow take HeadObject in mirror-based back-to-origin.
+     * @param string|null $transparentMirrorResponseCodes Specify which status codes returned by the origin server should be passed through to the client along with the body.
+     * @param int|null $mirrorAsyncStatus The HTTP status codes that trigger the asynchronous pull mode in mirror-based back-to-origin.
+     * @param MirrorTaggings|null $mirrorTaggings The rules for setting tags when saving files during mirror-based back-to-origin.
+     * @param MirrorReturnHeaders|null $mirrorReturnHeaders Container to store the rules for setting response headers in mirror-based back-to-origin.
+     * @param MirrorAuth|null $mirrorAuth The authentication information for the origin server in mirror-based back-to-origin.
+     * @param MirrorMultiAlternates|null $mirrorMultiAlternates The container to store the configuration for multiple origins in mirror-based back-to-origin.
      */
     public function __construct(
         ?bool $mirrorPassOriginalSlashes = null,
@@ -154,6 +338,28 @@ final class RoutingRuleRedirect extends Model
         ?bool $enableReplacePrefix = null,
         ?string $replaceKeyWith = null,
         ?int $httpRedirectCode = null,
+        ?string $mirrorURLSlave = null,
+        ?string $mirrorURLProbe = null,
+        ?bool $mirrorSaveOssMeta = null,
+        ?bool $mirrorProxyPass = null,
+        ?bool $mirrorAllowGetImageInfo = null,
+        ?bool $mirrorAllowVideoSnapshot = null,
+        ?bool $mirrorIsExpressTunnel = null,
+        ?string $mirrorDstRegion = null,
+        ?string $mirrorDstVpcId = null,
+        ?string $mirrorDstSlaveVpcId = null,
+        ?bool $mirrorUserLastModified = null,
+        ?bool $mirrorSwitchAllErrors = null,
+        ?string $mirrorTunnelId = null,
+        ?bool $mirrorUsingRole = null,
+        ?string $mirrorRole = null,
+        ?bool $mirrorAllowHeadObject = null,
+        ?string $transparentMirrorResponseCodes = null,
+        ?int $mirrorAsyncStatus = null,
+        ?MirrorTaggings $mirrorTaggings = null,
+        ?MirrorReturnHeaders $mirrorReturnHeaders = null,
+        ?MirrorAuth $mirrorAuth = null,
+        ?MirrorMultiAlternates $mirrorMultiAlternates = null,
     )
     {
         $this->mirrorPassOriginalSlashes = $mirrorPassOriginalSlashes;
@@ -171,5 +377,27 @@ final class RoutingRuleRedirect extends Model
         $this->enableReplacePrefix = $enableReplacePrefix;
         $this->replaceKeyWith = $replaceKeyWith;
         $this->httpRedirectCode = $httpRedirectCode;
+        $this->mirrorURLSlave = $mirrorURLSlave;
+        $this->mirrorURLProbe = $mirrorURLProbe;
+        $this->mirrorSaveOssMeta = $mirrorSaveOssMeta;
+        $this->mirrorProxyPass = $mirrorProxyPass;
+        $this->mirrorAllowGetImageInfo = $mirrorAllowGetImageInfo;
+        $this->mirrorAllowVideoSnapshot = $mirrorAllowVideoSnapshot;
+        $this->mirrorIsExpressTunnel = $mirrorIsExpressTunnel;
+        $this->mirrorDstRegion = $mirrorDstRegion;
+        $this->mirrorDstVpcId = $mirrorDstVpcId;
+        $this->mirrorDstSlaveVpcId = $mirrorDstSlaveVpcId;
+        $this->mirrorUserLastModified = $mirrorUserLastModified;
+        $this->mirrorSwitchAllErrors = $mirrorSwitchAllErrors;
+        $this->mirrorTunnelId = $mirrorTunnelId;
+        $this->mirrorUsingRole = $mirrorUsingRole;
+        $this->mirrorRole = $mirrorRole;
+        $this->mirrorAllowHeadObject = $mirrorAllowHeadObject;
+        $this->transparentMirrorResponseCodes = $transparentMirrorResponseCodes;
+        $this->mirrorAsyncStatus = $mirrorAsyncStatus;
+        $this->mirrorTaggings = $mirrorTaggings;
+        $this->mirrorReturnHeaders = $mirrorReturnHeaders;
+        $this->mirrorAuth = $mirrorAuth;
+        $this->mirrorMultiAlternates = $mirrorMultiAlternates;
     }
 }
