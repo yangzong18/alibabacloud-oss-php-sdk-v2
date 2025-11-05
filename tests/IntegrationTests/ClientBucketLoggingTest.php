@@ -18,7 +18,7 @@ class ClientBucketLoggingTest extends TestIntegration
             $bucketName,
             new Oss\Models\BucketLoggingStatus(
                 new Oss\Models\LoggingEnabled(
-                    targetBucket: $bucketName, targetPrefix: 'TargetPrefix'
+                    targetBucket: $bucketName, targetPrefix: 'TargetPrefix', loggingRole: 'AliyunOSSLoggingDefaultRole'
                 )
             )
         ));
