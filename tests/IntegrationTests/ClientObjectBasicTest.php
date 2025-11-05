@@ -135,6 +135,30 @@ class ClientObjectBasicTest extends TestIntegration
         $this->assertEquals('No Content', $result->status);
         $this->assertEquals(True, count($result->headers) > 0);
         $this->assertEquals(24, strlen($result->requestId));
+
+        // delete objects
+        $delObjsRequest = new Oss\Models\DeleteMultipleObjectsRequest(
+            $bucketName,
+        );
+        $delArray = [];
+        for ($i = 1; $i <= 10; $i++) {
+            // put object
+            $putObjRequest = new Oss\Models\PutObjectRequest(
+                $bucketName,
+                $key . $i,
+            );
+            $delArray[] = new Oss\Models\ObjectIdentifier($key . $i);
+            $body = 'hi oss';
+            $putObjRequest->body = Oss\Utils::streamFor($body);
+            $result = $client->putObject($putObjRequest);
+            $this->assertEquals(200, $result->statusCode);
+        }
+        $delObjsRequest->delete = new Oss\Models\Delete($delArray);
+        $result = $client->deleteMultipleObjects($delObjsRequest);
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
     }
 
     public function testObjectBasicFail()
@@ -286,6 +310,28 @@ class ClientObjectBasicTest extends TestIntegration
             $result = $client->deleteObject($delObjRequest);
         } catch (Oss\Exception\OperationException $e) {
             $this->assertStringContainsString('Operation error DeleteObject', $e);
+            $se = $e->getPrevious();
+            $this->assertInstanceOf(Oss\Exception\ServiceException::class, $se);
+            if ($se instanceof Oss\Exception\ServiceException) {
+                $this->assertEquals('InvalidAccessKeyId', $se->getErrorCode());
+                $this->assertEquals(403, $se->getStatusCode());
+            }
+        }
+
+        // delete objects
+        try {
+            $delObjRequest = new Oss\Models\DeleteMultipleObjectsRequest(
+                $bucketName,
+            );
+            $delObjRequest->delete = new Oss\Models\Delete(
+                [
+                    new Oss\Models\ObjectIdentifier('key1'),
+                    new Oss\Models\ObjectIdentifier('key2', 'version-id-2'),
+                ], true
+            );
+            $result = $client->deleteMultipleObjects($delObjRequest);
+        } catch (Oss\Exception\OperationException $e) {
+            $this->assertStringContainsString('Operation error DeleteMultipleObjects', $e);
             $se = $e->getPrevious();
             $this->assertInstanceOf(Oss\Exception\ServiceException::class, $se);
             if ($se instanceof Oss\Exception\ServiceException) {
