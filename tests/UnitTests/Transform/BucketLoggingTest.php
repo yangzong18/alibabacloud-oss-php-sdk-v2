@@ -37,6 +37,16 @@ class BucketLoggingTest extends \PHPUnit\Framework\TestCase
 <?xml version="1.0" encoding="UTF-8"?><BucketLoggingStatus><LoggingEnabled><TargetBucket>TargetBucket</TargetBucket><TargetPrefix>TargetPrefix</TargetPrefix></LoggingEnabled></BucketLoggingStatus>
 BBB;
         $this->assertEquals($xml, $this->cleanXml($input->getBody()->getContents()));
+
+        $request = new Models\PutBucketLoggingRequest('bucket-123', new Models\BucketLoggingStatus(new Models\LoggingEnabled(
+            targetBucket: 'TargetBucket', targetPrefix: 'TargetPrefix', loggingRole: 'AliyunOSSLoggingDefaultRole'
+        )));
+        $input = BucketLogging::fromPutBucketLogging($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $xml = <<<BBB
+<?xml version="1.0" encoding="UTF-8"?><BucketLoggingStatus><LoggingEnabled><TargetBucket>TargetBucket</TargetBucket><TargetPrefix>TargetPrefix</TargetPrefix><LoggingRole>AliyunOSSLoggingDefaultRole</LoggingRole></LoggingEnabled></BucketLoggingStatus>
+BBB;
+        $this->assertEquals($xml, $this->cleanXml($input->getBody()->getContents()));
     }
 
     public function testToPutBucketLogging()
@@ -111,6 +121,39 @@ BBB;
         $this->assertEquals('application/xml', $result->headers['content-type']);
         $this->assertEquals('bucket-log', $result->bucketLoggingStatus->loggingEnabled->targetBucket);
         $this->assertEquals('prefix-access_log', $result->bucketLoggingStatus->loggingEnabled->targetPrefix);
+
+
+        $output = new OperationOutput();
+        $result = BucketLogging::toGetBucketLogging($output);
+        $this->assertEquals('', $result->status);
+        $this->assertEquals(0, $result->statusCode);
+        $this->assertEquals('', $result->requestId);
+        $this->assertEquals(0, count($result->headers));
+
+        $body = '<?xml version="1.0" encoding="UTF-8"?>
+<BucketLoggingStatus>
+  <LoggingEnabled>
+        <TargetBucket>bucket-log</TargetBucket>
+        <TargetPrefix>prefix-access_log</TargetPrefix>
+        <LoggingRole>AliyunOSSLoggingDefaultRole</LoggingRole>
+    </LoggingEnabled>
+</BucketLoggingStatus>';
+        $output = new OperationOutput(
+            'OK',
+            200,
+            ['x-oss-request-id' => '123', 'content-type' => 'application/xml'],
+            Utils::streamFor($body)
+        );
+        $result = BucketLogging::toGetBucketLogging($output);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('123', $result->requestId);
+        $this->assertEquals(2, count($result->headers));
+        $this->assertEquals('123', $result->headers['x-oss-request-id']);
+        $this->assertEquals('application/xml', $result->headers['content-type']);
+        $this->assertEquals('bucket-log', $result->bucketLoggingStatus->loggingEnabled->targetBucket);
+        $this->assertEquals('prefix-access_log', $result->bucketLoggingStatus->loggingEnabled->targetPrefix);
+        $this->assertEquals('AliyunOSSLoggingDefaultRole', $result->bucketLoggingStatus->loggingEnabled->loggingRole);
     }
 
     public function testFromDeleteBucketLogging()

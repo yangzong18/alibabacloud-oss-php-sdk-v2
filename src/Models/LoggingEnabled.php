@@ -29,18 +29,28 @@ final class LoggingEnabled extends Model
     #[XmlElement(rename: 'TargetPrefix', type: 'string')]
     public ?string $targetPrefix;
 
+    /**
+     * Log transfer authorization role.
+     * @var string|null
+     */
+    #[XmlElement(rename: 'LoggingRole', type: 'string')]
+    public ?string $loggingRole;
+
 
     /**
      * LoggingEnabled constructor.
      * @param string|null $targetBucket The bucket that stores access logs.
      * @param string|null $targetPrefix The prefix of the log objects.
+     * @param string|null $loggingRole Log transfer authorization role.
      */
     public function __construct(
         ?string $targetBucket = null,
-        ?string $targetPrefix = null
+        ?string $targetPrefix = null,
+        ?string $loggingRole = null
     )
     {
         $this->targetBucket = $targetBucket;
         $this->targetPrefix = $targetPrefix;
+        $this->loggingRole = $loggingRole;
     }
 }
