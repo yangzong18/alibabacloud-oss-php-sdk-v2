@@ -77,6 +77,8 @@ final class PutSymlinkRequest extends RequestModel
      * @param bool|null $forbidOverwrite Specifies whether the PutSymlink operation overwrites the object that has the same name as that of the symbolic link you want to create.
      * @param string|null $requestPayer To indicate that the requester is aware that the request and data download will incur costs.
      * @param array|null $options
+     * @param string|null $objectAcl The access control list (ACL) of the object. The object acl parameter has the same functionality as the acl parameter. it is the standardized name for acl. If both exist simultaneously, the value of objectAcl will take precedence.
+     * @param string|null $symlinkTarget The target object to which the symbolic link points. The symlinkTarget parameter has the same functionality as the target parameter. It is the normalized name of target. If both exist simultaneously, the value of symlinkTarget will take precedence.
      */
     public function __construct(
         ?string $bucket = null,
@@ -87,13 +89,15 @@ final class PutSymlinkRequest extends RequestModel
         ?array $metadata = null,
         ?bool $forbidOverwrite = null,
         ?string $requestPayer = null,
-        ?array $options = null
+        ?array $options = null,
+        ?string $objectAcl = null,
+        ?string $symlinkTarget = null
     )
     {
         $this->bucket = $bucket;
         $this->key = $key;
-        $this->target = $target;
-        $this->acl = $acl;
+        $this->target = $symlinkTarget ?? $target;
+        $this->acl = $objectAcl ?? $acl;
         $this->storageClass = $storageClass;
         $this->metadata = $metadata;
         $this->forbidOverwrite = $forbidOverwrite;
