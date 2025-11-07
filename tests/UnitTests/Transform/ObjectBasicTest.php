@@ -26,7 +26,22 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             $request = new Models\DeleteMultipleObjectsRequest('bucket-123');
             $input = ObjectBasic::fromDeleteMultipleObjects($request);
         } catch (\InvalidArgumentException $e) {
-            $this->assertStringContainsString("missing required field, objects", (string)$e);
+            $this->assertStringContainsString("InvalidArgumentException: objects and delete must have one set", (string)$e);
+        }
+
+        try {
+            $request = new Models\DeleteMultipleObjectsRequest('bucket-123');
+            $request->objects = [
+                new Models\DeleteObject('key1'),
+                new Models\DeleteObject('key2', 'version-id-2'),
+            ];
+            $request->delete = new Models\Delete([
+                new Models\ObjectIdentifier('key1'),
+                new Models\ObjectIdentifier('key2', 'version-id-2'),
+            ], true);
+            $input = ObjectBasic::fromDeleteMultipleObjects($request);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("InvalidArgumentException: objects and body cannot be set simultaneously", (string)$e);
         }
 
         // bucket only
@@ -68,6 +83,10 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
 
 
         // all settings
+        $xmlStr = <<<BBB
+<?xml version="1.0" encoding="UTF-8"?><Delete><Quiet>true</Quiet><Object><Key>key1</Key></Object><Object><Key>key2</Key><VersionId>version-id-2</VersionId></Object></Delete>
+BBB;
+
         $request = new Models\DeleteMultipleObjectsRequest(
             'bucket-123',
             [
@@ -86,6 +105,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('url1', $input->getParameters()['encoding-type']);
 
         $str = $input->getBody()->getContents();
+        $this->assertEquals($xmlStr, $this->cleanXml($str));
         $this->assertStringContainsString('<Delete>', $str);
         $xml = \simplexml_load_string($str);
         $this->assertEquals(3, $xml->count());
@@ -106,7 +126,8 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             [
                 'headers' => ['x-oss-test' => 'test-123'],
                 'parameters' => ['x-oss-param' => 'param-123']
-            ]
+            ],
+            null,
         );
         $input = ObjectBasic::fromDeleteMultipleObjects($request);
         $this->assertEquals('bucket-123', $input->getBucket());
@@ -114,6 +135,21 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('D0iFyCSGo62Kd/zfca7aPg==', $input->getHeaders()['content-md5']);
         $this->assertEquals('test-123', $input->getHeaders()['x-oss-test']);
         $this->assertEquals('param-123', $input->getParameters()['x-oss-param']);
+
+        $request = new Models\DeleteMultipleObjectsRequest(
+            'bucket-123',
+        );
+        $request->delete = new Models\Delete(
+            [
+                new Models\ObjectIdentifier('key1'),
+                new Models\ObjectIdentifier('key2', 'version-id-2'),
+            ], true
+        );
+        $input = ObjectBasic::fromDeleteMultipleObjects($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('application/xml', $input->getHeaders()['content-type']);
+        $this->assertEquals('BesWzihB4UGzEXQLrXWg0w==', $input->getHeaders()['content-md5']);
+        $this->assertEquals($xmlStr, $this->cleanXml($input->getBody()->getContents()));
     }
 
     public function testToDeleteMultipleObjects()

@@ -643,7 +643,12 @@ final class ObjectBasic
     public static function fromDeleteMultipleObjects(Models\DeleteMultipleObjectsRequest $request): OperationInput
     {
         Functions::assertFieldRequired('bucket', $request->bucket);
-        Functions::assertFieldRequired('objects', $request->objects);
+        if (isset($request->objects) && isset($request->body)) {
+            throw new \InvalidArgumentException('objects and body cannot be set simultaneously');
+        }
+        if (!isset($request->objects) && !isset($request->delete)) {
+            throw new \InvalidArgumentException('objects and delete must have one set');
+        }
         $input = new OperationInput(
             'DeleteMultipleObjects',
             'POST',
@@ -659,25 +664,55 @@ final class ObjectBasic
                 if (isset($request->encodingType)) {
                     $input->setParameter('encoding-type', $request->encodingType);
                 }
-                $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
-                $xmlStr .= "\n<Delete>\n";
-                if (isset($request->quiet)) {
-                    $val = $request->quiet === true ? 'true' : 'false';
+                if (isset($request->objects) && isset($request->body)) {
+                    throw new \InvalidArgumentException('objects and body cannot be set simultaneously');
+                }
+                if (isset($request->objects)) {
+                    $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
+                    $xmlStr .= "\n<Delete>\n";
+                    if (isset($request->quiet)) {
+                        $val = $request->quiet === true ? 'true' : 'false';
+                        $xmlStr .= "<Quiet>$val</Quiet>\n";
+                    }
+                    foreach ($request->objects as $obj) {
+                        $xmlStr .= "<Object>\n";
+                        if (isset($obj->key)) {
+                            $key = Utils::escapeXml($obj->key);
+                            $xmlStr .= "<Key>$key</Key>\n";
+                        }
+                        if (isset($obj->versionId)) {
+                            $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
+                        }
+                        $xmlStr .= "</Object>\n";
+                    }
+                    $xmlStr .= '</Delete>';
+                    $input->setBody(Utils::streamFor($xmlStr));
+                } else {
+                    /**
+                     * @var Models\Delete
+                     */
+                    $delete = $request->delete;
+                    $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
+                    $xmlStr .= "\n<Delete>\n";
+                    $val = 'false';
+                    if (isset($delete->quiet)) {
+                        $val = $delete->quiet === true ? 'true' : 'false';
+                    }
                     $xmlStr .= "<Quiet>$val</Quiet>\n";
-                }
-                foreach ($request->objects as $obj) {
-                    $xmlStr .= "<Object>\n";
-                    if (isset($obj->key)) {
-                        $key = Utils::escapeXml($obj->key);
-                        $xmlStr .= "<Key>$key</Key>\n";
+                    foreach ($delete->objects as $obj) {
+                        $xmlStr .= "<Object>\n";
+                        if (isset($obj->key)) {
+                            $key = Utils::escapeXml($obj->key);
+                            $xmlStr .= "<Key>$key</Key>\n";
+                        }
+                        if (isset($obj->versionId)) {
+                            $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
+                        }
+                        $xmlStr .= "</Object>\n";
                     }
-                    if (isset($obj->versionId)) {
-                        $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
-                    }
-                    $xmlStr .= "</Object>\n";
+                    $xmlStr .= '</Delete>';
+                    $input->setBody(Utils::streamFor($xmlStr));
                 }
-                $xmlStr .= '</Delete>';
-                $input->setBody(Utils::streamFor($xmlStr));
             },
             [Functions::class, 'addContentMd5']
         ];
