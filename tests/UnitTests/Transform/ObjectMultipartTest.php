@@ -62,7 +62,7 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
             $this->assertEmpty($input->getParameters()['uploads']);
             $this->assertNotEmpty($input->getOpMetadata());
-            $this->assertEquals(true,$input->getOpMetadata()['detect_content_type']);
+            $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
         } catch (\InvalidArgumentException $e) {
             $this->assertTrue(false, "should not here");
         }
@@ -406,7 +406,23 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
         }
 
         try {
-            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', null, new Models\CompleteMultipartUpload([new Models\UploadPart(1, '"3349DC700140D7F86A0784842780****"'), new Models\UploadPart(2, '"8C315065167132444177411FDA14****"'), new Models\UploadPart(3, '"8EFDA8BE206636A695359836FE0A****"'),]), null, null, null, '', Models\EncodeType::URL);
+            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', Models\ObjectACLType::PUBLIC_READ, null, null, null, null, null, null, null, null, Models\ObjectACLType::PRIVATE);
+            $input = ObjectMultipart::fromCompleteMultipartUpload($request);
+            $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertTrue(false, "should not here");
+        }
+
+        try {
+            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', Models\ObjectACLType::PUBLIC_READ, null, null, null, null, null, null, null, null, Models\ObjectACLType::PRIVATE);
+            $input = ObjectMultipart::fromCompleteMultipartUpload($request);
+            $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertTrue(false, "should not here");
+        }
+
+        try {
+            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', null, new Models\CompleteMultipartUpload([new Models\UploadPart(1, '"3349DC700140D7F86A0784842780****"'), new Models\UploadPart(2, '"8C315065167132444177411FDA14****"'), new Models\UploadPart(3, '"8EFDA8BE206636A695359836FE0A****"'),]), null, null, null, null, Models\EncodeType::URL);
             $input = ObjectMultipart::fromCompleteMultipartUpload($request);
             $this->assertEquals('bucket-123', $input->getBucket());
             $this->assertEquals('key-123', $input->getKey());
@@ -416,6 +432,40 @@ class ObjectMultipartTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals(base64_encode(md5($body, true)), $input->getHeaders()['content-md5']);
             $xml = <<<BBB
 <?xml version="1.0" encoding="UTF-8"?><CompleteMultipartUpload><Part><PartNumber>1</PartNumber><ETag>"3349DC700140D7F86A0784842780****"</ETag></Part><Part><PartNumber>2</PartNumber><ETag>"8C315065167132444177411FDA14****"</ETag></Part><Part><PartNumber>3</PartNumber><ETag>"8EFDA8BE206636A695359836FE0A****"</ETag></Part></CompleteMultipartUpload>
+BBB;
+            $this->assertEquals($xml, $this->cleanXml($body));
+        } catch (\InvalidArgumentException $e) {
+            $this->assertTrue(false, "should not here");
+        }
+
+        try {
+            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', null, new Models\CompleteMultipartUpload([new Models\UploadPart(1, null, '"3349DC700140D7F86A0784842780****1"',), new Models\UploadPart(2, null, '"8C315065167132444177411FDA14****2"'), new Models\UploadPart(3, null, '"8EFDA8BE206636A695359836FE0A****3"'),]), null, null, null, null, Models\EncodeType::URL);
+            $input = ObjectMultipart::fromCompleteMultipartUpload($request);
+            $this->assertEquals('bucket-123', $input->getBucket());
+            $this->assertEquals('key-123', $input->getKey());
+            $this->assertEquals('0004B9895DBBB6EC9****', $input->getParameters()['uploadId']);
+            $this->assertEquals(Models\EncodeType::URL, $input->getParameters()['encoding-type']);
+            $body = $input->getBody()->getContents();
+            $this->assertEquals(base64_encode(md5($body, true)), $input->getHeaders()['content-md5']);
+            $xml = <<<BBB
+<?xml version="1.0" encoding="UTF-8"?><CompleteMultipartUpload><Part><PartNumber>1</PartNumber><ETag>"3349DC700140D7F86A0784842780****1"</ETag></Part><Part><PartNumber>2</PartNumber><ETag>"8C315065167132444177411FDA14****2"</ETag></Part><Part><PartNumber>3</PartNumber><ETag>"8EFDA8BE206636A695359836FE0A****3"</ETag></Part></CompleteMultipartUpload>
+BBB;
+            $this->assertEquals($xml, $this->cleanXml($body));
+        } catch (\InvalidArgumentException $e) {
+            $this->assertTrue(false, "should not here");
+        }
+
+        try {
+            $request = new Models\CompleteMultipartUploadRequest('bucket-123', 'key-123', '0004B9895DBBB6EC9****', null, new Models\CompleteMultipartUpload([new Models\UploadPart(1, '"3349DC700140D7F86A0784842780****"', '"3349DC700140D7F86A0784842780****1"',), new Models\UploadPart(2, '"8C315065167132444177411FDA14****"', '"8C315065167132444177411FDA14****2"'), new Models\UploadPart(3, '"8EFDA8BE206636A695359836FE0A****"', '"8EFDA8BE206636A695359836FE0A****3"'),]), null, null, null, null, Models\EncodeType::URL);
+            $input = ObjectMultipart::fromCompleteMultipartUpload($request);
+            $this->assertEquals('bucket-123', $input->getBucket());
+            $this->assertEquals('key-123', $input->getKey());
+            $this->assertEquals('0004B9895DBBB6EC9****', $input->getParameters()['uploadId']);
+            $this->assertEquals(Models\EncodeType::URL, $input->getParameters()['encoding-type']);
+            $body = $input->getBody()->getContents();
+            $this->assertEquals(base64_encode(md5($body, true)), $input->getHeaders()['content-md5']);
+            $xml = <<<BBB
+<?xml version="1.0" encoding="UTF-8"?><CompleteMultipartUpload><Part><PartNumber>1</PartNumber><ETag>"3349DC700140D7F86A0784842780****1"</ETag></Part><Part><PartNumber>2</PartNumber><ETag>"8C315065167132444177411FDA14****2"</ETag></Part><Part><PartNumber>3</PartNumber><ETag>"8EFDA8BE206636A695359836FE0A****3"</ETag></Part></CompleteMultipartUpload>
 BBB;
             $this->assertEquals($xml, $this->cleanXml($body));
         } catch (\InvalidArgumentException $e) {

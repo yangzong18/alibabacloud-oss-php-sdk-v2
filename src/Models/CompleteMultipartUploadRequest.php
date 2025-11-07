@@ -94,6 +94,7 @@ final class CompleteMultipartUploadRequest extends RequestModel
      * @param string|null $encodingType The encoding type of the object name in the response.
      * @param string|null $requestPayer To indicate that the requester is aware that the request and data download will incur costs
      * @param array|null $options
+     * @param string|null $objectAcl The access control list (ACL) of the object. The object acl parameter has the same functionality as the acl parameter. it is the standardized name for acl. If both exist simultaneously, the value of objectAcl will take precedence.
      */
     public function __construct(
         ?string $bucket = null,
@@ -107,13 +108,14 @@ final class CompleteMultipartUploadRequest extends RequestModel
         ?bool $forbidOverwrite = null,
         ?string $encodingType = null,
         ?string $requestPayer = null,
-        ?array $options = null
+        ?array $options = null,
+        ?string $objectAcl = null
     )
     {
         $this->bucket = $bucket;
         $this->key = $key;
         $this->uploadId = $uploadId;
-        $this->acl = $acl;
+        $this->acl = $objectAcl ?? $acl;
         $this->completeMultipartUpload = $completeMultipartUpload;
         $this->completeAll = $completeAll;
         $this->callback = $callback;

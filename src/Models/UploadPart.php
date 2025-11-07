@@ -29,18 +29,19 @@ final class UploadPart extends Model
     #[XmlElement(rename: 'ETag', type: 'string')]
     public ?string $etag;
 
-
     /**
      * UploadPart constructor.
      * @param int|null $partNumber The part number.
      * @param string|null $etag The ETag value that is returned by OSS after the part is uploaded.
+     * @param string|null $eTag The ETag value that is returned by OSS after the part is uploaded. The eTag parameter has the same functionality as the etag parameter. It is the normalized name of etag. If both exist simultaneously, the value of eTag will take precedence. It is the normalized name of ETag.
      */
     public function __construct(
         ?int $partNumber = null,
-        ?string $etag = null
+        ?string $etag = null,
+        ?string $eTag = null
     )
     {
         $this->partNumber = $partNumber;
-        $this->etag = $etag;
+        $this->etag = $eTag ?? $etag;
     }
 }

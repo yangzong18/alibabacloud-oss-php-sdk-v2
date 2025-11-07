@@ -195,6 +195,7 @@ final class PutObjectRequest extends RequestModel
      * @param \Psr\Http\Message\StreamInterface|null $body Object data.
      * @param callable|null $progressFn Progress callback function.
      * @param array|null $options
+     * @param string|null $objectAcl The access control list (ACL) of the object. The object acl parameter has the same functionality as the acl parameter. it is the standardized name for acl. If both exist simultaneously, the value of objectAcl will take precedence.
      */
     public function __construct(
         ?string $bucket = null,
@@ -220,12 +221,13 @@ final class PutObjectRequest extends RequestModel
         ?string $requestPayer = null,
         ?\Psr\Http\Message\StreamInterface $body = null,
         ?callable $progressFn = null,
-        ?array $options = null
+        ?array $options = null,
+        ?string $objectAcl = null
     )
     {
         $this->bucket = $bucket;
         $this->key = $key;
-        $this->acl = $acl;
+        $this->acl = $objectAcl ?? $acl;
         $this->storageClass = $storageClass;
         $this->metadata = $metadata;
         $this->cacheControl = $cacheControl;

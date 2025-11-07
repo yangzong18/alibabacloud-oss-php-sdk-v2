@@ -434,6 +434,34 @@ BBB;
         $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
         $this->assertEquals([], $input->getParameters());
         $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
+
+        $request = new Models\PutObjectRequest('bucket-123', 'key-123', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, Models\ObjectACLType::PUBLIC_READ);
+        $request->body = Utils::streamFor($body);
+        $request->trafficLimit = 102400;
+        $request->requestPayer = 'requester';
+        $input = ObjectBasic::fromPutObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals($input->getBody()->getContents(), $body);
+        $this->assertEquals('102400', $input->getHeaders()['x-oss-traffic-limit']);
+        $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
+        $this->assertEquals([], $input->getParameters());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
+        $this->assertEquals(true, $input->getHeaders()['x-oss-object-acl']);
+
+        $request = new Models\PutObjectRequest('bucket-123', 'key-123', Models\ObjectACLType::PRIVATE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, Models\ObjectACLType::PUBLIC_READ);
+        $request->body = Utils::streamFor($body);
+        $request->trafficLimit = 102400;
+        $request->requestPayer = 'requester';
+        $input = ObjectBasic::fromPutObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals($input->getBody()->getContents(), $body);
+        $this->assertEquals('102400', $input->getHeaders()['x-oss-traffic-limit']);
+        $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
+        $this->assertEquals([], $input->getParameters());
+        $this->assertEquals(true, $input->getOpMetadata()['detect_content_type']);
+        $this->assertEquals(true, $input->getHeaders()['x-oss-object-acl']);
     }
 
     public function testToPutObject()
@@ -878,6 +906,58 @@ BBB;
         $this->assertEquals('Replace', $input->getHeaders()['x-oss-tagging-directive']);
         $this->assertEquals('REPLACE', $input->getHeaders()['x-oss-metadata-directive']);
         $this->assertEquals([], $input->getOpMetadata());
+
+        $request = new Models\CopyObjectRequest('bucket-123', 'key-123', null, 'src-key', 'CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY*****', '"D41D8CD98F00B204E9800998ECF8****"', '"D41D8CD98F00B204E9800998ECF9****"', 'Fri, 13 Nov 2023 14:47:53 GMT', 'Fri, 13 Nov 2015 14:47:53 GMT', null, Models\StorageClassType::STANDARD, array(
+            "name" => "walker",
+            "email" => "demo@aliyun.com",
+        ), null, null, null, null, null, null, null, 'REPLACE', 'KMS', 'SM4', '9468da86-3509-4f8d-a61e-6eab1eac****', 'TagA=B&TagC=D', 'Replace', true, 102400, null, null, null, Models\ObjectACLType::PRIVATE);
+        $input = ObjectBasic::fromCopyObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertNull($input->getBody());
+        $this->assertEquals('"D41D8CD98F00B204E9800998ECF8****"', $input->getHeaders()['x-oss-copy-source-if-match']);
+        $this->assertEquals('"D41D8CD98F00B204E9800998ECF9****"', $input->getHeaders()['x-oss-copy-source-if-none-match']);
+        $this->assertEquals('Fri, 13 Nov 2023 14:47:53 GMT', $input->getHeaders()['x-oss-copy-source-if-modified-since']);
+        $this->assertEquals('Fri, 13 Nov 2015 14:47:53 GMT', $input->getHeaders()['x-oss-copy-source-if-unmodified-since']);
+        $this->assertEquals('/bucket-123/src-key?versionId=CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY*****', $input->getHeaders()['x-oss-copy-source']);
+        $this->assertEquals('walker', $input->getHeaders()['x-oss-meta-name']);
+        $this->assertEquals('demo@aliyun.com', $input->getHeaders()['x-oss-meta-email']);
+        $this->assertEquals('KMS', $input->getHeaders()['x-oss-server-side-encryption']);
+        $this->assertEquals('SM4', $input->getHeaders()['x-oss-server-side-data-encryption']);
+        $this->assertEquals('9468da86-3509-4f8d-a61e-6eab1eac****', $input->getHeaders()['x-oss-server-side-encryption-key-id']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals('TagA=B&TagC=D', $input->getHeaders()['x-oss-tagging']);
+        $this->assertEquals('Replace', $input->getHeaders()['x-oss-tagging-directive']);
+        $this->assertEquals('REPLACE', $input->getHeaders()['x-oss-metadata-directive']);
+        $this->assertEquals([], $input->getOpMetadata());
+
+        $request = new Models\CopyObjectRequest('bucket-123', 'key-123', null, 'src-key', 'CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY*****', '"D41D8CD98F00B204E9800998ECF8****"', '"D41D8CD98F00B204E9800998ECF9****"', 'Fri, 13 Nov 2023 14:47:53 GMT', 'Fri, 13 Nov 2015 14:47:53 GMT', Models\ObjectACLType::PUBLIC_READ, Models\StorageClassType::STANDARD, array(
+            "name" => "walker",
+            "email" => "demo@aliyun.com",
+        ), null, null, null, null, null, null, null, 'REPLACE', 'KMS', 'SM4', '9468da86-3509-4f8d-a61e-6eab1eac****', 'TagA=B&TagC=D', 'Replace', true, 102400, null, null, null, Models\ObjectACLType::PRIVATE);
+        $input = ObjectBasic::fromCopyObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertNull($input->getBody());
+        $this->assertEquals('"D41D8CD98F00B204E9800998ECF8****"', $input->getHeaders()['x-oss-copy-source-if-match']);
+        $this->assertEquals('"D41D8CD98F00B204E9800998ECF9****"', $input->getHeaders()['x-oss-copy-source-if-none-match']);
+        $this->assertEquals('Fri, 13 Nov 2023 14:47:53 GMT', $input->getHeaders()['x-oss-copy-source-if-modified-since']);
+        $this->assertEquals('Fri, 13 Nov 2015 14:47:53 GMT', $input->getHeaders()['x-oss-copy-source-if-unmodified-since']);
+        $this->assertEquals('/bucket-123/src-key?versionId=CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY*****', $input->getHeaders()['x-oss-copy-source']);
+        $this->assertEquals('walker', $input->getHeaders()['x-oss-meta-name']);
+        $this->assertEquals('demo@aliyun.com', $input->getHeaders()['x-oss-meta-email']);
+        $this->assertEquals('KMS', $input->getHeaders()['x-oss-server-side-encryption']);
+        $this->assertEquals('SM4', $input->getHeaders()['x-oss-server-side-data-encryption']);
+        $this->assertEquals('9468da86-3509-4f8d-a61e-6eab1eac****', $input->getHeaders()['x-oss-server-side-encryption-key-id']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals('TagA=B&TagC=D', $input->getHeaders()['x-oss-tagging']);
+        $this->assertEquals('Replace', $input->getHeaders()['x-oss-tagging-directive']);
+        $this->assertEquals('REPLACE', $input->getHeaders()['x-oss-metadata-directive']);
+        $this->assertEquals([], $input->getOpMetadata());
     }
 
     public function testToCopyObject()
@@ -1013,6 +1093,54 @@ BBB;
             "user" => "walker",
         );
         $request->tagging = 'TagA=A&TagB=B';
+        $input = ObjectBasic::fromAppendObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertNull($input->getBody());
+
+        $this->assertEquals('no-cache', $input->getHeaders()['cache-control']);
+        $this->assertEquals('attachment', $input->getHeaders()['content-disposition']);
+        $this->assertEquals('walker', $input->getHeaders()['x-oss-meta-user']);
+        $this->assertEquals('demo', $input->getHeaders()['x-oss-meta-location']);
+        $this->assertEquals('AES256', $input->getHeaders()['x-oss-server-side-encryption']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals('gzip', $input->getHeaders()['content-encoding']);
+        $this->assertEquals('eB5eJF1ptWaXm4bijSPyxw==', $input->getHeaders()['content-md5']);
+        $this->assertEquals('2022-10-12T00:00:00.000Z', $input->getHeaders()['expires']);
+        $this->assertEquals('TagA=A&TagB=B', $input->getHeaders()['x-oss-tagging']);
+        $this->assertEmpty($input->getParameters()['append']);
+        $this->assertEquals('0', $input->getParameters()['position']);
+
+        $request = new Models\AppendObjectRequest('bucket-123', 'key-123', 0, null, Models\StorageClassType::STANDARD, array(
+            "location" => "demo",
+            "user" => "walker",
+        ), 'no-cache', 'attachment', 'gzip', null, 'eB5eJF1ptWaXm4bijSPyxw==', null, '2022-10-12T00:00:00.000Z', 'AES256', null, null, 'TagA=A&TagB=B', true, null, null, null, null, null, Models\ObjectACLType::PRIVATE);
+        $input = ObjectBasic::fromAppendObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertNull($input->getBody());
+
+        $this->assertEquals('no-cache', $input->getHeaders()['cache-control']);
+        $this->assertEquals('attachment', $input->getHeaders()['content-disposition']);
+        $this->assertEquals('walker', $input->getHeaders()['x-oss-meta-user']);
+        $this->assertEquals('demo', $input->getHeaders()['x-oss-meta-location']);
+        $this->assertEquals('AES256', $input->getHeaders()['x-oss-server-side-encryption']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals('gzip', $input->getHeaders()['content-encoding']);
+        $this->assertEquals('eB5eJF1ptWaXm4bijSPyxw==', $input->getHeaders()['content-md5']);
+        $this->assertEquals('2022-10-12T00:00:00.000Z', $input->getHeaders()['expires']);
+        $this->assertEquals('TagA=A&TagB=B', $input->getHeaders()['x-oss-tagging']);
+        $this->assertEmpty($input->getParameters()['append']);
+        $this->assertEquals('0', $input->getParameters()['position']);
+
+        $request = new Models\AppendObjectRequest('bucket-123', 'key-123', 0, Models\ObjectACLType::PUBLIC_READ, Models\StorageClassType::STANDARD, array(
+            "location" => "demo",
+            "user" => "walker",
+        ), 'no-cache', 'attachment', 'gzip', null, 'eB5eJF1ptWaXm4bijSPyxw==', null, '2022-10-12T00:00:00.000Z', 'AES256', null, null, 'TagA=A&TagB=B', true, null, null, null, null, null, Models\ObjectACLType::PRIVATE);
         $input = ObjectBasic::fromAppendObject($request);
         $this->assertEquals('bucket-123', $input->getBucket());
         $this->assertEquals('key-123', $input->getKey());
@@ -1243,8 +1371,6 @@ BBB;
         $this->assertEquals('key-123', $input->getKey());
         $this->assertEquals('CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY****', $input->getParameters()['versionId']);
         $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
-
-
     }
 
     public function testToHeadObject()
@@ -1394,7 +1520,6 @@ BBB;
         $this->assertEquals('Appendable', $result->objectType);
         $this->assertEquals(Models\StorageClassType::STANDARD, $result->storageClass);
         $this->assertEquals(1001, $result->nextAppendPosition);
-
     }
 
     public function testFromGetObjectMeta()
@@ -1427,8 +1552,6 @@ BBB;
         $this->assertEquals('key-123', $input->getKey());
         $this->assertEquals('CAEQNhiBgM0BYiIDc4MGZjZGI2OTBjOTRmNTE5NmU5NmFhZjhjYmY****', $input->getParameters()['versionId']);
         $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
-
-
     }
 
     public function testToGetObjectMeta()
@@ -1510,7 +1633,6 @@ BBB;
         } catch (\Throwable $e) {
             $this->assertTrue(false, "should not here");
         }
-
     }
 
     public function testFromRestoreObject()
@@ -1729,6 +1851,21 @@ BBB;
 
         $request = new Models\PutObjectAclRequest('bucket-123', 'key-123', Models\ObjectACLType::PRIVATE);
         $request->requestPayer = 'requester';
+        $input = ObjectBasic::fromPutObjectAcl($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()["x-oss-object-acl"]);
+        $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
+
+        $request = new Models\PutObjectAclRequest('bucket-123', 'key-123', null, null, null, null, Models\ObjectACLType::PRIVATE);
+        $request->requestPayer = 'requester';
+        $input = ObjectBasic::fromPutObjectAcl($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals(Models\ObjectACLType::PRIVATE, $input->getHeaders()["x-oss-object-acl"]);
+        $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
+
+        $request = new Models\PutObjectAclRequest('bucket-123', 'key-123',Models\ObjectACLType::PUBLIC_READ,null,'requester',null,Models\ObjectACLType::PRIVATE);
         $input = ObjectBasic::fromPutObjectAcl($request);
         $this->assertEquals('bucket-123', $input->getBucket());
         $this->assertEquals('key-123', $input->getKey());
@@ -2330,6 +2467,28 @@ BBB;
         $this->assertEquals('key-123', $input->getKey());
         $this->assertEquals('target-key', $input->getHeaders()['x-oss-symlink-target']);
         $this->assertEquals('requester', $input->getHeaders()['x-oss-request-payer']);
+
+        $request = new Models\PutSymlinkRequest('bucket-123', 'key-123', null, null, Models\StorageClassType::STANDARD, ['name' => 'demo', 'email' => 'demo@aliyun.com'], true, null, null, Models\ObjectACLType::PUBLIC_READ, 'target-key');
+        $input = ObjectBasic::fromPutSymlink($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals('target-key', $input->getHeaders()['x-oss-symlink-target']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals(Models\ObjectACLType::PUBLIC_READ, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals('demo', $input->getHeaders()['x-oss-meta-name']);
+        $this->assertEquals('demo@aliyun.com', $input->getHeaders()['x-oss-meta-email']);
+
+        $request = new Models\PutSymlinkRequest('bucket-123', 'key-123', 'target-key',Models\ObjectACLType::PRIVATE, Models\StorageClassType::STANDARD, ['name' => 'demo', 'email' => 'demo@aliyun.com'], true,null,null,Models\ObjectACLType::PUBLIC_READ,'target-key2');
+        $input = ObjectBasic::fromPutSymlink($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals('target-key2', $input->getHeaders()['x-oss-symlink-target']);
+        $this->assertEquals('true', $input->getHeaders()['x-oss-forbid-overwrite']);
+        $this->assertEquals(Models\ObjectACLType::PUBLIC_READ, $input->getHeaders()['x-oss-object-acl']);
+        $this->assertEquals(Models\StorageClassType::STANDARD, $input->getHeaders()['x-oss-storage-class']);
+        $this->assertEquals('demo', $input->getHeaders()['x-oss-meta-name']);
+        $this->assertEquals('demo@aliyun.com', $input->getHeaders()['x-oss-meta-email']);
     }
 
     public function testToPutSymlink()
