@@ -45,12 +45,19 @@ final class DeleteMultipleObjectsRequest extends RequestModel
     public ?string $requestPayer;
 
     /**
+     * The container that stores information about you want to delete objects.
+     * @var Delete|null
+     */
+    public ?Delete $delete;
+
+    /**
      * DeleteMultipleObjectsRequest constructor.
      * @param string|null $bucket The name of the bucket.
      * @param array<DeleteObject>|null $objects The container that stores information about you want to delete objects.
      * @param string|null $encodingType The encoding type of the object names in the response. Valid value: url
      * @param bool|null $quiet Specifies whether to enable the Quiet return mode.
      * @param string|null $requestPayer To indicate that the requester is aware that the request and data download will incur costs.
+     * @param Delete|null $delete The container that stores information about you want to delete objects.
      * @param array|null $options
      */
     public function __construct(
@@ -59,7 +66,8 @@ final class DeleteMultipleObjectsRequest extends RequestModel
         ?string $encodingType = null,
         ?bool $quiet = null,
         ?string $requestPayer = null,
-        ?array $options = null
+        ?array $options = null,
+        ?Delete $delete = null
     )
     {
         $this->bucket = $bucket;
@@ -67,6 +75,7 @@ final class DeleteMultipleObjectsRequest extends RequestModel
         $this->encodingType = $encodingType;
         $this->quiet = $quiet;
         $this->requestPayer = $requestPayer;
+        $this->delete = $delete;
         parent::__construct($options);
     }
 }
