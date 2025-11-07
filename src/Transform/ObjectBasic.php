@@ -643,7 +643,9 @@ final class ObjectBasic
     public static function fromDeleteMultipleObjects(Models\DeleteMultipleObjectsRequest $request): OperationInput
     {
         Functions::assertFieldRequired('bucket', $request->bucket);
-        Functions::assertFieldRequired('objects', $request->objects);
+        if (isset($request->objects) && isset($request->delete)) {
+            throw new \InvalidArgumentException('The objects and delete parameters cannot be set simultaneously');
+        }
         $input = new OperationInput(
             'DeleteMultipleObjects',
             'POST',
@@ -659,25 +661,56 @@ final class ObjectBasic
                 if (isset($request->encodingType)) {
                     $input->setParameter('encoding-type', $request->encodingType);
                 }
-                $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
-                $xmlStr .= "\n<Delete>\n";
-                if (isset($request->quiet)) {
-                    $val = $request->quiet === true ? 'true' : 'false';
+
+                if (isset($request->delete)) {
+                    /**
+                     * @var Models\Delete
+                     */
+                    $delete = $request->delete;
+                    Functions::assertFieldRequired('delete.objects', $delete->objects);
+                    $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
+                    $xmlStr .= "\n<Delete>\n";
+                    $val = 'false';
+                    if (isset($delete->quiet)) {
+                        $val = $delete->quiet === true ? 'true' : 'false';
+                    }
                     $xmlStr .= "<Quiet>$val</Quiet>\n";
-                }
-                foreach ($request->objects as $obj) {
-                    $xmlStr .= "<Object>\n";
-                    if (isset($obj->key)) {
-                        $key = Utils::escapeXml($obj->key);
-                        $xmlStr .= "<Key>$key</Key>\n";
+                    foreach ($delete->objects as $obj) {
+                        $xmlStr .= "<Object>\n";
+                        if (isset($obj->key)) {
+                            $key = Utils::escapeXml($obj->key);
+                            $xmlStr .= "<Key>$key</Key>\n";
+                        }
+                        if (isset($obj->versionId)) {
+                            $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
+                        }
+                        $xmlStr .= "</Object>\n";
                     }
-                    if (isset($obj->versionId)) {
-                        $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
+                    $xmlStr .= '</Delete>';
+                    $input->setBody(Utils::streamFor($xmlStr));
+
+                } else {
+                    Functions::assertFieldRequired('objects', $request->objects);
+                    $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
+                    $xmlStr .= "\n<Delete>\n";
+                    if (isset($request->quiet)) {
+                        $val = $request->quiet === true ? 'true' : 'false';
+                        $xmlStr .= "<Quiet>$val</Quiet>\n";
                     }
-                    $xmlStr .= "</Object>\n";
+                    foreach ($request->objects as $obj) {
+                        $xmlStr .= "<Object>\n";
+                        if (isset($obj->key)) {
+                            $key = Utils::escapeXml($obj->key);
+                            $xmlStr .= "<Key>$key</Key>\n";
+                        }
+                        if (isset($obj->versionId)) {
+                            $xmlStr .= "<VersionId>$obj->versionId</VersionId>\n";
+                        }
+                        $xmlStr .= "</Object>\n";
+                    }
+                    $xmlStr .= '</Delete>';
+                    $input->setBody(Utils::streamFor($xmlStr));
                 }
-                $xmlStr .= '</Delete>';
-                $input->setBody(Utils::streamFor($xmlStr));
             },
             [Functions::class, 'addContentMd5']
         ];
