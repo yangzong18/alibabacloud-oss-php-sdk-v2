@@ -26,7 +26,7 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             $request = new Models\DeleteMultipleObjectsRequest('bucket-123');
             $input = ObjectBasic::fromDeleteMultipleObjects($request);
         } catch (\InvalidArgumentException $e) {
-            $this->assertStringContainsString("InvalidArgumentException: objects and delete must have one set", (string)$e);
+             $this->assertStringContainsString("missing required field, objects", (string)$e);
         }
 
         try {
@@ -41,8 +41,18 @@ class ObjectBasicTest extends \PHPUnit\Framework\TestCase
             ], true);
             $input = ObjectBasic::fromDeleteMultipleObjects($request);
         } catch (\InvalidArgumentException $e) {
-            $this->assertStringContainsString("InvalidArgumentException: objects and body cannot be set simultaneously", (string)$e);
+            $this->assertStringContainsString("InvalidArgumentException: The objects and delete parameters cannot be set simultaneously", (string)$e);
         }
+
+        try {
+            $request = new Models\DeleteMultipleObjectsRequest('bucket-123');
+            $request->delete = new Models\Delete();
+            $request->delete->quiet = true;
+            $input = ObjectBasic::fromDeleteMultipleObjects($request);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("missing required field, delete.objects", (string)$e);
+        }
+
 
         // bucket only
         $request = new Models\DeleteMultipleObjectsRequest('bucket-123', []);

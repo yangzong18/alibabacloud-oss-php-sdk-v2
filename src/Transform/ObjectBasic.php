@@ -643,11 +643,8 @@ final class ObjectBasic
     public static function fromDeleteMultipleObjects(Models\DeleteMultipleObjectsRequest $request): OperationInput
     {
         Functions::assertFieldRequired('bucket', $request->bucket);
-        if (isset($request->objects) && isset($request->body)) {
-            throw new \InvalidArgumentException('objects and body cannot be set simultaneously');
-        }
-        if (!isset($request->objects) && !isset($request->delete)) {
-            throw new \InvalidArgumentException('objects and delete must have one set');
+        if (isset($request->objects) && isset($request->delete)) {
+            throw new \InvalidArgumentException('The objects and delete parameters cannot be set simultaneously');
         }
         $input = new OperationInput(
             'DeleteMultipleObjects',
@@ -664,17 +661,21 @@ final class ObjectBasic
                 if (isset($request->encodingType)) {
                     $input->setParameter('encoding-type', $request->encodingType);
                 }
-                if (isset($request->objects) && isset($request->body)) {
-                    throw new \InvalidArgumentException('objects and body cannot be set simultaneously');
-                }
-                if (isset($request->objects)) {
+
+                if (isset($request->delete)) {
+                    /**
+                     * @var Models\Delete
+                     */
+                    $delete = $request->delete;
+                    Functions::assertFieldRequired('delete.objects', $delete->objects);
                     $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
                     $xmlStr .= "\n<Delete>\n";
-                    if (isset($request->quiet)) {
-                        $val = $request->quiet === true ? 'true' : 'false';
-                        $xmlStr .= "<Quiet>$val</Quiet>\n";
+                    $val = 'false';
+                    if (isset($delete->quiet)) {
+                        $val = $delete->quiet === true ? 'true' : 'false';
                     }
-                    foreach ($request->objects as $obj) {
+                    $xmlStr .= "<Quiet>$val</Quiet>\n";
+                    foreach ($delete->objects as $obj) {
                         $xmlStr .= "<Object>\n";
                         if (isset($obj->key)) {
                             $key = Utils::escapeXml($obj->key);
@@ -687,19 +688,16 @@ final class ObjectBasic
                     }
                     $xmlStr .= '</Delete>';
                     $input->setBody(Utils::streamFor($xmlStr));
+
                 } else {
-                    /**
-                     * @var Models\Delete
-                     */
-                    $delete = $request->delete;
+                    Functions::assertFieldRequired('objects', $request->objects);
                     $xmlStr = '<?xml version="1.0" encoding="UTF-8"?>';
                     $xmlStr .= "\n<Delete>\n";
-                    $val = 'false';
-                    if (isset($delete->quiet)) {
-                        $val = $delete->quiet === true ? 'true' : 'false';
+                    if (isset($request->quiet)) {
+                        $val = $request->quiet === true ? 'true' : 'false';
+                        $xmlStr .= "<Quiet>$val</Quiet>\n";
                     }
-                    $xmlStr .= "<Quiet>$val</Quiet>\n";
-                    foreach ($delete->objects as $obj) {
+                    foreach ($request->objects as $obj) {
                         $xmlStr .= "<Object>\n";
                         if (isset($obj->key)) {
                             $key = Utils::escapeXml($obj->key);

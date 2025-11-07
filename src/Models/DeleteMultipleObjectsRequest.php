@@ -58,6 +58,8 @@ final class DeleteMultipleObjectsRequest extends RequestModel
      * @param bool|null $quiet Specifies whether to enable the Quiet return mode.
      * @param string|null $requestPayer To indicate that the requester is aware that the request and data download will incur costs.
      * @param Delete|null $delete The container that stores information about you want to delete objects.
+     *                            The delete parameter is functionally equivalent to specifying objects and quiet parameters separately.
+     *                            It is recommended to use the delete parameter for unified configuration.
      * @param array|null $options
      */
     public function __construct(
