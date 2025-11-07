@@ -22,15 +22,23 @@ final class HttpsConfiguration extends Model
     #[XmlElement(rename: 'TLS', type: TLS::class)]
     public ?TLS $tls;
 
+    /**
+     * @var CipherSuite|null
+     */
+    #[XmlElement(rename: 'CipherSuite', type: CipherSuite::class)]
+    public ?CipherSuite $cipherSuite;
 
     /**
      * HttpsConfiguration constructor.
      * @param TLS|null $tls The container that stores TLS version configurations.
+     * @param CipherSuite|null $cipherSuite
      */
     public function __construct(
-        ?TLS $tls = null
+        ?TLS $tls = null,
+        ?CipherSuite $cipherSuite = null
     )
     {
         $this->tls = $tls;
+        $this->cipherSuite = $cipherSuite;
     }
 }
