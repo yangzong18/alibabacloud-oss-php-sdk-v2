@@ -221,6 +221,7 @@ final class CopyObjectRequest extends RequestModel
      * @param string|null $requestPayer To indicate that the requester is aware that the request and data download will incur costs.
      * @param callable|null $progressFn Progress callback function, it works in Copier.Copy only.
      * @param array|null $options
+     * @param string|null $objectAcl The access control list (ACL) of the object. The object acl parameter has the same functionality as the acl parameter. it is the standardized name for acl. If both exist simultaneously, the value of objectAcl will take precedence.
      */
     public function __construct(
         ?string $bucket = null,
@@ -252,7 +253,8 @@ final class CopyObjectRequest extends RequestModel
         ?int $trafficLimit = null,
         ?string $requestPayer = null,
         ?callable $progressFn = null,
-        ?array $options = null
+        ?array $options = null,
+        ?string $objectAcl = null
     )
     {
         $this->bucket = $bucket;
@@ -264,7 +266,7 @@ final class CopyObjectRequest extends RequestModel
         $this->ifNoneMatch = $ifNoneMatch;
         $this->ifModifiedSince = $ifModifiedSince;
         $this->ifUnmodifiedSince = $ifUnmodifiedSince;
-        $this->acl = $acl;
+        $this->acl = $objectAcl ?? $acl;
         $this->storageClass = $storageClass;
         $this->metadata = $metadata;
         $this->cacheControl = $cacheControl;
