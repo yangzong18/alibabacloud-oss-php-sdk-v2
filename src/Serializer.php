@@ -100,7 +100,9 @@ final class Serializer
 
         // children element
         foreach ($ro->getProperties() as $property) {
-            $property->setAccessible(true);
+            if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+                $property->setAccessible(true);
+            }
             $val = $property->getValue($value);
             if (!isset($val)) {
                 continue;
@@ -130,7 +132,9 @@ final class Serializer
 
         //headers
         $hp = $ro->getProperty('headers');
-        $hp->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $hp->setAccessible(true);
+        }
         $h = $hp->getValue($request);
         if (is_array($h)) {
             foreach ($h as $key => $value) {
@@ -140,7 +144,9 @@ final class Serializer
 
         //parameters
         $pp = $ro->getProperty('parameters');
-        $pp->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pp->setAccessible(true);
+        }
         $p = $pp->getValue($request);
         if (is_array($p)) {
             foreach ($p as $key => $value) {
@@ -150,7 +156,9 @@ final class Serializer
 
         //payload
         $pd = $ro->getProperty('payload');
-        $pd->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pd->setAccessible(true);
+        }
         $payload = $pd->getValue($request);
         if ($payload instanceof StreamInterface) {
             $input->setBody($payload);
@@ -158,7 +166,9 @@ final class Serializer
 
         // all properties in request
         foreach ($ro->getProperties() as $property) {
-            $property->setAccessible(true);
+            if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+                $property->setAccessible(true);
+            }
             $val = $property->getValue($request);
             if (!isset($val)) {
                 if (Functions::isRequiredProperty($property)) {

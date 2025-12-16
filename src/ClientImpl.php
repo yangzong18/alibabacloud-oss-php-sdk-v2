@@ -69,7 +69,9 @@ final class ClientImpl
                     $responseRo = new \ReflectionObject($response);
                     if ($responseRo->hasProperty('stream')) {
                         $pp = $responseRo->getProperty('stream');
-                        $pp->setAccessible(true);
+                        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+                            $pp->setAccessible(true);
+                        }
                         $pp->setValue($response, $body);
                     }
                 }
@@ -631,6 +633,8 @@ final class ClientImpl
             }
             if ($value != null) {
                 $request = $request->withAddedHeader('Content-Type', $value);
+            } else {
+                $request = $request->withAddedHeader('Content-Type', "application/octet-stream");
             }
         }
 

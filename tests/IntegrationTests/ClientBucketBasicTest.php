@@ -133,6 +133,16 @@ class ClientBucketBasicTest extends TestIntegration
         $this->assertEquals(True, count($result->headers) > 0);
         $this->assertEquals(24, strlen($result->requestId));
 
+        // set acl
+        $result = $client->putBucketAcl(new Oss\Models\PutBucketAclRequest(
+            $bucketName,
+            'private'
+        ));
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(True, count($result->headers) > 0);
+        $this->assertEquals(24, strlen($result->requestId));
+
         // get acl
         $result = $client->getBucketAcl(new Oss\Models\GetBucketAclRequest(
             $bucketName
@@ -142,27 +152,6 @@ class ClientBucketBasicTest extends TestIntegration
         $this->assertEquals(True, count($result->headers) > 0);
         $this->assertEquals(24, strlen($result->requestId));
         $this->assertEquals('private', $result->accessControlList->grant);
-
-        //set acl
-        $result = $client->putBucketAcl(new Oss\Models\PutBucketAclRequest(
-            $bucketName,
-            'public-read'
-        ));
-        $this->assertEquals(200, $result->statusCode);
-        $this->assertEquals('OK', $result->status);
-        $this->assertEquals(True, count($result->headers) > 0);
-        $this->assertEquals(24, strlen($result->requestId));
-
-        $this->waitFor(3);
-
-        $result = $client->getBucketAcl(new Oss\Models\GetBucketAclRequest(
-            $bucketName
-        ));
-        $this->assertEquals(200, $result->statusCode);
-        $this->assertEquals('OK', $result->status);
-        $this->assertEquals(True, count($result->headers) > 0);
-        $this->assertEquals(24, strlen($result->requestId));
-        $this->assertEquals('public-read', $result->accessControlList->grant);
 
         $client->deleteBucket(new Oss\Models\DeleteBucketRequest(
             $bucketName

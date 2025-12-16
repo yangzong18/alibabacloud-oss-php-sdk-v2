@@ -40,9 +40,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
 
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
 
         $sdkOptions = $pSdkOptions->getValue($client);
         $innerOptions = $pInnerOptions->getValue($client);
@@ -66,7 +72,7 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(null, $sdkOptions['response_handlers']);
         $this->assertEquals(0, $sdkOptions['feature_flags']);
         $this->assertEquals(null, $cfg->getCloudBoxId());
-        $this->assertEquals(null,  $cfg->getEnableAutoDetectCloudBoxId());
+        $this->assertEquals(null, $cfg->getEnableAutoDetectCloudBoxId());
 
         #$this->assertEquals('oss', $sdkOptions['response_stream']);
 
@@ -99,7 +105,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(null, $sdkOptions['credentials_provider']);
 
@@ -111,7 +119,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Credentials\AnonymousCredentialsProvider::class, $sdkOptions['credentials_provider']);
@@ -124,7 +134,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Credentials\StaticCredentialsProvider::class, $sdkOptions['credentials_provider']);
@@ -144,7 +156,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Signer\SignerV4::class, $sdkOptions['signer']);
@@ -154,7 +168,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Signer\SignerV1::class, $sdkOptions['signer']);
@@ -165,7 +181,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Signer\SignerV4::class, $sdkOptions['signer']);
@@ -175,7 +193,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
 
         $this->assertInstanceOf(Signer\SignerV4::class, $sdkOptions['signer']);
@@ -190,7 +210,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('https', $sdkOptions['endpoint']->getScheme());
@@ -205,7 +227,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('https', $sdkOptions['endpoint']->getScheme());
@@ -220,7 +244,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('https', $sdkOptions['endpoint']->getScheme());
@@ -235,7 +261,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('https', $sdkOptions['endpoint']->getScheme());
@@ -250,7 +278,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('http', $sdkOptions['endpoint']->getScheme());
@@ -266,7 +296,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertInstanceOf(GuzzleHttp\Psr7\Uri::class, $sdkOptions['endpoint']);
         $this->assertEquals('http', $sdkOptions['endpoint']->getScheme());
@@ -285,7 +317,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('virtual', $sdkOptions['address_style']);
 
@@ -298,7 +332,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('path', $sdkOptions['address_style']);
 
@@ -311,7 +347,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('cname', $sdkOptions['address_style']);
 
@@ -324,7 +362,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('path', $sdkOptions['address_style']);
     }
@@ -339,7 +379,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(null, $sdkOptions['retry_max_attempts']);
         $this->assertInstanceOf(Retry\StandardRetryer::class, $sdkOptions['retryer']);
@@ -353,7 +395,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(2, $sdkOptions['retry_max_attempts']);
         $this->assertInstanceOf(Retry\StandardRetryer::class, $sdkOptions['retryer']);
@@ -367,7 +411,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(null, $sdkOptions['retry_max_attempts']);
         $this->assertInstanceOf(Retry\NopRetryer::class, $sdkOptions['retryer']);
@@ -382,7 +428,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(2, $sdkOptions['retry_max_attempts']);
         $this->assertInstanceOf(Retry\StandardRetryer::class, $sdkOptions['retryer']);
@@ -399,7 +447,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pInnerOptions = $ro->getProperty('innerOptions');
-        $pInnerOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
         $innerOptions = $pInnerOptions->getValue($client);
         $this->assertEquals(Utils::defaultUserAgent(), $innerOptions['user_agent']);
 
@@ -412,7 +462,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pInnerOptions = $ro->getProperty('innerOptions');
-        $pInnerOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
         $innerOptions = $pInnerOptions->getValue($client);
         $this->assertEquals(Utils::defaultUserAgent() . '/my-agent', $innerOptions['user_agent']);
 
@@ -425,7 +477,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg, ['user_agent' => 'user-define-agent']);
         $ro = new \ReflectionObject($client);
         $pInnerOptions = $ro->getProperty('innerOptions');
-        $pInnerOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
         $innerOptions = $pInnerOptions->getValue($client);
         $this->assertEquals('user-define-agent', $innerOptions['user_agent']);
     }
@@ -440,7 +494,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(null, $sdkOptions['additional_headers']);
 
@@ -453,7 +509,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(['header1', 'header2'], $sdkOptions['additional_headers']);
     }
@@ -468,7 +526,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals(False, $requestOptions['allow_redirects']);
         $this->assertEquals(10.0, $requestOptions['connect_timeout']);
@@ -487,7 +547,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals(true, $requestOptions['allow_redirects']);
         $this->assertEquals(30.0, $requestOptions['connect_timeout']);
@@ -512,7 +574,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         );
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         #$this->assertEquals(true, $requestOptions['allow_redirects']);
         $this->assertEquals(11.0, $requestOptions['connect_timeout']);
@@ -541,7 +605,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         );
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals(false, $requestOptions['allow_redirects']);
         $this->assertEquals(12.0, $requestOptions['connect_timeout']);
@@ -559,7 +625,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals(false, isset($requestOptions['proxy']));
 
@@ -572,7 +640,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals('http://127.0.0.1:8080', $requestOptions['proxy']);
 
@@ -591,7 +661,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         );
         $ro = new \ReflectionObject($client);
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $requestOptions = $pRequestOptions->getValue($client);
         $this->assertEquals('http://127.0.0.1:3182', $requestOptions['proxy']);
     }
@@ -606,7 +678,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('header', $sdkOptions['auth_method']);
 
@@ -618,7 +692,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg, ['auth_method' => 'query']);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('query', $sdkOptions['auth_method']);
     }
@@ -633,7 +709,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss', $sdkOptions['product']);
 
@@ -645,7 +723,9 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $client = new ClientImpl($cfg, ['product' => 'oss-cloudbox']);
         $ro = new \ReflectionObject($client);
         $pSdkOptions = $ro->getProperty('sdkOptions');
-        $pSdkOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss-cloudbox', $sdkOptions['product']);
     }
@@ -2010,9 +2090,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(Defaults::CLOUD_BOX_PRODUCT, $sdkOptions['product']);
         $this->assertEquals('test-cloudbox-id', $sdkOptions['region']);
@@ -2020,7 +2106,7 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('https', $sdkOptions['endpoint']->getScheme());
         $this->assertEquals('test-endpoint', $sdkOptions['endpoint']->getAuthority());
         $this->assertEquals('test-cloudbox-id', $cfg->getCloudBoxId());
-        $this->assertEquals(null,  $cfg->getEnableAutoDetectCloudBoxId());
+        $this->assertEquals(null, $cfg->getEnableAutoDetectCloudBoxId());
 
         // cb-***.{region}.oss-cloudbox-control.aliyuncs.com
         // cb-***.{region}.oss-cloudbox.aliyuncs.com
@@ -2035,9 +2121,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss', $sdkOptions['product']);
         $this->assertEquals('test-region', $sdkOptions['region']);
@@ -2056,9 +2148,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss', $sdkOptions['product']);
         $this->assertEquals('test-region', $sdkOptions['region']);
@@ -2077,9 +2175,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(Defaults::CLOUD_BOX_PRODUCT, $sdkOptions['product']);
         $this->assertEquals('cb-123', $sdkOptions['region']);
@@ -2097,9 +2201,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals(Defaults::CLOUD_BOX_PRODUCT, $sdkOptions['product']);
         $this->assertEquals('cb-123', $sdkOptions['region']);
@@ -2118,9 +2228,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss', $sdkOptions['product']);
         $this->assertEquals('test-region', $sdkOptions['region']);
@@ -2138,9 +2254,15 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $pSdkOptions = $ro->getProperty('sdkOptions');
         $pInnerOptions = $ro->getProperty('innerOptions');
         $pRequestOptions = $ro->getProperty('requestOptions');
-        $pSdkOptions->setAccessible(true);
-        $pInnerOptions->setAccessible(true);
-        $pRequestOptions->setAccessible(true);
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pSdkOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pInnerOptions->setAccessible(true);
+        }
+        if (version_compare(PHP_VERSION, '8.5.0', '<')) {
+            $pRequestOptions->setAccessible(true);
+        }
         $sdkOptions = $pSdkOptions->getValue($client);
         $this->assertEquals('oss', $sdkOptions['product']);
         $this->assertEquals('test-region', $sdkOptions['region']);
