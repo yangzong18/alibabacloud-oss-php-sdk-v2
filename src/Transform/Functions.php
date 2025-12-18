@@ -176,6 +176,10 @@ final class Functions
         'GetBucketInventory' => 'BucketInventory',
         'ListBucketInventory' => 'BucketInventory',
         'DeleteBucketInventory' => 'BucketInventory',
+        // bucket overwrite config
+        'PutBucketOverwriteConfig' => 'BucketOverwriteConfig',
+        'GetBucketOverwriteConfig' => 'BucketOverwriteConfig',
+        'DeleteBucketOverwriteConfig' => 'BucketOverwriteConfig',
     ];
 
     public static function getTransformClass(string $apiName)

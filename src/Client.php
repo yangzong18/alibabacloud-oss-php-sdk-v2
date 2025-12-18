@@ -274,6 +274,12 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise listBucketInventoryAsync(Models\ListBucketInventoryRequest $request, array $args = []) Queries all inventories in a bucket at a time.
  * @method Models\DeleteBucketInventoryResult deleteBucketInventory(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
  * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryAsync(Models\DeleteBucketInventoryRequest $request, array $args = []) Deletes an inventory for a bucket.
+ * @method Models\PutBucketOverwriteConfigResult putBucketOverwriteConfig(Models\PutBucketOverwriteConfigRequest $request, array $args = []) Call the PutBucketOverwriteConfig operation to configure overwrite protection for a bucket. This prevents specified objects from being overwritten.
+ * @method \GuzzleHttp\Promise\Promise putBucketOverwriteConfigAsync(Models\PutBucketOverwriteConfigRequest $request, array $args = []) Call the PutBucketOverwriteConfig operation to configure overwrite protection for a bucket. This prevents specified objects from being overwritten.
+ * @method Models\GetBucketOverwriteConfigResult getBucketOverwriteConfig(Models\GetBucketOverwriteConfigRequest $request, array $args = []) Call the GetBucketOverwriteConfig operation to retrieve the overwrite configuration of a bucket.
+ * @method \GuzzleHttp\Promise\Promise getBucketOverwriteConfigAsync(Models\GetBucketOverwriteConfigRequest $request, array $args = []) Call the GetBucketOverwriteConfig operation to retrieve the overwrite configuration of a bucket.
+ * @method Models\DeleteBucketOverwriteConfigResult deleteBucketOverwriteConfig(Models\DeleteBucketOverwriteConfigRequest $request, array $args = []) Delete overwrite configuration rule for the bucket.
+ * @method \GuzzleHttp\Promise\Promise deleteBucketOverwriteConfigAsync(Models\DeleteBucketOverwriteConfigRequest $request, array $args = []) Delete overwrite configuration rule for the bucket.
  */
 final class Client
 {
