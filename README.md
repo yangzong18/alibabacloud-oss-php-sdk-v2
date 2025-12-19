@@ -2,7 +2,7 @@
 
 [![GitHub version](https://badge.fury.io/gh/aliyun%2Falibabacloud-oss-php-sdk-v2.svg)](https://badge.fury.io/gh/aliyun%2Falibabacloud-oss-php-sdk-v2)
 
-alibabacloud-oss-php-sdk-v2 is the Developer Preview for the v2 of the OSS SDK for the PHP programming language
+alibabacloud-oss-php-sdk-v2 is the v2 of the OSS SDK for the PHP programming language
 
 ## [简体中文](README-CN.md)
 
