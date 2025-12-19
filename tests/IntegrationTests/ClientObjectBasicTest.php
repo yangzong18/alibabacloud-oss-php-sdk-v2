@@ -236,6 +236,24 @@ class ClientObjectBasicTest extends TestIntegration
             }
         }
 
+        // seal append object
+        try {
+            $sealAppendObjRequest = new Oss\Models\SealAppendObjectRequest(
+                $bucketName,
+                $appendKey,
+                0
+            );
+            $result = $client->sealAppendObject($sealAppendObjRequest);
+        } catch (Oss\Exception\OperationException $e) {
+            $this->assertStringContainsString('Operation error SealAppendObject', $e);
+            $se = $e->getPrevious();
+            $this->assertInstanceOf(Oss\Exception\ServiceException::class, $se);
+            if ($se instanceof Oss\Exception\ServiceException) {
+                $this->assertEquals('InvalidAccessKeyId', $se->getErrorCode());
+                $this->assertEquals(403, $se->getStatusCode());
+            }
+        }
+
         // head object
         try {
             $headObjRequest = new Oss\Models\HeadObjectRequest(

@@ -52,6 +52,8 @@ use AlibabaCloud\Oss\V2\Transform;
  * @method \GuzzleHttp\Promise\Promise getObjectAsync(Models\GetObjectRequest $request, array $args = []) You can call this operation to query an object.
  * @method Models\AppendObjectResult appendObject(Models\AppendObjectRequest $request, array $args = []) You can call this operation to upload an object by appending the object to an existing object.
  * @method \GuzzleHttp\Promise\Promise appendObjectAsync(Models\AppendObjectRequest $request, array $args = []) You can call this operation to upload an object by appending the object to an existing object.
+ * @method Models\SealAppendObjectResult sealAppendObject(Models\SealAppendObjectRequest $request, array $args = []) This operation stops writing to the Appendable Object, after which the user can configure lifecycle rules to change the storage class of the corresponding Appendable Object to Cold Archive or Deep Cold Archive.
+ * @method \GuzzleHttp\Promise\Promise sealAppendObjectAsync(Models\SealAppendObjectRequest $request, array $args = []) This operation stops writing to the Appendable Object, after which the user can configure lifecycle rules to change the storage class of the corresponding Appendable Object to Cold Archive or Deep Cold Archive.
  * @method Models\DeleteObjectResult deleteObject(Models\DeleteObjectRequest $request, array $args = []) You can call this operation to delete an object.
  * @method \GuzzleHttp\Promise\Promise deleteObjectAsync(Models\DeleteObjectRequest $request, array $args = []) You can call this operation to delete an object.
  * @method Models\DeleteMultipleObjectsResult deleteMultipleObjects(Models\DeleteMultipleObjectsRequest $request, array $args = []) You can call this operation to delete an object.

@@ -2830,6 +2830,72 @@ BBB;
         $this->assertEquals('OK', $result->processStatus);
     }
 
+    public function testFromSealAppendObject()
+    {
+        // miss required field
+        try {
+            $request = new Models\SealAppendObjectRequest();
+            $input = ObjectBasic::fromSealAppendObject($request);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("missing required field, bucket", (string)$e);
+        }
+
+        try {
+            $request = new Models\SealAppendObjectRequest('bucket-123');
+            $input = ObjectBasic::fromSealAppendObject($request);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("missing required field, key", (string)$e);
+        }
+
+        try {
+            $request = new Models\SealAppendObjectRequest('bucket-123', 'key-123');
+            $input = ObjectBasic::fromSealAppendObject($request);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("missing required field, position", (string)$e);
+        }
+        $body = 'hi oss';
+        $request = new Models\SealAppendObjectRequest('bucket-123', 'key-123', 0);
+        $input = ObjectBasic::fromSealAppendObject($request);
+        $this->assertEquals('bucket-123', $input->getBucket());
+        $this->assertEquals('key-123', $input->getKey());
+        $this->assertEquals('0', $input->getParameters()['position']);
+    }
+
+    public function testToSealAppendObject()
+    {
+        // empty output
+        try {
+            $output = new OperationOutput();
+            $result = ObjectBasic::toSealAppendObject($output);
+            $this->assertTrue(false, 'should not here');
+        } catch (\Throwable $e) {
+            $this->assertStringContainsString('Call to a member function hasHeader() on null', $e->getMessage());
+        }
+
+        try {
+            $output = new OperationOutput(
+                'OK',
+                200,
+                ['x-oss-request-id' => '123', 'ETag' => '"F2064A169EE92E9775EE5324D0B1****"', 'x-oss-sealed-time' => 'Wed, 07 May 2025 23:00:00 GMT'],
+                null,
+                new OperationInput('SealAppendObject', 'POST', []),
+                null,
+                new \GuzzleHttp\Psr7\Response(
+                    200,
+                    ['x-oss-request-id' => '123', 'ETag' => '"F2064A169EE92E9775EE5324D0B1****"', 'x-oss-sealed-time' => 'Wed, 07 May 2025 23:00:00 GMT'],
+                ),
+            );
+            $result = ObjectBasic::toSealAppendObject($output);
+            $this->assertEquals('OK', $result->status);
+            $this->assertEquals(200, $result->statusCode);
+            $this->assertEquals('123', $result->requestId);
+            $this->assertEquals('123', $result->headers['x-oss-request-id']);
+            $this->assertEquals('Wed, 07 May 2025 23:00:00 GMT', $result->sealedTime);
+        } catch (\Throwable $e) {
+            $this->assertTrue(false, "should not here");
+        }
+    }
+
     private function cleanXml($xml)
     {
         return str_replace("\n", "", str_replace("\r", "", $xml));
