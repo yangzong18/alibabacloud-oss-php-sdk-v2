@@ -34,6 +34,7 @@ final class Functions
         'CopyObject' => 'ObjectBasic',
         'GetObject' => 'ObjectBasic',
         'AppendObject' => 'ObjectBasic',
+        'SealAppendObject' => 'ObjectBasic',
         'DeleteObject' => 'ObjectBasic',
         'DeleteMultipleObjects' => 'ObjectBasic',
         'HeadObject' => 'ObjectBasic',
