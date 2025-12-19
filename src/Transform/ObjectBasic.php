@@ -586,6 +586,55 @@ final class ObjectBasic
     }
 
     /**
+     * @param Models\SealAppendObjectRequest $request
+     * @return OperationInput
+     */
+    public static function fromSealAppendObject(Models\SealAppendObjectRequest $request): OperationInput
+    {
+        Functions::assertFieldRequired('bucket', $request->bucket);
+        Functions::assertFieldRequired('key', $request->key);
+        Functions::assertFieldRequired('position', $request->position);
+        $input = new OperationInput(
+            'SealAppendObject',
+            'POST',
+            ['Content-Type' => 'application/xml'],
+        );
+        $input->setBucket($request->bucket);
+        $input->setKey($request->key);
+        $input->setParameter('seal', '');
+        $input->setOpMetadata('sub-resource', ["seal",]);
+        $customSerializer = [
+            static function (Models\SealAppendObjectRequest $request, OperationInput $input) {
+                if (isset($request->position)) {
+                    $input->setParameter('position', (string)$request->position);
+                }
+            },
+            [Functions::class, 'addContentMd5']
+        ];
+        Functions::serializeInputLite($request, $input, $customSerializer);
+        return $input;
+    }
+
+    /**
+     * @param OperationOutput $output
+     * @return Models\SealAppendObjectResult
+     */
+    public static function toSealAppendObject(OperationOutput $output): Models\SealAppendObjectResult
+    {
+        $result = new Models\SealAppendObjectResult();
+        $customDeserializer = [
+            static function (Models\SealAppendObjectResult $result, OperationOutput $output) {
+                $resp = $output->getHttpResponse();
+                if ($resp->hasHeader('x-oss-sealed-time')) {
+                    $result->sealedTime = $resp->getHeader('x-oss-sealed-time')[0];
+                }
+            },
+        ];
+        Deserializer::deserializeOutput($result, $output, $customDeserializer);
+        return $result;
+    }
+
+    /**
      * @param Models\DeleteObjectRequest $request
      * @return OperationInput
      */
