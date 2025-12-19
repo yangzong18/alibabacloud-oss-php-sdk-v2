@@ -69,7 +69,9 @@ final class ClientImpl
                     $responseRo = new \ReflectionObject($response);
                     if ($responseRo->hasProperty('stream')) {
                         $pp = $responseRo->getProperty('stream');
-                        $pp->setAccessible(true);
+                        if (PHP_VERSION_ID < 80100) {
+                            $pp->setAccessible(true);
+                        }
                         $pp->setValue($response, $body);
                     }
                 }
@@ -629,9 +631,10 @@ final class ClientImpl
                     }
                 }
             }
-            if ($value != null) {
-                $request = $request->withAddedHeader('Content-Type', $value);
+            if ($value == null) {
+                $value = 'application/octet-stream';
             }
+            $request = $request->withAddedHeader('Content-Type', $value);
         }
 
         // signing context

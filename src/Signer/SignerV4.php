@@ -112,7 +112,7 @@ class SignerV4 implements SignerInterface
             $signingCtx->time = (new DateTime('now', new DateTimeZone('UTC')))->modify('+' . $signingCtx->clockOffset . 'seconds');
         }
         $datetime = $signingCtx->time->format("Ymd\THis\Z");
-        $dateGmt = $signingCtx->time->format(DATE_RFC7231);
+        $dateGmt = $signingCtx->time->format("D, d M Y H:i:s \G\M\T");
         $date = $signingCtx->time->format("Ymd");
         $request = $request->withHeader(self::OSS_DATE_HEADER, $datetime)
             ->withHeader(self::DATE_HEADER, $dateGmt);
@@ -134,14 +134,14 @@ class SignerV4 implements SignerInterface
         // CanonicalRequest
         $signingCtx->request = $request;
         $canonicalRequest = $this->calcCanonicalRequest($signingCtx, $additionalHeaders);
-        //printf("canonicalRequest:%s" . PHP_EOL, $canonicalRequest);
+//        printf("canonicalRequest:%s" . PHP_EOL, $canonicalRequest);
         // StringToSign
         $stringToSign = $this->calcStringToSign($datetime, $scope, $canonicalRequest);
         $signingCtx->stringToSign = $stringToSign;
-        //printf("stringToSign:%s" . PHP_EOL, $stringToSign);
+//        printf("stringToSign:%s" . PHP_EOL, $stringToSign);
         // Signature
         $signature = $this->calcSignature($cred->getAccessKeySecret(), $date, $region, $product, $stringToSign);
-        //printf("signature:%s" . PHP_EOL, $signature);
+//        printf("signature:%s" . PHP_EOL, $signature);
 
         // credential
         $buf = 'OSS4-HMAC-SHA256 Credential=';

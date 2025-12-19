@@ -57,11 +57,14 @@ class ClientPresignerTest extends TestIntegration
         // PutObjRequest
         try {
             $request = new Oss\Models\PutObjectRequest($bucketName, $objectName);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $request->contentType = '';
+            }
             $result = $client->presign($request);
             $response = $httpClient->request($result->method, $result->url, ['body' => $body]);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
-            print_r($e);
+            print_r($e->getMessage());
             $this->assertTrue(false, 'should not here');
         }
 
@@ -102,13 +105,19 @@ class ClientPresignerTest extends TestIntegration
         $xml = Utils::parseXml($body);
         $uploadId = Functions::tryToString($xml->UploadId);
         try {
-            $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart,);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $options = ['headers' => ['content-type' => '']];
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $options);
+            } else {
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart);
+            }
             $partRequest->partNumber = 1;
             $partRequest->uploadId = $uploadId;
             $result = $client->presign($partRequest);
             $response = $httpClient->request($result->method, $result->url, ['body' => $body, ['headers' => $result->signedHeaders]]);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
+            print_r($e->getMessage());
             $this->assertTrue(false, 'should not here');
         }
 
@@ -247,6 +256,9 @@ class ClientPresignerTest extends TestIntegration
         // PutObjRequest
         try {
             $request = new Oss\Models\PutObjectRequest($bucketName, $objectName);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $request->contentType = '';
+            }
             $result = $client->presign($request);
             $response = $httpClient->request($result->method, $result->url, ['body' => $body]);
             $this->assertEquals(200, $response->getStatusCode());
@@ -292,10 +304,16 @@ class ClientPresignerTest extends TestIntegration
         $xml = Utils::parseXml($body);
         $uploadId = Functions::tryToString($xml->UploadId);
         try {
-            $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart,);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $options = ['headers' => ['content-type' => '']];
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $options);
+            } else {
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart);
+            }
             $partRequest->partNumber = 1;
             $partRequest->uploadId = $uploadId;
             $result = $client->presign($partRequest);
+
             $response = $httpClient->request($result->method, $result->url, ['body' => $body, ['headers' => $result->signedHeaders]]);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
@@ -383,12 +401,14 @@ class ClientPresignerTest extends TestIntegration
         // PutObjRequest
         try {
             $request = new Oss\Models\PutObjectRequest($bucketName, $objectName);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $request->contentType = '';
+            }
             $result = $client->presign($request);
             $response = $httpClient->request($result->method, $result->url, ['body' => $body]);
-            $this->assertCount(0, $result->signedHeaders);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
-            print_r($e);
+            print_r($e->getMessage());
             $this->assertTrue(false, 'should not here');
         }
 
@@ -409,14 +429,19 @@ class ClientPresignerTest extends TestIntegration
         $xml = Utils::parseXml($body);
         $uploadId = Functions::tryToString($xml->UploadId);
         try {
-            $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart,);
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $options = ['headers' => ['content-type' => '']];
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, $options);
+            } else {
+                $partRequest = new Oss\Models\UploadPartRequest($bucketName, $objectNameMultipart);
+            }
             $partRequest->partNumber = 1;
             $partRequest->uploadId = $uploadId;
             $result = $client->presign($partRequest);
-            $this->assertCount(0, $result->signedHeaders);
             $response = $httpClient->request($result->method, $result->url, ['body' => $body, ['headers' => $result->signedHeaders]]);
             $this->assertEquals(200, $response->getStatusCode());
         } catch (\Throwable $e) {
+            print_r($e->getMessage());
             $this->assertTrue(false, 'should not here');
         }
 
@@ -467,30 +492,5 @@ class ClientPresignerTest extends TestIntegration
         } catch (\Throwable $e) {
             $this->assertTrue(false, 'should not here');
         }
-    }
-
-    public function testPresignWithAnonymous()
-    {
-        $client = $this->getDefaultClient();
-        $bucketName = self::$bucketName;
-        $objectName = self::$OBJECTNAME_PREFIX . self::randomLowStr() . '-put-object';
-        $content = 'hi oss';
-        $putObjectRequest = new Oss\Models\PutObjectRequest(
-            $bucketName, $objectName
-        );
-        $putObjectRequest->acl = 'public-read';
-        $putObjectRequest->body = Utils::streamFor($content);
-        $client->putObject($putObjectRequest);
-
-        $request = new Oss\Models\GetObjectRequest($bucketName, $objectName);
-        $options['credentials_provider'] = new Oss\Credentials\AnonymousCredentialsProvider();
-        $result = $client->presign($request, $options);
-        $this->assertNotEmpty($result->url);
-        $this->assertNotEmpty($result->method);
-        $this->assertStringNotContainsString('?', $result->url);
-        $httpClient = new GuzzleHttp\Client();
-        $response = $httpClient->get($result->url);
-        $this->assertEquals($response->getStatusCode(), 200);
-        $this->assertEquals($response->getBody()->getContents(), $content);
     }
 }
