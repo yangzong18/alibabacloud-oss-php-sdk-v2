@@ -95,16 +95,16 @@ final class Utils
         }
 
         switch ($type) {
-            case 'internal';
+            case 'internal':
                 $endpoint = "oss-$region-internal.aliyuncs.com";
                 break;
-            case 'dualstack';
+            case 'dualstack':
                 $endpoint = "$region.oss.aliyuncs.com";
                 break;
-            case 'accelerate';
+            case 'accelerate':
                 $endpoint = 'oss-accelerate.aliyuncs.com';
                 break;
-            case 'overseas';
+            case 'overseas':
                 $endpoint = 'oss-accelerate-overseas.aliyuncs.com';
             default:
                 $endpoint = "oss-$region.aliyuncs.com";
@@ -116,7 +116,7 @@ final class Utils
 
     public static function defaultUserAgent(): string
     {
-        return 'alibabacloud-php-sdk-v2/'. Version::VERSION . " (" . php_uname('s') . "/" . php_uname('r') . "/" . php_uname('m') . ";" . PHP_VERSION . ")";
+        return 'alibabacloud-php-sdk-v2/' . Version::VERSION . " (" . php_uname('s') . "/" . php_uname('r') . "/" . php_uname('m') . ";" . PHP_VERSION . ")";
     }
 
     /**
@@ -154,12 +154,12 @@ final class Utils
         $result = [];
         foreach ($value as $k => $vv) {
             if (\is_array($vv)) {
-                $result[$k] =  $vv[0];
+                $result[$k] = $vv[0];
             } else {
-                $result[$k] =  $vv;
+                $result[$k] = $vv;
             }
         }
-        return  $result;
+        return $result;
     }
 
     /**
@@ -214,25 +214,25 @@ final class Utils
         for ($i = 0; $i < $length; $i++) {
             $d = $s[$i];
             switch ($d) {
-                case '"';
+                case '"':
                     $result .= '&quot;';
                     break;
-                case '&';
+                case '&':
                     $result .= '&amp;';
                     break;
-                case '<';
+                case '<':
                     $result .= '&lt;';
                     break;
-                case '>';
+                case '>':
                     $result .= '&gt;';
                     break;
-                case "\t";
+                case "\t":
                     $result .= '&#09;';
                     break;
-                case "\n";
+                case "\n":
                     $result .= '&#10;';
                     break;
-                case "\r";
+                case "\r":
                     $result .= '&#13;';
                     break;
                 default:
@@ -250,7 +250,7 @@ final class Utils
     public static function copyRequest($dst, $src): void
     {
         if (
-            !($dst instanceof Types\RequestModel)  ||
+            !($dst instanceof Types\RequestModel) ||
             !($dst instanceof Types\RequestModel)
         ) {
             throw new \InvalidArgumentException('dst or src is not subclass of RequestModel');
@@ -261,10 +261,14 @@ final class Utils
         foreach ($dstRo->getProperties() as $property) {
             if ($srcRo->hasProperty($property->getName())) {
                 $pp = $srcRo->getProperty($property->getName());
-                $pp->setAccessible(true);
+                if (PHP_VERSION_ID < 80100) {
+                    $pp->setAccessible(true);
+                }
                 $v = $pp->getValue($src);
                 if (isset($v)) {
-                    $property->setAccessible(true);
+                    if (PHP_VERSION_ID < 80100) {
+                        $property->setAccessible(true);
+                    }
                     $property->setValue($dst, $v);
                 }
             }
@@ -274,7 +278,7 @@ final class Utils
     public static function copyResult($dst, $src): void
     {
         if (
-            !($dst instanceof Types\ResultModel)  ||
+            !($dst instanceof Types\ResultModel) ||
             !($dst instanceof Types\ResultModel)
         ) {
             throw new \InvalidArgumentException('dst or src is not subclass of ResultModel');
@@ -285,10 +289,14 @@ final class Utils
         foreach ($dstRo->getProperties() as $property) {
             if ($srcRo->hasProperty($property->getName())) {
                 $pp = $srcRo->getProperty($property->getName());
-                $pp->setAccessible(true);
+                if (PHP_VERSION_ID < 80100) {
+                    $pp->setAccessible(true);
+                }
                 $v = $pp->getValue($src);
                 if (isset($v)) {
-                    $property->setAccessible(true);
+                    if (PHP_VERSION_ID < 80100) {
+                        $property->setAccessible(true);
+                    }
                     $property->setValue($dst, $v);
                 }
             }
@@ -298,7 +306,7 @@ final class Utils
     /**
      * Parses a http range string into array.
      *
-     * @param string $range    Http range string (e.g., "bytes=0-1023")
+     * @param string $range Http range string (e.g., "bytes=0-1023")
      *
      * @return array | false
      */
@@ -345,7 +353,7 @@ final class Utils
     /**
      * Parses a content range string into array.
      *
-     * @param string $range    Http range string (e.g., "bytes 0-10239/25723")
+     * @param string $range Http range string (e.g., "bytes 0-10239/25723")
      *
      * @return array | false
      */

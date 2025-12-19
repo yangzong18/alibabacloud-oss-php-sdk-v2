@@ -200,7 +200,9 @@ final class Functions
 
         //headers
         $hp = $ro->getProperty('headers');
-        $hp->setAccessible(true);
+        if (PHP_VERSION_ID < 80100){
+            $hp->setAccessible(true);
+        }
         $h = $hp->getValue($request);
         if (is_array($h)) {
             foreach ($h as $key => $value) {
@@ -210,7 +212,9 @@ final class Functions
 
         //parameters
         $pp = $ro->getProperty('parameters');
-        $pp->setAccessible(true);
+        if (PHP_VERSION_ID < 80100){
+            $pp->setAccessible(true);
+        }
         $p = $pp->getValue($request);
         if (is_array($p)) {
             foreach ($p as $key => $value) {
@@ -220,7 +224,9 @@ final class Functions
 
         //payload
         $pd = $ro->getProperty('payload');
-        $pd->setAccessible(true);
+        if (PHP_VERSION_ID < 80100){
+            $pd->setAccessible(true);
+        }
         $payload = $pd->getValue($request);
         if ($payload instanceof \Psr\Http\Message\StreamInterface) {
             $input->setBody($payload);

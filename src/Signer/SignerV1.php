@@ -147,7 +147,7 @@ class SignerV1 implements SignerInterface
             $signingCtx->time = (new DateTime('now', new DateTimeZone('UTC')))->modify('+' . $signingCtx->clockOffset . 'seconds');
         }
 
-        $datetime = $signingCtx->time->format(DATE_RFC7231);
+        $datetime = $signingCtx->time->format("D, d M Y H:i:s \G\M\T");
         $request = $request->withHeader(self::DATE_HEADER, $datetime);
 
         // Credentials information

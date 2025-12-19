@@ -97,7 +97,9 @@ final class Deserializer
 
             $type = (string)$property->getType();
             $value = self::deserializeXmlAny($element->$name, $type, $annotation);
-            $property->setAccessible(true);
+            if (PHP_VERSION_ID < 80100) {
+                $property->setAccessible(true);
+            }
             $property->setValue($obj, $value);
         }
 
@@ -120,12 +122,12 @@ final class Deserializer
 
     private static function castToInt(string $value): int
     {
-        return (int) $value;
+        return (int)$value;
     }
 
     private static function castToFloat(string $value): float
     {
-        return (float) $value;
+        return (float)$value;
     }
 
     private static function castToAny(string $value, string $type, ?string $format)
@@ -179,21 +181,29 @@ final class Deserializer
 
         //common part
         $p = $ro->getProperty('status');
-        $p->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $p->setAccessible(true);
+        }
         $p->setValue($result, $output->getStatus());
 
         $p = $ro->getProperty('statusCode');
-        $p->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $p->setAccessible(true);
+        }
         $p->setValue($result, $output->GetStatusCode());
 
         $headers = $output->getHeaders() ?? [];
         $p = $ro->getProperty('headers');
-        $p->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $p->setAccessible(true);
+        }
         $p->setValue($result, $headers);
 
         if (isset($headers['x-oss-request-id'])) {
             $p = $ro->getProperty('requestId');
-            $p->setAccessible(true);
+            if (PHP_VERSION_ID < 80100) {
+                $p->setAccessible(true);
+            }
             $p->setValue($result, $headers['x-oss-request-id']);
         }
 
@@ -233,8 +243,10 @@ final class Deserializer
                 continue;
             }
 
-            $value = self::castToAny( $headers[$name], $annotation->type, $annotation->format);
-            $property->setAccessible(true);
+            $value = self::castToAny($headers[$name], $annotation->type, $annotation->format);
+            if (PHP_VERSION_ID < 80100) {
+                $property->setAccessible(true);
+            }
             $property->setValue($result, $value);
         }
 
@@ -243,15 +255,17 @@ final class Deserializer
             $property = $item['property'];
             $prefix = strtolower($annotation->rename);
             $len = strlen($prefix);
-            $meta = []; 
-            foreach ($headers as  $key => $value) {
+            $meta = [];
+            foreach ($headers as $key => $value) {
                 if (strncasecmp($key, $prefix, $len) == 0) {
                     $meta[strtolower(substr($key, $len))] = $value;
                 }
             }
 
             if (count($meta) > 0) {
-                $property->setAccessible(true);
+                if (PHP_VERSION_ID < 80100) {
+                    $property->setAccessible(true);
+                }
                 $property->setValue($result, $meta);
             }
         }
@@ -280,7 +294,9 @@ final class Deserializer
 
             if ('xml' === $annotation->format) {
                 $value = self::deserializeXml($content, $annotation->type, $annotation->rename);
-                $property->setAccessible(true);
+                if (PHP_VERSION_ID < 80100) {
+                    $property->setAccessible(true);
+                }
                 $property->setValue($result, $value);
             } else {
                 throw new DeserializationExecption("Unsupport body format:$annotation->format");
@@ -292,7 +308,7 @@ final class Deserializer
     }
 
     public static function deserializeOutputInnerBody(ResultModel $result, OperationOutput $output)
-    {        
+    {
         $body = $output->getBody();
         if ($body == null) {
             return;

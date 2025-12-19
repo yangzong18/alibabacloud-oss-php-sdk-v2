@@ -29,7 +29,13 @@ final class FullJitterBackoff implements BackoffDelayerInterface
     {
         $this->baseDelay = $baseDelay;
         $this->maxBackOff = $maxBackOff;
-        $this->attemptCelling = intval(log(PHP_FLOAT_MAX / $baseDelay, 2));
+        $value = log(PHP_FLOAT_MAX / $baseDelay, 2);
+        if (is_finite($value)) {
+            $intValue = (int)$value;
+        } else {
+            $intValue = 64;
+        }
+        $this->attemptCelling = $intValue;
     }
 
     public function backoffDelay(int $attempt, ?\Throwable $reason): float
