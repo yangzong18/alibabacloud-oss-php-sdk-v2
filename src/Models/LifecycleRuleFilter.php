@@ -17,10 +17,10 @@ final class LifecycleRuleFilter extends Model
 {
     /**
      * The condition that is matched by objects to which the lifecycle rule does not apply.
-     * @var LifecycleRuleNot|null
+     * @var array<LifecycleRuleNot>|null
      */
     #[XmlElement(rename: 'Not', type: LifecycleRuleNot::class)]
-    public ?LifecycleRuleNot $not;
+    public ?array $nots;
 
     /**
      * This lifecycle rule only applies to files larger than this size.
@@ -39,17 +39,17 @@ final class LifecycleRuleFilter extends Model
 
     /**
      * LifecycleRuleFilter constructor.
-     * @param LifecycleRuleNot|null $not The condition that is matched by objects to which the lifecycle rule does not apply.
+     * @param array<LifecycleRuleNot>|null $nots The condition that is matched by objects to which the lifecycle rule does not apply.
      * @param int|null $objectSizeGreaterThan This lifecycle rule only applies to files larger than this size.
      * @param int|null $objectSizeLessThan This lifecycle rule only applies to files smaller than this size.
      */
     public function __construct(
-        ?LifecycleRuleNot $not = null,
-        ?int $objectSizeGreaterThan = null,
-        ?int $objectSizeLessThan = null
+        ?array $nots = null,
+        ?int   $objectSizeGreaterThan = null,
+        ?int   $objectSizeLessThan = null
     )
     {
-        $this->not = $not;
+        $this->nots = $nots;
         $this->objectSizeGreaterThan = $objectSizeGreaterThan;
         $this->objectSizeLessThan = $objectSizeLessThan;
     }
