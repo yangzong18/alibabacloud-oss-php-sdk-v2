@@ -98,8 +98,8 @@ BBB;
         $request = new Models\PutBucketLifecycleRequest('bucket-123');
         $rule = new Models\LifecycleRule(prefix: '', transitions: array(
             new Models\LifecycleRuleTransition(days: 30, storageClass: 'Archive'),
-        ), filter: new Models\LifecycleRuleFilter(not: new Models\LifecycleRuleNot(tag: new Models\Tag(key: 'key1', value: 'value1'), prefix: 'log')
-        ), id: 'rule', expiration: new Models\LifecycleRuleExpiration(expiredObjectDeleteMarker: true), noncurrentVersionExpiration: new Models\NoncurrentVersionExpiration(noncurrentDays: 5), status: 'Enabled');
+        ), filter: new Models\LifecycleRuleFilter(nots: array(new Models\LifecycleRuleNot(tag: new Models\Tag(key: 'key1', value: 'value1'), prefix: 'log')
+        )), id: 'rule', expiration: new Models\LifecycleRuleExpiration(expiredObjectDeleteMarker: true), noncurrentVersionExpiration: new Models\NoncurrentVersionExpiration(noncurrentDays: 5), status: 'Enabled');
         $request->lifecycleConfiguration = new Models\LifecycleConfiguration(
             array(
                 $rule
@@ -349,6 +349,57 @@ BBB;
         $this->assertFalse($result->lifecycleConfiguration->rules[1]->noncurrentVersionTransitions[0]->returnToStdWhenVisit);
         $this->assertTrue($result->lifecycleConfiguration->rules[1]->noncurrentVersionTransitions[0]->isAccessTime);
         $this->assertEquals(1631698332, $result->lifecycleConfiguration->rules[1]->atimeBase);
+
+        $body = '<?xml version="1.0" encoding="UTF-8"?>
+<LifecycleConfiguration>
+    <Rule>
+        <Prefix></Prefix>
+        <Transition>
+            <Days>30</Days>
+            <StorageClass>Archive</StorageClass>
+        </Transition>
+        <Filter>
+            <Not>
+                <Tag>
+                    <Key>key1</Key>
+                    <Value>value1</Value>
+                </Tag>
+                <Prefix>log</Prefix>
+            </Not>
+        </Filter>
+        <ID>rule</ID>
+        <Expiration>
+            <ExpiredObjectDeleteMarker>true</ExpiredObjectDeleteMarker>
+        </Expiration>
+        <NoncurrentVersionExpiration>
+            <NoncurrentDays>5</NoncurrentDays>
+        </NoncurrentVersionExpiration>
+        <Status>Enabled</Status>
+    </Rule>
+</LifecycleConfiguration>';
+        $output = new OperationOutput(
+            'OK',
+            200,
+            ['x-oss-request-id' => '123'],
+            Utils::streamFor($body)
+        );
+        $result = BucketLifecycle::toGetBucketLifecycle($output);
+        $this->assertEquals('OK', $result->status);
+        $this->assertEquals(200, $result->statusCode);
+        $this->assertEquals('123', $result->requestId);
+        $this->assertEquals(1, count($result->headers));
+        $this->assertEquals('123', $result->headers['x-oss-request-id']);
+        $this->assertEquals(1, count($result->lifecycleConfiguration->rules));
+        $this->assertEquals('rule', $result->lifecycleConfiguration->rules[0]->id);
+        $this->assertEquals('', $result->lifecycleConfiguration->rules[0]->prefix);
+        $this->assertEquals('Enabled', $result->lifecycleConfiguration->rules[0]->status);
+        $this->assertEquals(1, count($result->lifecycleConfiguration->rules[0]->transitions));
+        $this->assertEquals(30, $result->lifecycleConfiguration->rules[0]->transitions[0]->days);
+        $this->assertEquals('Archive', $result->lifecycleConfiguration->rules[0]->transitions[0]->storageClass);
+        $this->assertEquals(1, count($result->lifecycleConfiguration->rules[0]->filter->nots));
+        $this->assertEquals('log', $result->lifecycleConfiguration->rules[0]->filter->nots[0]->prefix);
+        $this->assertEquals('key1', $result->lifecycleConfiguration->rules[0]->filter->nots[0]->tag->key);
+        $this->assertEquals('value1', $result->lifecycleConfiguration->rules[0]->filter->nots[0]->tag->value);
     }
 
     public function testFromDeleteBucketLifecycle()
