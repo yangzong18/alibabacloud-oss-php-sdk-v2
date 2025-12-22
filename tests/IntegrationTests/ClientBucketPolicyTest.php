@@ -14,6 +14,13 @@ class ClientBucketPolicyTest extends TestIntegration
         $client = $this->getDefaultClient();
         $bucketName = self::$bucketName;
 
+        $client->putBucketPublicAccessBlock(new Oss\Models\PutBucketPublicAccessBlockRequest(
+            $bucketName,
+            new Oss\Models\PublicAccessBlockConfiguration(
+                false
+            )
+        ));
+
         // PutBucketPolicy
         $putResult = $client->putBucketPolicy(new Oss\Models\PutBucketPolicyRequest(
             $bucketName,
