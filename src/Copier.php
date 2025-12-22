@@ -322,7 +322,9 @@ final class Copier
                 }
                 $imRequestRo = new \ReflectionObject($imRequest);
                 $pp = $imRequestRo->getProperty('headers');
-                $pp->setAccessible(true);
+                if (PHP_VERSION_ID < 80100) {
+                    $pp->setAccessible(true);
+                }
                 $pp->setValue($imRequest, $imHeaders);
 
                 break;
