@@ -11,8 +11,8 @@ jobs:
         php-version: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5' ]
     steps:
       - name: Install SASL library on macOS
-        if: matrix.operating-system == 'macos-latest' && php-version >= 8.5
-        run: brew install cyrus-sasl
+        if: matrix.operating-system == 'macos-latest' && matrix.php-version >= 8.5
+        run: brew update && brew install cyrus-sasl
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
