@@ -1,5 +1,5 @@
 name: main
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   phpunit:
     name: PHPUnit
@@ -7,12 +7,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macos-latest]
-        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
+        php-version: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5' ]
     steps:
       - name: Install SASL library on macOS
         if: matrix.operating-system == 'macos-latest' && matrix.php-version >= 8.5
         run: brew update && brew install cyrus-sasl
+
+      - name: Install net-snmp and fix library path on macOS
+        if: matrix.operating-system == 'macos-latest' && matrix.php-version >= 8.4
+        run: |
+          brew update
+          brew install net-snmp
+          echo 'export PATH="/opt/homebrew/opt/net-snmp/bin:$PATH"' >> /Users/runner/.bash_profile
+          echo 'export PATH="/opt/homebrew/opt/net-snmp/sbin:$PATH"' >> /Users/runner/.bash_profile
+          export LDFLAGS="-L/opt/homebrew/opt/net-snmp/lib"
+          export CPPFLAGS="-I/opt/homebrew/opt/net-snmp/include"
+          export PKG_CONFIG_PATH="/opt/homebrew/opt/net-snmp/lib/pkgconfig"
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
@@ -30,7 +41,7 @@ jobs:
       - name: PHPUnit Migrate Configuration
         if: ${{ matrix.php-version != '7.4' && matrix.php-version != '8.0'}}
         run: vendor/bin/phpunit --migrate-configuration
-        
+
       - name: Run PHPUnit
         run: vendor/bin/phpunit --testsuite UnitTest --fail-on-warning --fail-on-incomplete --fail-on-risky
 
