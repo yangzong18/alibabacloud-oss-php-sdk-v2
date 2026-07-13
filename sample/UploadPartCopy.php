@@ -46,15 +46,51 @@ $client = new Oss\Client($cfg);
 $initRequest = new Oss\Models\InitiateMultipartUploadRequest($bucket, $key);
 $initResult = $client->initiateMultipartUpload($initRequest);
 
-$request = new Oss\Models\UploadPartCopyRequest($bucket, $key, 1, $initResult->uploadId);
 if (!empty($options["src-bucket"])) {
-    $request->sourceBucket = $options["src-bucket"];
+    $srcBucket = $options["src-bucket"];
+} else {
+    $srcBucket = $bucket;
 }
-$request->sourceKey = $srcKey;
-$result = $client->uploadPartCopy($request);
+
+$headResult = $client->headObject(new Oss\Models\HeadObjectRequest(
+    $srcBucket,
+    $srcKey
+));
+
+$length = $headResult->contentLength;
+
+$partSize = 64 * 1024 * 1024;
+$partsNum = intdiv($length, $partSize) + intval(1);
+
+$parts = array();
+
+for ($i = 1; $i <= $partsNum; $i++) {
+    $partRequest = new Oss\Models\UploadPartCopyRequest(
+        $bucket,
+        $key,
+        $i,
+        $initResult->uploadId
+    );
+
+    $partRequest->sourceRange = getPartRange($length, $partSize, $i);
+
+    $partRequest->sourceBucket = $srcBucket;
+    $partRequest->sourceKey = $srcKey;
+    $partResult = $client->uploadPartCopy($partRequest);
+    $part = new Oss\Models\UploadPart(
+        $i,
+        $partResult->etag,
+    );
+    array_push($parts, $part);
+}
 
 printf(
-    'status code:' . $result->statusCode . PHP_EOL .
-    'request id:' . $result->requestId . PHP_EOL .
-    'result:' . var_export($result, true) . PHP_EOL
+    "upload part copy success\n"
 );
+
+function getPartRange(int $totalSize, int $partSize, int $partNumber): string
+{
+    $start = ($partNumber - 1) * $partSize;
+    $end = min($partNumber * $partSize - 1, $totalSize - 1);
+    return sprintf('bytes=%d-%d', $start, $end);
+}
