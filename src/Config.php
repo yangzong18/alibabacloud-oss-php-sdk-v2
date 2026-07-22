@@ -129,6 +129,12 @@ final class Config
     private $additionalHeaders;
 
     /**
+     * The account id, used by the agentic bucket client.
+     * @var string|null
+     */
+    private ?string $accountId;
+
+    /**
      * Config constructor.
      * @param string|null $region
      * @param string|null $endpoint
@@ -150,6 +156,7 @@ final class Config
      * @param array|null $additionalHeaders
      * @param string|null $cloudBoxId
      * @param bool|null $enableAutoDetectCloudBoxId
+     * @param string|null $accountId
      */
     public function __construct(
         ?string $region = null,
@@ -171,7 +178,8 @@ final class Config
         ?string $userAgent = null,
         ?array $additionalHeaders = null,
         ?string $cloudBoxId = null,
-        ?bool $enableAutoDetectCloudBoxId = null
+        ?bool $enableAutoDetectCloudBoxId = null,
+        ?string $accountId = null
     )
     {
         $this->region = $region;
@@ -194,6 +202,7 @@ final class Config
         $this->additionalHeaders = $additionalHeaders;
         $this->cloudBoxId = $cloudBoxId;
         $this->enableAutoDetectCloudBoxId = $enableAutoDetectCloudBoxId;
+        $this->accountId = $accountId;
     }
 
     public static function loadDefault(): Config
@@ -696,5 +705,25 @@ final class Config
     public function getCloudBoxId()
     {
         return $this->cloudBoxId;
+    }
+
+    /**
+     * Set account id.
+     * @param string $accountId
+     * @return  self
+     */
+    public function setAccountId(string $accountId)
+    {
+        $this->accountId = $accountId;
+        return $this;
+    }
+
+    /**
+     * Get account id.
+     * @return string|null
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
     }
 }

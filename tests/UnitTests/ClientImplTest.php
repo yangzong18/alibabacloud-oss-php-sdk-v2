@@ -730,6 +730,56 @@ class ClientImplTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('oss-cloudbox', $sdkOptions['product']);
     }
 
+    public function testConfigAccountId(): void
+    {
+        $readInitError = function (ClientImpl $client) {
+            $ro = new \ReflectionObject($client);
+            $p = $ro->getProperty('innerOptions');
+            if (PHP_VERSION_ID < 80100) {
+                $p->setAccessible(true);
+            }
+            return $p->getValue($client)['init_error'];
+        };
+
+        // no account id: no deferred error
+        $cfg = Config::loadDefault();
+        $cfg->setRegion('cn-hangzhou');
+        $cfg->setCredentialsProvider(new Credentials\AnonymousCredentialsProvider());
+        $client = new ClientImpl($cfg);
+        $this->assertNull($readInitError($client));
+
+        // valid account id (pure digits): no deferred error, operation proceeds
+        $cfg = Config::loadDefault();
+        $cfg->setRegion('cn-hangzhou');
+        $cfg->setAccountId('1234567890');
+        $cfg->setCredentialsProvider(new Credentials\AnonymousCredentialsProvider());
+        $mock = new GuzzleHttp\Handler\MockHandler([new GuzzleHttp\Psr7\Response()]);
+        $client = new ClientImpl($cfg, ['handler' => $mock]);
+        $this->assertNull($readInitError($client));
+        $input = new OperationInput("TestApi", "PUT");
+        $output = $client->executeAsync($input)->wait();
+        $this->assertEquals(200, $output->getStatusCode());
+
+        // invalid account id: construction succeeds, error deferred to operation
+        $cfg = Config::loadDefault();
+        $cfg->setRegion('cn-hangzhou');
+        $cfg->setAccountId('abc');
+        $cfg->setCredentialsProvider(new Credentials\AnonymousCredentialsProvider());
+        $client = new ClientImpl($cfg);
+        $initError = $readInitError($client);
+        $this->assertInstanceOf(\InvalidArgumentException::class, $initError);
+        $this->assertStringContainsString('invalid account id: abc, must be pure digits', $initError->getMessage());
+
+        // the deferred error is surfaced when an operation is invoked
+        $input = new OperationInput("TestApi", "PUT");
+        try {
+            $client->executeAsync($input)->wait();
+            $this->assertTrue(false, "should not here");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString('invalid account id', $e->getMessage());
+        }
+    }
+
     public function testInvokeOperationOptions(): void
     {
         $cfg = Config::loadDefault();
