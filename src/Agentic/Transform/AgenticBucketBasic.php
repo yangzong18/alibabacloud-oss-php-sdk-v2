@@ -254,6 +254,7 @@ final class AgenticBucketBasic
                 $result->maxKeys = Functions::tryToInt($xml->MaxKeys);
                 $result->continuationToken = Functions::tryToString($xml->ContinuationToken);
                 $result->nextContinuationToken = Functions::tryToString($xml->NextContinuationToken);
+                $result->startAfter = Functions::tryToString($xml->StartAfter);
                 $result->isTruncated = Functions::tryToBool($xml->IsTruncated);
                 if (isset($xml->BucketSpaces->BucketSpace)) {
                     $result->bucketSpaces = [];

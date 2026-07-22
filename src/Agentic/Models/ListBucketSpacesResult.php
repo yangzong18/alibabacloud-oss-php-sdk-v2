@@ -44,6 +44,12 @@ final class ListBucketSpacesResult extends ResultModel
     public ?string $nextContinuationToken;
 
     /**
+     * The name of the bucket space after which the list operation began.
+     * @var string|null
+     */
+    public ?string $startAfter;
+
+    /**
      * Indicates whether the returned results are truncated.
      * @var bool|null
      */
@@ -62,6 +68,7 @@ final class ListBucketSpacesResult extends ResultModel
      * @param int|null $maxKeys The maximum number of bucket spaces that can be returned.
      * @param string|null $continuationToken The token from which the list operation started.
      * @param string|null $nextContinuationToken The token used to continue the next list operation.
+     * @param string|null $startAfter The name of the bucket space after which the list operation began.
      * @param bool|null $isTruncated Indicates whether the returned results are truncated.
      * @param array<BucketSpaceSummary>|null $bucketSpaces The container that stores the information about multiple bucket spaces.
      */
@@ -71,6 +78,7 @@ final class ListBucketSpacesResult extends ResultModel
         ?int $maxKeys = null,
         ?string $continuationToken = null,
         ?string $nextContinuationToken = null,
+        ?string $startAfter = null,
         ?bool $isTruncated = null,
         ?array $bucketSpaces = null
     )
@@ -80,6 +88,7 @@ final class ListBucketSpacesResult extends ResultModel
         $this->maxKeys = $maxKeys;
         $this->continuationToken = $continuationToken;
         $this->nextContinuationToken = $nextContinuationToken;
+        $this->startAfter = $startAfter;
         $this->isTruncated = $isTruncated;
         $this->bucketSpaces = $bucketSpaces;
     }
