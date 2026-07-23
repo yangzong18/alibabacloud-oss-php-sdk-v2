@@ -212,12 +212,13 @@ class AgenticBucketBasicTest extends \PHPUnit\Framework\TestCase
             $this->assertStringContainsString("missing required field, bucket", (string)$e);
         }
 
-        $input = AgenticBucketBasic::fromListBucketSpaces(new Models\ListBucketSpacesRequest('bucket-123', 'pre', 'token-1', 50));
+        $input = AgenticBucketBasic::fromListBucketSpaces(new Models\ListBucketSpacesRequest('bucket-123', 'pre', 'token-1', 'space-0', 50));
         $this->assertEquals('ListBucketSpaces', $input->getOpName());
         $this->assertEquals('bucket-123', $input->getBucket());
         $this->assertArrayHasKey('bucketSpace', $input->getParameters());
         $this->assertEquals('pre', $input->getParameters()['prefix']);
         $this->assertEquals('token-1', $input->getParameters()['continuation-token']);
+        $this->assertEquals('space-0', $input->getParameters()['start-after']);
         $this->assertEquals('50', $input->getParameters()['max-keys']);
     }
 
@@ -233,6 +234,7 @@ class AgenticBucketBasicTest extends \PHPUnit\Framework\TestCase
   <MaxKeys>50</MaxKeys>
   <ContinuationToken></ContinuationToken>
   <NextContinuationToken>next-1</NextContinuationToken>
+  <StartAfter>space-0</StartAfter>
   <IsTruncated>false</IsTruncated>
   <BucketSpaces>
     <BucketSpace>
@@ -250,6 +252,7 @@ class AgenticBucketBasicTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('pre', $result->prefix);
         $this->assertEquals(50, $result->maxKeys);
         $this->assertEquals('next-1', $result->nextContinuationToken);
+        $this->assertEquals('space-0', $result->startAfter);
         $this->assertFalse($result->isTruncated);
         $this->assertCount(1, $result->bucketSpaces);
         $this->assertEquals('space-1', $result->bucketSpaces[0]->name);
